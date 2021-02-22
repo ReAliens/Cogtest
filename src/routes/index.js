@@ -3,9 +3,9 @@ const routes = {
     index: () => "/",
   },
   auth: {
-    index: () => "/auth",
-    login: () => "/auth/login",
-    register: () => "/auth/register",
+    // index: () => "/auth",
+    // login: () => "/auth/login",
+    register: () => "/register"
   },
   tests: {
     index: () => "/tests",
