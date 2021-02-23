@@ -10,8 +10,8 @@ const Home = () => {
       <Flex
         borderRadius="10px"
         paddingTop="20px"
-        h="750px"
-        w="1140px"
+        h="100%"
+        w="800px"
         bg="#f9f9fc"
         flexDir="column"
       >
