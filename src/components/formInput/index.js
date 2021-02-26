@@ -18,6 +18,7 @@ const FormInput = ({
   labelSize,
   labelWeight,
   containerProps,
+  placeholder,
   ...props
 }) => {
   const { register, errors } = useFormContext();
@@ -27,6 +28,7 @@ const FormInput = ({
       {label ? (
         <FormLabel
           htmlFor={id}
+          dir="rtl"
           color={handleErrors(errors, id) ? "red" : "blackAlpha"}
           fontSize={labelSize}
           fontWeight={labelWeight}
@@ -43,10 +45,12 @@ const FormInput = ({
         ref={register(validation)}
         isInvalid={!!handleErrors(errors, id)}
         errorBorderColor="red"
+        dir="rtl"
+        placeholder={placeholder}
         {...props}
       />
       {handleErrors(errors, id) && (
-        <Text fontSize="sm" mt={2} color="red">
+        <Text dir="rtl" fontSize="sm" mt={2} color="red">
           {handleErrors(errors, id)}
         </Text>
       )}
