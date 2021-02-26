@@ -1,26 +1,21 @@
-import {
-  Box,
-  Flex,
-  Grid,
-  Radio,
-  RadioGroup,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Flex, Grid, Radio, RadioGroup, Text } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import StartTestButton from "../../components/Button";
 import FormInput from "../../components/formInput";
 import FormSelect from "../../components/FormSelect";
 
 const UserInfo = () => {
   const [radioValue, setRadioValue] = useState();
+  const history = useHistory();
   console.log(radioValue);
   const methods = useForm();
   const { handleSubmit } = methods;
 
   const submit = (data) => {
     console.log(data);
+    history.push("/tests");
   };
   console.log("data");
   return (
@@ -34,7 +29,7 @@ const UserInfo = () => {
         flexDir="column"
       >
         <Flex marginX="20px" dir="rtl">
-          <Text>الاختبارات</Text>
+          <Text>تسجيل البيانات</Text>
         </Flex>
         <Flex
           justifyContent="center"
@@ -146,18 +141,18 @@ const UserInfo = () => {
                     validation={{
                       required: {
                         value: true,
-                        message:
-                          " هذا الحقل مطلوب لا يمكن ادخال اقل من خمس سنوات",
+                        message: " هذا الحقل مطلوب ",
                       },
                       min: {
                         value: 5,
+                        message:'اقل عمر يمكن ادخاله خمس سنوات'
                       },
                     }}
                   />
                 </Flex>
                 <Flex>
                   <FormInput
-                    id="age"
+                    id="email"
                     placeholder="البريد الإلكترونى"
                     type="email"
                     label=" البريد الإلكترونى"
@@ -170,18 +165,22 @@ const UserInfo = () => {
                     onChange={setRadioValue}
                     value={radioValue}
                   >
-                    <Stack justifyItems="self-start" direction="rtl">
-                      <Radio dir="rtl" value="1">
+                    <Flex
+                      flexDir="row"
+                      justifyItems="self-start"
+                      direction="rtl"
+                    >
+                      <Radio dir="rtl" value="male">
                         ذكر
                       </Radio>
-                      <Radio dir="rtl" value="2">
+                      <Radio dir="rtl" value="female">
                         أنثى
                       </Radio>
-                    </Stack>
+                    </Flex>
                   </RadioGroup>
                 </Flex>
                 <StartTestButton
-                  buttonText="test"
+                  buttonText="تسجيل"
                   onClick={handleSubmit(submit)}
                 />
               </Grid>
