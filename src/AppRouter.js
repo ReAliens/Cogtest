@@ -12,12 +12,12 @@ import axios from "axios";
 //   console.log(res.data);
 // });
 
-const test = async () => {
-  const hamada = await axios.get("https://cogtests.com/api/cogtests");
-  console.log(hamada.data);
-};
+// const test = async () => {
+//   const hamada = await axios.get("https://cogtests.com/api/cogtests");
+//   console.log(hamada.data);
+// };
 
-test();
+// test();
 
 // const id =
 
