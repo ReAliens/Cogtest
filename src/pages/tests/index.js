@@ -8,7 +8,7 @@ const Tests = () => {
   return (
     <>
       <Suspense fallback={<Text>Loading</Text>}>
-        <Route path="/tests" component={Introduction} />
+        <Route path="/tests/stroop" component={Introduction} />
       </Suspense>
     </>
   );

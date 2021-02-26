@@ -2,8 +2,12 @@ import { Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 import StartTestButton from "../../../../../components/Button";
+import useTests from "../../../../../hooks/useTests";
 
 const Introduction = () => {
+  const { tests } = useTests();
+  const firstTest = tests && tests.payload ? tests.payload[0] : null;
+
   return (
     <Box margin="auto">
       <Flex
@@ -47,7 +51,7 @@ const Introduction = () => {
             </Text>
           </Flex>
           <Flex>
-            <Link to="/tests/5">
+            <Link to={`/tests/stroop/${firstTest?.id}`}>
               <StartTestButton buttonText="ابدأ الاختبار" />
             </Link>
           </Flex>

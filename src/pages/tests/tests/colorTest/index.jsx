@@ -6,12 +6,11 @@ const Introduction = lazy(() => import("./introduction/index"));
 const StroopTest = lazy(() => import("./test"));
 
 const Tests = () => {
-  //   const testID = "stroopTest";
   return (
     <>
       <Suspense fallback={<Text>Loading</Text>}>
-        <Route exact path="/tests" component={Introduction} />
-        <Route path="/tests/:testID" component={StroopTest} />
+        <Route exact path="/tests/stroop" component={Introduction} />
+        <Route path="/tests/stroop/:testID" component={StroopTest} />
       </Suspense>
     </>
   );

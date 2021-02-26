@@ -15,7 +15,7 @@ const UserInfo = () => {
 
   const submit = (data) => {
     console.log(data);
-    history.push("/tests");
+    history.push("/tests/stroop");
   };
   console.log("data");
   return (
