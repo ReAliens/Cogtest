@@ -21,7 +21,7 @@ const Home = ({
         paddingTop="20px"
         h="70vh"
         w="800px"
-        bg="#f9f9fc"
+        bg="#F3F6F9"
         flexDir="column"
       >
         <Grid
@@ -54,73 +54,77 @@ const Home = ({
           paddingX="20px"
           h="100%"
         >
-          <Flex
+          <Grid
             padding="20px"
             marginTop="20px"
             justifyContent="center"
             borderRadius="10px"
             bg="white"
+            w="100%"
+            templateRows="0.7fr 1fr 1fr 0.5fr"
           >
-            <Grid w="100%" templateRows="0.7fr 1fr 1fr 0.5fr">
-              <Grid
-                w="100%"
-                borderBottom="2px dashed #EBEDF3"
-                justifyContent="center"
-                h="80px"
-                templateRows="1fr 1fr"
+            <Grid
+              w="100%"
+              borderBottom="2px dashed #EBEDF3"
+              justifyContent="center"
+              h="80px"
+              templateRows="1fr 1fr"
+            >
+              <Text
+                fontFamily="sans-serif"
+                display="inline-block"
+                fontSize="30px"
+                whiteSpace="break-spaces"
               >
+                {header}
+              </Text>
+              <Flex justifyContent="center">
                 <Text
                   fontFamily="sans-serif"
                   display="inline-block"
-                  fontSize="30px"
+                  fontSize="16px"
                   whiteSpace="break-spaces"
                 >
-                  {header}
-                </Text>
-                <Flex justifyContent="center">
-                  <Text
-                    fontFamily="sans-serif"
-                    display="inline-block"
-                    fontSize="16px"
-                    whiteSpace="break-spaces"
-                  >
-                    {welcome}
-                  </Text>
-                </Flex>
-              </Grid>
-              <Flex dir="rtl" alignItems="center">
-                <Text fontSize="20px">
-                  <Icon as={FaAngleDoubleRight} />
-                  {intro}
-                  <Icon as={FaAngleDoubleLeft} />
+                  {welcome}
                 </Text>
               </Flex>
-              <Grid
-                height="70px"
-                templateRows="1fr 1fr"
-                alignItems="center"
-                justifyContent="center"
-                marginTop="30px"
-              >
-                <Text fontSize="18px" fontWeight="bold">
-                  {tip}
-                </Text>
-                <Flex justifyContent="center">
-                  <Text fontSize="18px" fontWeight="bold">
-                    {thanking}
-                  </Text>
-                </Flex>
-              </Grid>
-              <Grid marginLeft="30px" templateRows="1fr 1fr">
-                <Text fontSize="18px" fontWeight="bold" marginLeft="40px">
-                  {ending}
-                </Text>
-                <Text fontSize="18px" fontWeight="bold">
-                  {signature}
-                </Text>
-              </Grid>
             </Grid>
-          </Flex>
+            <Flex dir="rtl" alignItems="center">
+              <Text fontSize="20px">
+                <Icon as={FaAngleDoubleRight} />
+                {intro}
+                <Icon as={FaAngleDoubleLeft} />
+              </Text>
+            </Flex>
+            <Grid
+              height="70px"
+              templateRows="1fr 1fr"
+              alignItems="center"
+              justifyContent="center"
+              marginTop="30px"
+            >
+              <Text fontSize="18px" fontWeight="bold">
+                {tip}
+              </Text>
+              <Flex justifyContent="center">
+                <Text fontSize="18px" fontWeight="bold">
+                  {thanking}
+                </Text>
+              </Flex>
+            </Grid>
+            <Grid
+              justifyContent="flex-end"
+              marginLeft="30px"
+              templateRows="1fr 1fr"
+            >
+              <Text fontSize="18px" fontWeight="bold" marginLeft="40px">
+                {ending}
+              </Text>
+              <Text fontSize="18px" fontWeight="bold">
+                {signature}
+              </Text>
+            </Grid>
+          </Grid>
         </Flex>
       </Flex>
     </Box>

@@ -6,7 +6,10 @@ const StroopIntroduction = lazy(() => import("./tests/stroop"));
 const FlankerIntroduction = lazy(() => import("./tests/flanker"));
 const DigitSymbolIntroduction = lazy(() => import("./tests/digitSymbol"));
 const InhibitionIntroduction = lazy(() => import("./tests/inhibition"));
-const LogicalReasoningIntroduction = lazy(() => import("./tests/logicalReasoning"));
+const LogicalReasoningIntroduction = lazy(() =>
+  import("./tests/logicalReasoning")
+);
+const CrossBlockIntroduction = lazy(() => import("./tests/crossBlock"));
 
 const Tests = () => {
   return (
@@ -16,7 +19,11 @@ const Tests = () => {
         <Route path="/tests/flanker" component={FlankerIntroduction} />
         <Route path="/tests/digit-symbol" component={DigitSymbolIntroduction} />
         <Route path="/tests/inhibition" component={InhibitionIntroduction} />
-        <Route path="/tests/logical-reasoning" component={LogicalReasoningIntroduction} />
+        <Route
+          path="/tests/logical-reasoning"
+          component={LogicalReasoningIntroduction}
+        />
+        <Route path="/tests/corsi" component={CrossBlockIntroduction} />
       </Suspense>
     </>
   );

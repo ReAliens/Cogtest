@@ -11,10 +11,10 @@ const useQustions = (testID) => {
         const response = await axios.get(`${API_ROOT}/get-questions/${testID}`);
         setQuestions(response.data);
       } catch (err) {
-        console.log(
+        console.dev(
           "=============== REQUEST ERROR =========================== "
         );
-        console.log(err);
+        console.dev(err);
         return null;
       }
     };
