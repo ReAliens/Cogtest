@@ -122,6 +122,7 @@ const FlankerTest = () => {
                 width="200px"
                 type="next"
                 buttonText="التالى"
+                disabled={!answers[currQuestionIndex]}
                 onClick={() => {
                   if (currQuestionIndex >= apiQuestions?.payload.length - 1) {
                     console.log("ok ok ok");
