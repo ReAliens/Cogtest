@@ -2,14 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { API_ROOT } from "../shared/constants";
 
-const useTests = () => {
-  const [tests, setTests] = useState({});
+const useSettings = (testID) => {
+  const [settings, setSettings] = useState({});
 
   useEffect(() => {
-    const testCallback = async () => {
+    const settingsCallback = async () => {
       try {
-        const response = await axios.get(`${API_ROOT}/cogtests`);
-        setTests(response.data);
+        const response = await axios.get(`${API_ROOT}/settings`);
+        setSettings(response.data);
       } catch (err) {
         console.log(
           "=============== REQUEST ERROR =========================== "
@@ -18,12 +18,12 @@ const useTests = () => {
         return null;
       }
     };
-    testCallback();
-  }, [setTests]);
+    settingsCallback();
+  }, [setSettings]);
 
   return {
-    tests,
+    settings,
   };
 };
 
-export default useTests;
+export default useSettings;

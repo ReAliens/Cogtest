@@ -4,15 +4,24 @@ import { Link } from "react-router-dom";
 import StartTestButton from "../../components/Button";
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
 
-const Home = () => {
+const Home = ({
+  title,
+  header,
+  welcome,
+  intro,
+  tip,
+  ending,
+  thanking,
+  signature,
+}) => {
   return (
     <Box margin="auto">
       <Flex
         borderRadius="10px"
         paddingTop="20px"
-        h="100%"
+        h="70vh"
         w="800px"
-        bg="#f9f9fc"
+        bg="#F3F6F9"
         flexDir="column"
       >
         <Grid
@@ -34,7 +43,7 @@ const Home = () => {
             fontWeight="bold"
             fontSize="16px"
           >
-            الرئيسية
+            {title}
           </Text>
         </Grid>
         <Flex
@@ -45,80 +54,77 @@ const Home = () => {
           paddingX="20px"
           h="100%"
         >
-          <Flex
+          <Grid
             padding="20px"
             marginTop="20px"
             justifyContent="center"
             borderRadius="10px"
             bg="white"
+            w="100%"
+            templateRows="0.7fr 1fr 1fr 0.5fr"
           >
-            <Grid w="100%" templateRows="0.7fr 1fr 1fr 0.5fr">
-              <Grid
-                w="100%"
-                borderBottom="2px dashed #EBEDF3"
-                justifyContent="center"
-                h="80px"
-                templateRows="1fr 1fr"
+            <Grid
+              w="100%"
+              borderBottom="2px dashed #EBEDF3"
+              justifyContent="center"
+              h="80px"
+              templateRows="1fr 1fr"
+            >
+              <Text
+                fontFamily="sans-serif"
+                display="inline-block"
+                fontSize="30px"
+                whiteSpace="break-spaces"
               >
+                {header}
+              </Text>
+              <Flex justifyContent="center">
                 <Text
                   fontFamily="sans-serif"
                   display="inline-block"
-                  fontSize="30px"
+                  fontSize="16px"
                   whiteSpace="break-spaces"
                 >
-                  عزيزي الطالب / عزيزتي الطالبة
-                </Text>
-                <Flex justifyContent="center">
-                  <Text
-                    fontFamily="sans-serif"
-                    display="inline-block"
-                    fontSize="16px"
-                    whiteSpace="break-spaces"
-                  >
-                    السلام عليكم ورحمة الله وبركاته
-                  </Text>
-                </Flex>
-              </Grid>
-              <Flex dir="rtl" alignItems="center">
-                <Text fontSize="20px">
-                  <Icon as={FaAngleDoubleRight} /> بين يديك مجموعة اختبارات تهدف
-                  لقياس بعض القدرات المعرفية؛ وذلك بغرض البحث العلمي فقط، وحيث
-                  أن لتجربتك الأهمية الكبرى في هذا الموضوع كونك أحد الطلاب؛ لذا
-                  أرجو منك التكرم بالأداء على الاختبارات المعرفية التالية التي
-                  تعتمد على السرعة والدقة، من خلال تخصيص بعضا من وقتك، علما بأن
-                  ذلك لا يتطلب وقتا طويلا للأداء، قم بقراءة تعليمات كل اختبار
-                  قراءة متأنية ثم سيعرض بعض المهام التجريبية (أمثلة) قبل البدأ
-                  في كل اختبار للتأكد من استيعابك لطريقة الاختبار{" "}
-                  <Icon as={FaAngleDoubleLeft} />
+                  {welcome}
                 </Text>
               </Flex>
-              <Grid
-                height="70px"
-                templateRows="1fr 1fr"
-                alignItems="center"
-                justifyContent="center"
-                marginTop="30px"
-              >
-                <Text fontSize="18px" fontWeight="bold">
-                  . علماً بأن المعلومات التي ستجمع من استجابتك سيتم التعامل معها
-                  بسرية تامة
-                </Text>
-                <Flex justifyContent="center">
-                  <Text fontSize="18px" fontWeight="bold">
-                    شاكرين ومقدرين حسن تعاونك
-                  </Text>
-                </Flex>
-              </Grid>
-              <Grid marginLeft="30px" templateRows="1fr 1fr">
-                <Text fontSize="18px" fontWeight="bold" marginLeft="40px">
-                  الباحث
-                </Text>
-                <Text fontSize="18px" fontWeight="bold">
-                  علي مستور الزهراني
-                </Text>
-              </Grid>
             </Grid>
-          </Flex>
+            <Flex dir="rtl" alignItems="center">
+              <Text fontSize="20px">
+                <Icon as={FaAngleDoubleRight} />
+                {intro}
+                <Icon as={FaAngleDoubleLeft} />
+              </Text>
+            </Flex>
+            <Grid
+              height="70px"
+              templateRows="1fr 1fr"
+              alignItems="center"
+              justifyContent="center"
+              marginTop="30px"
+            >
+              <Text fontSize="18px" fontWeight="bold">
+                {tip}
+              </Text>
+              <Flex justifyContent="center">
+                <Text fontSize="18px" fontWeight="bold">
+                  {thanking}
+                </Text>
+              </Flex>
+            </Grid>
+            <Grid
+              justifyContent="flex-end"
+              marginLeft="30px"
+              templateRows="1fr 1fr"
+            >
+              <Text fontSize="18px" fontWeight="bold" marginLeft="40px">
+                {ending}
+              </Text>
+              <Text fontSize="18px" fontWeight="bold">
+                {signature}
+              </Text>
+            </Grid>
+          </Grid>
         </Flex>
       </Flex>
     </Box>
