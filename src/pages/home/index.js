@@ -4,13 +4,22 @@ import { Link } from "react-router-dom";
 import StartTestButton from "../../components/Button";
 import { FaAngleDoubleRight, FaAngleDoubleLeft } from "react-icons/fa";
 
-const Home = () => {
+const Home = ({
+  title,
+  header,
+  welcome,
+  intro,
+  tip,
+  ending,
+  thanking,
+  signature,
+}) => {
   return (
     <Box margin="auto">
       <Flex
         borderRadius="10px"
         paddingTop="20px"
-        h="100%"
+        h="70vh"
         w="800px"
         bg="#f9f9fc"
         flexDir="column"
@@ -34,7 +43,7 @@ const Home = () => {
             fontWeight="bold"
             fontSize="16px"
           >
-            الرئيسية
+            {title}
           </Text>
         </Grid>
         <Flex
@@ -66,7 +75,7 @@ const Home = () => {
                   fontSize="30px"
                   whiteSpace="break-spaces"
                 >
-                  عزيزي الطالب / عزيزتي الطالبة
+                  {header}
                 </Text>
                 <Flex justifyContent="center">
                   <Text
@@ -75,20 +84,14 @@ const Home = () => {
                     fontSize="16px"
                     whiteSpace="break-spaces"
                   >
-                    السلام عليكم ورحمة الله وبركاته
+                    {welcome}
                   </Text>
                 </Flex>
               </Grid>
               <Flex dir="rtl" alignItems="center">
                 <Text fontSize="20px">
-                  <Icon as={FaAngleDoubleRight} /> بين يديك مجموعة اختبارات تهدف
-                  لقياس بعض القدرات المعرفية؛ وذلك بغرض البحث العلمي فقط، وحيث
-                  أن لتجربتك الأهمية الكبرى في هذا الموضوع كونك أحد الطلاب؛ لذا
-                  أرجو منك التكرم بالأداء على الاختبارات المعرفية التالية التي
-                  تعتمد على السرعة والدقة، من خلال تخصيص بعضا من وقتك، علما بأن
-                  ذلك لا يتطلب وقتا طويلا للأداء، قم بقراءة تعليمات كل اختبار
-                  قراءة متأنية ثم سيعرض بعض المهام التجريبية (أمثلة) قبل البدأ
-                  في كل اختبار للتأكد من استيعابك لطريقة الاختبار{" "}
+                  <Icon as={FaAngleDoubleRight} />
+                  {intro}
                   <Icon as={FaAngleDoubleLeft} />
                 </Text>
               </Flex>
@@ -100,21 +103,20 @@ const Home = () => {
                 marginTop="30px"
               >
                 <Text fontSize="18px" fontWeight="bold">
-                  . علماً بأن المعلومات التي ستجمع من استجابتك سيتم التعامل معها
-                  بسرية تامة
+                  {tip}
                 </Text>
                 <Flex justifyContent="center">
                   <Text fontSize="18px" fontWeight="bold">
-                    شاكرين ومقدرين حسن تعاونك
+                    {thanking}
                   </Text>
                 </Flex>
               </Grid>
               <Grid marginLeft="30px" templateRows="1fr 1fr">
                 <Text fontSize="18px" fontWeight="bold" marginLeft="40px">
-                  الباحث
+                  {ending}
                 </Text>
                 <Text fontSize="18px" fontWeight="bold">
-                  علي مستور الزهراني
+                  {signature}
                 </Text>
               </Grid>
             </Grid>

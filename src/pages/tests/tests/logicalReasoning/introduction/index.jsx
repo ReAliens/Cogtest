@@ -6,7 +6,7 @@ import useTests from "../../../../../hooks/useTests";
 
 const Introduction = () => {
   const { tests } = useTests();
-  const firstTest = tests && tests.payload ? tests.payload[0] : null;
+  const ninthTest = tests && tests.payload ? tests.payload[8] : null;
 
   return (
     <Box margin="auto">
@@ -19,7 +19,7 @@ const Introduction = () => {
         flexDir="column"
       >
         <Flex marginX="20px" dir="rtl">
-          <Text> اختبار الضبط التنفيذي </Text>
+          <Text> {ninthTest?.name}</Text>
         </Flex>
         <Flex
           justifyContent="center"
@@ -41,17 +41,12 @@ const Introduction = () => {
             dir="rtl"
           >
             <Text dir="rtl">
-              يتكون هذا الاختبار من فقرتين رئيسيتين <br /> الفقرة الاولى : مهام
-              استروب و يعتمد هذا الاختبار على لون الحافز الذى يتم تقديمه سيتم
-              عرض بعض الكلمات الملونة وعليك ان تختار الاجابة الصحيحة ما بين
-              متعدد بناءاً على لون الكلمة مدة هذا الاختبار خمسة واربعون ثانية{" "}
-              <br /> الفقرة الثانية :اختبار الاصدار يعتمد على قياس تأثير
-              الملعومات المتضاربة داخل مجموعة التحفيز يجب على الممتحن فى هذا
-              الاختبار التركيز على الموضوع المحفز مع تجاهل المحفزات المجاورة
+              ksndlj;sndk;ansdfkjnasf
+              
             </Text>
           </Flex>
           <Flex>
-            <Link to={`/tests/stroop/${firstTest?.id}`}>
+            <Link to={`/tests/logical-reasoning/${ninthTest?.id}`}>
               <StartTestButton buttonText="ابدأ الاختبار" />
             </Link>
           </Flex>
