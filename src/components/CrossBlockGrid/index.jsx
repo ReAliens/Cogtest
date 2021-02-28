@@ -36,21 +36,17 @@ const CrossBlockGrid = ({
     }, (activeCards.length + 1) * 500);
   }, [setSelectedCards, setStarted, activeCards]);
   return (
-    <Grid
-      templateColumns="repeat(4, 1fr)"
-      dir="ltr"
-      gap={4}
-    >
+    <Grid templateColumns="repeat(4, 1fr)" dir="ltr" gap={4}>
       {Array.from(new Array(numberOfCards))
         .map((_, i) => i)
         .map((index) => (
           <Card
-            active={selectedCards?.find((card) => card === index)}
+            active={(selectedCards || []).indexOf(index) !== -1}
             key={index}
             onClick={() => {
               if (!started) return;
               const newSelectedCards = selectedCards.slice();
-              if (!selectedCards.find((card) => card === index)) {
+              if (selectedCards.indexOf(index) === -1) {
                 newSelectedCards.push(index);
               }
               setSelectedCards(newSelectedCards);
