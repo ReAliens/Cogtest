@@ -19,6 +19,7 @@ const FormInput = ({
   labelWeight,
   containerProps,
   placeholder,
+  width,
   ...props
 }) => {
   const { register, errors } = useFormContext();
@@ -47,6 +48,7 @@ const FormInput = ({
         errorBorderColor="red"
         dir="rtl"
         placeholder={placeholder}
+        width={width}
         {...props}
       />
       {handleErrors(errors, id) && (

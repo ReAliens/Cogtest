@@ -11,7 +11,9 @@ const UserInfo = () => {
   const history = useHistory();
   console.log(radioValue);
   const methods = useForm();
-  const { handleSubmit } = methods;
+  const { handleSubmit, watch } = methods;
+
+  const watchedStaging = watch(["stage"]);
 
   const submit = (data) => {
     console.log(data);
@@ -19,12 +21,12 @@ const UserInfo = () => {
   };
   console.log("data");
   return (
-    <Box margin="auto">
+    <Box h="50vh">
       <Flex
         borderRadius="10px"
         paddingTop="20px"
-        h="100%"
-        w="1140px"
+        h="70vh"
+        w="1000px"
         bg="#f9f9fc"
         flexDir="column"
       >
@@ -38,18 +40,21 @@ const UserInfo = () => {
           bg="#E4E6EF"
           paddingX="20px"
           h="100%"
+          borderRadius="10px"
         >
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(submit)}>
               <Grid
-                padding="20px"
+                h="500px"
+                paddingY="15px"
                 marginTop="20px"
                 justifyContent="center"
-                w="100%"
+                w="800px"
                 borderRadius="10px"
                 bg="white"
-                templateRows="repeat(auto,1fr)"
-                gap={5}
+                templateRows="repeat(7,1fr)"
+                gap={2}
+                overflowY="scroll"
               >
                 <Flex top="0px" justifyContent="center" alignItems="center">
                   <Text fontWeight="bold" fontSize="22px">
@@ -68,11 +73,13 @@ const UserInfo = () => {
                         message: "هذا الحقل مطلوب",
                       },
                     }}
+                    width="500px"
                   />
                 </Flex>
-                <Flex w="100%">
+                <Flex width="100%">
                   <FormSelect
                     id="stage"
+                    name="stage"
                     placeholder="اختر المرحلة الدراسية"
                     label="المرحلة الدراسية"
                     options={[
@@ -98,26 +105,28 @@ const UserInfo = () => {
                     }}
                   />
                 </Flex>
-                <Flex w="100%">
-                  <FormSelect
-                    id="type"
-                    placeholder=" من فضلك اختر التخصص "
-                    label=" اختر التخصص"
-                    options={[
-                      { value: "humanScience", label: "علوم انسانية" },
-                      {
-                        value: "appliedScience",
-                        label: "علوم تطبيقية",
-                      },
-                    ]}
-                    validation={{
-                      required: {
-                        value: true,
-                        message: "هذا الحقل مطلوب",
-                      },
-                    }}
-                  />
-                </Flex>
+                {watchedStaging?.stage?.value === "master" && (
+                  <Flex w="100%">
+                    <FormSelect
+                      id="type"
+                      placeholder=" من فضلك اختر التخصص "
+                      label=" اختر التخصص"
+                      options={[
+                        { value: "humanScience", label: "علوم انسانية" },
+                        {
+                          value: "appliedScience",
+                          label: "علوم تطبيقية",
+                        },
+                      ]}
+                      validation={{
+                        required: {
+                          value: true,
+                          message: "هذا الحقل مطلوب",
+                        },
+                      }}
+                    />
+                  </Flex>
+                )}
                 <Flex>
                   <FormInput
                     id="gpa"
@@ -130,6 +139,7 @@ const UserInfo = () => {
                         message: "هذا الحقل مطلوب",
                       },
                     }}
+                    width="500px"
                   />
                 </Flex>
                 <Flex>
@@ -145,9 +155,10 @@ const UserInfo = () => {
                       },
                       min: {
                         value: 5,
-                        message:'اقل عمر يمكن ادخاله خمس سنوات'
+                        message: "اقل عمر يمكن ادخاله خمس سنوات",
                       },
                     }}
+                    width="500px"
                   />
                 </Flex>
                 <Flex>
@@ -156,12 +167,12 @@ const UserInfo = () => {
                     placeholder="البريد الإلكترونى"
                     type="email"
                     label=" البريد الإلكترونى"
+                    width="500px"
                   />
                 </Flex>
-                <Flex>
+                <Flex dir="rtl">
                   <RadioGroup
                     id="gender"
-                    dir="rtl"
                     onChange={setRadioValue}
                     value={radioValue}
                   >
@@ -169,6 +180,7 @@ const UserInfo = () => {
                       flexDir="row"
                       justifyItems="self-start"
                       direction="rtl"
+                      marginBottom="20px"
                     >
                       <Radio dir="rtl" value="male">
                         ذكر
@@ -179,11 +191,13 @@ const UserInfo = () => {
                     </Flex>
                   </RadioGroup>
                 </Flex>
+              </Grid>
+              <Flex marginTop="20px" justifyContent="flex-end">
                 <StartTestButton
                   buttonText="تسجيل"
                   onClick={handleSubmit(submit)}
                 />
-              </Grid>
+              </Flex>
             </form>
           </FormProvider>
         </Flex>

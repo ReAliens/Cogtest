@@ -10,6 +10,8 @@ const LogicalReasoningIntroduction = lazy(() =>
   import("./tests/logicalReasoning")
 );
 const CrossBlockIntroduction = lazy(() => import("./tests/crossBlock"));
+const ReverseCrossBlockIntroduction = lazy(() => import("./tests/reverseCrossBlock"));
+
 
 const Tests = () => {
   return (
@@ -17,13 +19,14 @@ const Tests = () => {
       <Suspense fallback={<Text>Loading</Text>}>
         <Route path="/tests/stroop" component={StroopIntroduction} />
         <Route path="/tests/flanker" component={FlankerIntroduction} />
+        <Route path="/tests/corsi" component={CrossBlockIntroduction} />
+        <Route path="/tests/reverse-corsi" component={ReverseCrossBlockIntroduction} />
         <Route path="/tests/digit-symbol" component={DigitSymbolIntroduction} />
         <Route path="/tests/inhibition" component={InhibitionIntroduction} />
         <Route
           path="/tests/logical-reasoning"
           component={LogicalReasoningIntroduction}
         />
-        <Route path="/tests/corsi" component={CrossBlockIntroduction} />
       </Suspense>
     </>
   );
