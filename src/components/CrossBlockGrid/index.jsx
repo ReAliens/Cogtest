@@ -46,12 +46,12 @@ const CrossBlockGrid = ({
         .map((_, i) => i)
         .map((index) => (
           <Card
-            active={selectedCards?.find((card) => card === index)}
+            active={(selectedCards || []).indexOf(index) !== -1}
             key={index}
             onClick={() => {
               if (!started) return;
               const newSelectedCards = selectedCards.slice();
-              if (!selectedCards.find((card) => card === index)) {
+              if (selectedCards.indexOf(index) === -1) {
                 newSelectedCards.push(index);
               }
               setSelectedCards(newSelectedCards);
