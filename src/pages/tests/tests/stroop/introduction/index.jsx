@@ -41,12 +41,7 @@ const Introduction = () => {
             bg="white"
             dir="rtl"
           >
-            <Text dir="rtl">
-              يتكون هذا الاختبار من فقرتين رئيسيتين <br /> الفقرة الاولى : مهام
-              استروب و يعتمد هذا الاختبار على لون الحافز الذى يتم تقديمه سيتم
-              عرض بعض الكلمات الملونة وعليك ان تختار الاجابة الصحيحة ما بين
-              متعدد بناءاً على لون الكلمة مدة هذا الاختبار خمسة واربعون ثانية
-            </Text>
+            <Text dir="rtl">{firstTest?.desc}</Text>
           </Flex>
           <Flex justifyContent="center" marginTop="20px">
             <Link to={`/tests/stroop/${firstTest?.id}`}>

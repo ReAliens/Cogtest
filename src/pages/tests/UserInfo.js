@@ -1,25 +1,37 @@
 import { Box, Flex, Grid, Radio, RadioGroup, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import StartTestButton from "../../components/Button";
 import FormInput from "../../components/formInput";
 import FormSelect from "../../components/FormSelect";
+import useUserInfo from "../../hooks/useUserInfo";
 
 const UserInfo = () => {
   const [radioValue, setRadioValue] = useState();
-  const history = useHistory();
   console.log(radioValue);
+  const { submitUserInfo, submitUserInfoLoading } = useUserInfo();
+  const history = useHistory();
   const methods = useForm();
   const { handleSubmit, watch } = methods;
 
   const watchedStaging = watch(["stage"]);
 
-  const submit = (data) => {
-    console.log(data);
-    history.push("/tests/stroop");
-  };
-  console.log("data");
+  const submit = useCallback(
+    async (values) => {
+      const userINfo = {
+        ...values,
+        stage: values.stage.value,
+        major: values.type.value || {},
+        gender: radioValue,
+      };
+      const data = await submitUserInfo(userINfo);
+      console.log({ data });
+      history.push("/tests/stroop");
+    },
+    [submitUserInfo, history, radioValue]
+  );
+
   return (
     <Box h="50vh">
       <Flex
@@ -35,7 +47,7 @@ const UserInfo = () => {
         </Flex>
         <Flex
           justifyContent="center"
-          paddingBottom="100px"
+          paddingBottom="20px"
           marginTop="30px"
           bg="#E4E6EF"
           paddingX="20px"
@@ -54,7 +66,7 @@ const UserInfo = () => {
                 bg="white"
                 templateRows="repeat(7,1fr)"
                 gap={2}
-                overflowY="scroll"
+                overflowY="auto"
               >
                 <Flex top="0px" justifyContent="center" alignItems="center">
                   <Text fontWeight="bold" fontSize="22px">
@@ -173,6 +185,7 @@ const UserInfo = () => {
                 <Flex dir="rtl">
                   <RadioGroup
                     id="gender"
+                    name="gender"
                     onChange={setRadioValue}
                     value={radioValue}
                   >
@@ -182,18 +195,20 @@ const UserInfo = () => {
                       direction="rtl"
                       marginBottom="20px"
                     >
-                      <Radio dir="rtl" value="male">
+                      <Radio dir="rtl" value="m">
                         ذكر
                       </Radio>
-                      <Radio dir="rtl" value="female">
+                      <Radio dir="rtl" value="f">
                         أنثى
                       </Radio>
                     </Flex>
                   </RadioGroup>
                 </Flex>
               </Grid>
-              <Flex marginTop="20px" justifyContent="flex-end">
+              <Flex marginTop="10px" justifyContent="center">
                 <StartTestButton
+                  disabled={!radioValue}
+                  isLoading={submitUserInfoLoading}
                   buttonText="تسجيل"
                   onClick={handleSubmit(submit)}
                 />

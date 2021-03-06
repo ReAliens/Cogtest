@@ -4,6 +4,7 @@ import React, { useCallback, useMemo, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import useQuestions from "../../../../../hooks/useQuestions";
 import CrossBlockGrid from "../../../../../components/CrossBlockGrid";
+import StartTestButton from "../../../../../components/Button";
 
 const ReverseCrossBlockTest = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
@@ -42,6 +43,7 @@ const ReverseCrossBlockTest = () => {
     <Box margin="auto">
       {currentQuestion && (
         <Grid
+          marginTop="5%"
           h="100%"
           w="1140px"
           borderRadius="10px"
@@ -57,8 +59,9 @@ const ReverseCrossBlockTest = () => {
             started={started}
             setStarted={setStarted}
           />
-          <Flex>
-            <Button
+          <Flex marginTop="20px" justifyContent="center">
+            <StartTestButton
+              buttonText="التالى"
               disabled={
                 !started ||
                 !answers[currQuestionIndex] ||
@@ -77,9 +80,7 @@ const ReverseCrossBlockTest = () => {
                   setCurrQuestionIndex(currQuestionIndex + 1);
                 }
               }}
-            >
-              Next
-            </Button>
+            />
           </Flex>
         </Grid>
       )}

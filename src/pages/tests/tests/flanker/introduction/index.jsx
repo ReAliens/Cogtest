@@ -41,11 +41,7 @@ const Introduction = () => {
             bg="white"
             dir="rtl"
           >
-            <Text dir="rtl">
-              الفقرة الثانية :اختبار فلانكر للاصدار يعتمد على قياس تأثير
-              الملعومات المتضاربة داخل مجموعة التحفيز يجب على الممتحن فى هذا
-              الاختبار التركيز على الموضوع المحفز مع تجاهل المحفزات المجاورة
-            </Text>
+            <Text dir="rtl">{seconedTest?.desc}</Text>
           </Flex>
           <Flex justifyContent="center" marginTop="20px">
             <Link to={`/tests/flanker/${seconedTest?.id}`}>

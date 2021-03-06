@@ -51,7 +51,8 @@ const FlankerTest = () => {
           </Flex>
           <Flex
             justifyContent="center"
-            paddingBottom="100px"
+            paddingBottom="10px"
+            borderRadius="10px"
             marginTop="30px"
             bg="#E4E6EF"
             paddingX="20px"
@@ -113,7 +114,7 @@ const FlankerTest = () => {
                   )
                 )}
             </Grid>
-            <Flex width="50%" marginTop="20px">
+            <Flex justifyContent="center" width="100%" marginTop="20px">
               <StartTestButton
                 width="200px"
                 type="next"
@@ -128,11 +129,11 @@ const FlankerTest = () => {
                       setWrongAnswers(wrongAnswers + 1);
                     }
                     if (wrongAnswers === 1) {
-                      history.push("/tests/flanker");
+                      history.push("/tests/corsi");
                     }
                     setCurrQuestionIndex(currQuestionIndex + 1);
                   } else {
-                    history.push("/tests/flanker");
+                    history.push("/tests/corsi");
                   }
                 }}
               />

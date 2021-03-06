@@ -22,7 +22,6 @@ const StroopTest = () => {
   const correctAnswers = apiQuestions?.payload?.map((question) =>
     question?.answers?.find((answer) => answer.is_correct === true)
   );
-  console.log(wrongAnswers);
 
   return (
     <Box margin="auto">

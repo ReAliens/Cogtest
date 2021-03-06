@@ -15,6 +15,7 @@
     "react": "^17.0.1",
     "react-countdown-clock": "^2.8.1",
     "react-dom": "^17.0.1",
+    "react-favicon": "^0.0.18",
     "react-hook-form": "^6.15.2",
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",

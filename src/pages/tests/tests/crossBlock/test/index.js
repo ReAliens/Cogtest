@@ -1,9 +1,10 @@
-import { Box, Grid, Button, Flex } from "@chakra-ui/react";
+import { Box, Grid, Flex } from "@chakra-ui/react";
 import React, { useCallback, useMemo, useState } from "react";
 // import { questions } from "./data";
 import { useHistory, useParams } from "react-router-dom";
 import useQuestions from "../../../../../hooks/useQuestions";
 import CrossBlockGrid from "../../../../../components/CrossBlockGrid";
+import StartTestButton from "../../../../../components/Button";
 
 const CrossBlockTest = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
@@ -42,6 +43,7 @@ const CrossBlockTest = () => {
     <Box margin="auto">
       {currentQuestion && (
         <Grid
+          marginTop="10%"
           h="100%"
           w="1140px"
           borderRadius="10px"
@@ -57,29 +59,29 @@ const CrossBlockTest = () => {
             started={started}
             setStarted={setStarted}
           />
-          <Flex>
-            <Button
+          <Flex marginTop="20px" justifyContent="center">
+            <StartTestButton
+              buttonText="التالى"
               disabled={
                 !started ||
                 !answers[currQuestionIndex] ||
                 answers[currQuestionIndex].length === 0
               }
               onClick={() => {
+                const newAnswers = answers.slice();
+                newAnswers[currQuestionIndex] = newAnswers[
+                  currQuestionIndex
+                ].map((item) => item + 1);
+
+                setAnswers(newAnswers);
                 if (currQuestionIndex >= apiQuestions?.payload.length - 1) {
                   history.push("/tests/reverse-corsi");
                 } else {
-                  const newAnswers = answers.slice();
-                  newAnswers[currQuestionIndex] = newAnswers[
-                    currQuestionIndex
-                  ].map((item) => item + 1);
-                  setAnswers(newAnswers);
                   setStarted(false);
                   setCurrQuestionIndex(currQuestionIndex + 1);
                 }
               }}
-            >
-              Next
-            </Button>
+            />
           </Flex>
         </Grid>
       )}
