@@ -15,16 +15,17 @@ const Home = ({
   signature,
 }) => {
   return (
-    <Box margin="auto">
+    <Box borderRadius="10px" margin="auto">
       <Flex
         borderRadius="10px"
-        paddingTop="20px"
+        paddingTop="30px"
         h="70vh"
-        w="800px"
+        w="1000px"
         bg="#F3F6F9"
         flexDir="column"
       >
         <Grid
+          borderRadius="10px"
           paddingX="20px"
           h="30px"
           w="100%"
@@ -53,6 +54,7 @@ const Home = ({
           bg="#E4E6EF"
           paddingX="20px"
           h="100%"
+          borderRadius="10px"
         >
           <Grid
             padding="20px"
@@ -61,6 +63,7 @@ const Home = ({
             borderRadius="10px"
             bg="white"
             w="100%"
+            h="100%"
             templateRows="0.7fr 1fr 1fr 0.5fr"
           >
             <Grid
@@ -113,11 +116,11 @@ const Home = ({
               </Flex>
             </Grid>
             <Grid
-              justifyContent="flex-end"
+              justifyContent="flex-start"
               marginLeft="30px"
               templateRows="1fr 1fr"
             >
-              <Text fontSize="18px" fontWeight="bold" marginLeft="40px">
+              <Text fontSize="18px" fontWeight="bold" marginLeft="50px">
                 {ending}
               </Text>
               <Text fontSize="18px" fontWeight="bold">

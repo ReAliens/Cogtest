@@ -6,10 +6,10 @@ import useTests from "../../../../../hooks/useTests";
 
 const Introduction = () => {
   const { tests } = useTests();
-  const seconedTest = tests && tests.payload ? tests.payload[1] : null;
+  const thirdTest = tests && tests.payload ? tests.payload[2] : null;
 
   return (
-    <Box margin="auto">
+    <Box alignItems="center" alignSelf="center" marginTop="10%">
       <Flex
         borderRadius="10px"
         paddingTop="20px"
@@ -18,18 +18,19 @@ const Introduction = () => {
         bg="#f9f9fc"
         flexDir="column"
       >
-        {/* <Flex marginX="20px" dir="rtl">
-          <Text> {seconedTest?.name}</Text>
+        <Flex marginX="20px" dir="rtl">
+          <Text> {thirdTest?.name}</Text>
         </Flex>
         <Flex
           justifyContent="center"
-          paddingBottom="100px"
+          paddingBottom="20px"
           marginTop="30px"
           bg="#E4E6EF"
           paddingX="20px"
           h="100%"
           flexDir="column"
           dir="rtl"
+          borderRadius="10px"
         >
           <Flex
             padding="20px"
@@ -40,19 +41,14 @@ const Introduction = () => {
             bg="white"
             dir="rtl"
           >
-            <Text dir="rtl">
-              الفقرة الثانية :اختبار فلانكر للاصدار يعتمد على قياس تأثير
-              الملعومات المتضاربة داخل مجموعة التحفيز يجب على الممتحن فى هذا
-              الاختبار التركيز على الموضوع المحفز مع تجاهل المحفزات المجاورة
-            </Text>
+            <Text dir="rtl">{thirdTest?.desc}</Text>
           </Flex>
-          <Flex>
-            <Link to={`/tests/flanker/${seconedTest?.id}`}>
-              <StartTestButton buttonText="ابدأ الاختبار" />
+          <Flex justifyContent="center" marginTop="20px">
+            <Link to={`/tests/corsi/${thirdTest?.id}`}>
+              <StartTestButton width="200px" buttonText="ابدأ الاختبار" />
             </Link>
           </Flex>
-        </Flex> */}
-        test cross block intro
+        </Flex>
       </Flex>
     </Box>
   );

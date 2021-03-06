@@ -1,50 +1,54 @@
-import { Box, Grid, Button, Flex } from '@chakra-ui/react'
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { Box, Grid, Flex } from "@chakra-ui/react";
+import React, { useCallback, useMemo, useState } from "react";
 // import { questions } from "./data";
-import { useParams } from 'react-router-dom'
-import useQuestions from '../../../../../hooks/useQuestions'
-import CrossBlockGrid from '../../../../../components/CrossBlockGrid'
+import { useHistory, useParams } from "react-router-dom";
+import useQuestions from "../../../../../hooks/useQuestions";
+import CrossBlockGrid from "../../../../../components/CrossBlockGrid";
+import StartTestButton from "../../../../../components/Button";
 
 const CrossBlockTest = () => {
-  const [currQuestionIndex, setCurrQuestionIndex] = useState(0)
-  const [answers, setAnswers] = useState([])
-  const [started, setStarted] = useState(false)
-  const params = useParams()
-  const { questions: apiQuestions } = useQuestions(params.testID)
+  const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
+  const [answers, setAnswers] = useState([]);
+  const [started, setStarted] = useState(false);
+  const params = useParams();
+  const history = useHistory();
+  const { questions: apiQuestions } = useQuestions(params.testID);
 
   const onSetSelectedCards = useCallback(
-    cards => {
-      const newAnswers = answers.slice()
-      newAnswers[currQuestionIndex] = cards
-      setAnswers(newAnswers)
+    (cards) => {
+      const newAnswers = answers.slice();
+      newAnswers[currQuestionIndex] = cards;
+      setAnswers(newAnswers);
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [setAnswers, currQuestionIndex]
-  )
+  );
   const currentQuestion = useMemo(
     () =>
       apiQuestions && apiQuestions.payload
         ? apiQuestions.payload[currQuestionIndex]
         : null,
     [apiQuestions, currQuestionIndex]
-  )
+  );
 
   const activeCards = useMemo(
     () =>
       currentQuestion
-        ? JSON.parse(currentQuestion.show_order).map(item => item - 1)
+        ? JSON.parse(currentQuestion.show_order).map((item) => item - 1)
         : [],
     [currentQuestion]
-  )
+  );
 
   return (
-    <Box margin='auto'>
+    <Box margin="auto">
       {currentQuestion && (
         <Grid
-          h='100%'
-          w='1140px'
-          borderRadius='10px'
-          padding='20px'
-          bg='#f9f9fc'
+          marginTop="10%"
+          h="100%"
+          w="1140px"
+          borderRadius="10px"
+          padding="20px"
+          bg="#f9f9fc"
         >
           <CrossBlockGrid
             key={currQuestionIndex}
@@ -55,30 +59,34 @@ const CrossBlockTest = () => {
             started={started}
             setStarted={setStarted}
           />
-          <Flex>
-            <Button
+          <Flex marginTop="20px" justifyContent="center">
+            <StartTestButton
+              buttonText="التالى"
               disabled={
                 !started ||
                 !answers[currQuestionIndex] ||
                 answers[currQuestionIndex].length === 0
               }
               onClick={() => {
-                const newAnswers = answers.slice()
+                const newAnswers = answers.slice();
                 newAnswers[currQuestionIndex] = newAnswers[
                   currQuestionIndex
-                ].map(item => item + 1)
-                setAnswers(newAnswers)
-                setStarted(false)
-                setCurrQuestionIndex(currQuestionIndex + 1)
+                ].map((item) => item + 1);
+
+                setAnswers(newAnswers);
+                if (currQuestionIndex >= apiQuestions?.payload.length - 1) {
+                  history.push("/tests/reverse-corsi");
+                } else {
+                  setStarted(false);
+                  setCurrQuestionIndex(currQuestionIndex + 1);
+                }
               }}
-            >
-              Next
-            </Button>
+            />
           </Flex>
         </Grid>
       )}
     </Box>
-  )
-}
+  );
+};
 
-export default CrossBlockTest
+export default CrossBlockTest;

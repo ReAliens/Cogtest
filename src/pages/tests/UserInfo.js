@@ -1,30 +1,44 @@
 import { Box, Flex, Grid, Radio, RadioGroup, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import StartTestButton from "../../components/Button";
 import FormInput from "../../components/formInput";
 import FormSelect from "../../components/FormSelect";
+import useUserInfo from "../../hooks/useUserInfo";
 
 const UserInfo = () => {
   const [radioValue, setRadioValue] = useState();
-  const history = useHistory();
   console.log(radioValue);
+  const { submitUserInfo, submitUserInfoLoading } = useUserInfo();
+  const history = useHistory();
   const methods = useForm();
-  const { handleSubmit } = methods;
+  const { handleSubmit, watch } = methods;
 
-  const submit = (data) => {
-    console.log(data);
-    history.push("/tests/stroop");
-  };
-  console.log("data");
+  const watchedStaging = watch(["stage"]);
+
+  const submit = useCallback(
+    async (values) => {
+      const userINfo = {
+        ...values,
+        stage: values.stage.value,
+        major: values.type.value || {},
+        gender: radioValue,
+      };
+      const data = await submitUserInfo(userINfo);
+      console.log({ data });
+      history.push("/tests/stroop");
+    },
+    [submitUserInfo, history, radioValue]
+  );
+
   return (
-    <Box margin="auto">
+    <Box h="50vh">
       <Flex
         borderRadius="10px"
         paddingTop="20px"
-        h="100%"
-        w="1140px"
+        h="70vh"
+        w="1000px"
         bg="#f9f9fc"
         flexDir="column"
       >
@@ -33,23 +47,26 @@ const UserInfo = () => {
         </Flex>
         <Flex
           justifyContent="center"
-          paddingBottom="100px"
+          paddingBottom="20px"
           marginTop="30px"
           bg="#E4E6EF"
           paddingX="20px"
           h="100%"
+          borderRadius="10px"
         >
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(submit)}>
               <Grid
-                padding="20px"
+                h="500px"
+                paddingY="15px"
                 marginTop="20px"
                 justifyContent="center"
-                w="100%"
+                w="800px"
                 borderRadius="10px"
                 bg="white"
-                templateRows="repeat(auto,1fr)"
-                gap={5}
+                templateRows="repeat(7,1fr)"
+                gap={2}
+                overflowY="auto"
               >
                 <Flex top="0px" justifyContent="center" alignItems="center">
                   <Text fontWeight="bold" fontSize="22px">
@@ -68,11 +85,13 @@ const UserInfo = () => {
                         message: "هذا الحقل مطلوب",
                       },
                     }}
+                    width="500px"
                   />
                 </Flex>
-                <Flex w="100%">
+                <Flex width="100%">
                   <FormSelect
                     id="stage"
+                    name="stage"
                     placeholder="اختر المرحلة الدراسية"
                     label="المرحلة الدراسية"
                     options={[
@@ -98,26 +117,28 @@ const UserInfo = () => {
                     }}
                   />
                 </Flex>
-                <Flex w="100%">
-                  <FormSelect
-                    id="type"
-                    placeholder=" من فضلك اختر التخصص "
-                    label=" اختر التخصص"
-                    options={[
-                      { value: "humanScience", label: "علوم انسانية" },
-                      {
-                        value: "appliedScience",
-                        label: "علوم تطبيقية",
-                      },
-                    ]}
-                    validation={{
-                      required: {
-                        value: true,
-                        message: "هذا الحقل مطلوب",
-                      },
-                    }}
-                  />
-                </Flex>
+                {watchedStaging?.stage?.value === "master" && (
+                  <Flex w="100%">
+                    <FormSelect
+                      id="type"
+                      placeholder=" من فضلك اختر التخصص "
+                      label=" اختر التخصص"
+                      options={[
+                        { value: "humanScience", label: "علوم انسانية" },
+                        {
+                          value: "appliedScience",
+                          label: "علوم تطبيقية",
+                        },
+                      ]}
+                      validation={{
+                        required: {
+                          value: true,
+                          message: "هذا الحقل مطلوب",
+                        },
+                      }}
+                    />
+                  </Flex>
+                )}
                 <Flex>
                   <FormInput
                     id="gpa"
@@ -130,6 +151,7 @@ const UserInfo = () => {
                         message: "هذا الحقل مطلوب",
                       },
                     }}
+                    width="500px"
                   />
                 </Flex>
                 <Flex>
@@ -145,9 +167,10 @@ const UserInfo = () => {
                       },
                       min: {
                         value: 5,
-                        message:'اقل عمر يمكن ادخاله خمس سنوات'
+                        message: "اقل عمر يمكن ادخاله خمس سنوات",
                       },
                     }}
+                    width="500px"
                   />
                 </Flex>
                 <Flex>
@@ -156,12 +179,13 @@ const UserInfo = () => {
                     placeholder="البريد الإلكترونى"
                     type="email"
                     label=" البريد الإلكترونى"
+                    width="500px"
                   />
                 </Flex>
-                <Flex>
+                <Flex dir="rtl">
                   <RadioGroup
                     id="gender"
-                    dir="rtl"
+                    name="gender"
                     onChange={setRadioValue}
                     value={radioValue}
                   >
@@ -169,21 +193,26 @@ const UserInfo = () => {
                       flexDir="row"
                       justifyItems="self-start"
                       direction="rtl"
+                      marginBottom="20px"
                     >
-                      <Radio dir="rtl" value="male">
+                      <Radio dir="rtl" value="m">
                         ذكر
                       </Radio>
-                      <Radio dir="rtl" value="female">
+                      <Radio dir="rtl" value="f">
                         أنثى
                       </Radio>
                     </Flex>
                   </RadioGroup>
                 </Flex>
+              </Grid>
+              <Flex marginTop="10px" justifyContent="center">
                 <StartTestButton
+                  disabled={!radioValue}
+                  isLoading={submitUserInfoLoading}
                   buttonText="تسجيل"
                   onClick={handleSubmit(submit)}
                 />
-              </Grid>
+              </Flex>
             </form>
           </FormProvider>
         </Flex>

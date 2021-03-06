@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import StartTestButton from "../../../../../components/Button";
 // import { questions } from "./data";
 import ReactCountdownClockownClock from "react-countdown-clock";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import useQuestions from "../../../../../hooks/useQuestions";
 import useTests from "../../../../../hooks/useTests";
 import TimeIsUpPage from "../../../../../components/timeIsUP";
@@ -12,13 +12,17 @@ const FlankerTest = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [isTimeout, setIsTimeOut] = useState(false);
-  // const [count, setCount] = useState(0);
-  // const [wrongAnswers, setWrongAnswers] = useState(0);
-  // const history = useHistory();
+  const [wrongAnswers, setWrongAnswers] = useState(0);
+  const history = useHistory();
   const params = useParams();
   const { tests } = useTests();
-  const nextTest = tests && tests.payload ? tests?.payload[6] : null;
+  const nextTest = tests && tests.payload ? tests?.payload[2] : null;
   const { questions: apiQuestions } = useQuestions(params.testID);
+
+  const correctAnswers = apiQuestions?.payload?.map((question) =>
+    question?.answers?.find((answer) => answer.is_correct === true)
+  );
+
   return (
     <Box margin="auto">
       {isTimeout === false ? (
@@ -47,7 +51,8 @@ const FlankerTest = () => {
           </Flex>
           <Flex
             justifyContent="center"
-            paddingBottom="100px"
+            paddingBottom="10px"
+            borderRadius="10px"
             marginTop="30px"
             bg="#E4E6EF"
             paddingX="20px"
@@ -74,16 +79,8 @@ const FlankerTest = () => {
                   src={apiQuestions?.payload[currQuestionIndex]?.photo}
                 />
               )}
-              {/* {apiQuestions?.payload && (
-              <Text
-                fontSize="5xl"
-                color={apiQuestions?.payload[currQuestionIndex]?.color}
-              >
-                {apiQuestions?.payload[currQuestionIndex]?.color_text}
-              </Text>
-            )} */}
             </Flex>
-            <Grid gap={5} marginTop="20px" templateColumns="1fr 1fr 1fr 1fr">
+            <Grid gap={5} marginTop="20px" templateColumns="1fr 1fr">
               {apiQuestions?.payload &&
                 apiQuestions?.payload[currQuestionIndex].answers.map(
                   (option) => (
@@ -117,27 +114,26 @@ const FlankerTest = () => {
                   )
                 )}
             </Grid>
-            <Flex width="50%" marginTop="20px">
+            <Flex justifyContent="center" width="100%" marginTop="20px">
               <StartTestButton
                 width="200px"
                 type="next"
                 buttonText="التالى"
                 disabled={!answers[currQuestionIndex]}
                 onClick={() => {
-                  if (currQuestionIndex >= apiQuestions?.payload.length - 1) {
-                    console.log("ok ok ok");
-                    // const userAnswer = answers[currQuestionIndex];
-                    // if (
-                    //   userAnswer === questions[currQuestionIndex].correctAnswer
-                    // ) {
-                    //   setCount(count + 1);
-                    // } else {
-                    //   setWrongAnswers(wrongAnswers + 1);
-                    // }
-                    // if (wrongAnswers === 5) {
-                    //   history.push("/");
-                  } else {
+                  if (currQuestionIndex < apiQuestions?.payload.length - 1) {
+                    const userAnswer = answers[currQuestionIndex];
+                    if (
+                      userAnswer !== correctAnswers[currQuestionIndex]?.answer
+                    ) {
+                      setWrongAnswers(wrongAnswers + 1);
+                    }
+                    if (wrongAnswers === 1) {
+                      history.push("/tests/corsi");
+                    }
                     setCurrQuestionIndex(currQuestionIndex + 1);
+                  } else {
+                    history.push("/tests/corsi");
                   }
                 }}
               />

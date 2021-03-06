@@ -9,7 +9,7 @@ const Introduction = () => {
   const seventhTest = tests && tests.payload ? tests.payload[6] : null;
 
   return (
-    <Box margin="auto">
+    <Box alignItems="center" alignSelf="center" marginTop="10%">
       <Flex
         borderRadius="10px"
         paddingTop="20px"
@@ -23,13 +23,14 @@ const Introduction = () => {
         </Flex>
         <Flex
           justifyContent="center"
-          paddingBottom="100px"
+          paddingBottom="20px"
           marginTop="30px"
           bg="#E4E6EF"
           paddingX="20px"
           h="100%"
           flexDir="column"
           dir="rtl"
+          borderRadius="10px"
         >
           <Flex
             padding="20px"
@@ -40,15 +41,11 @@ const Introduction = () => {
             bg="white"
             dir="rtl"
           >
-            <Text dir="rtl">
-              اختبار {seventhTest?.name} أداة محترفة مُصممة للكشف عن مهارات سرعة
-              المعالجة والوقت المستغرق لرد الفعل. تقيس هذه المهمة بشكل دقيق
-              القدرة على استقبال ومعالجة محفز بسيط والإستجابة له.
-            </Text>
+            <Text dir="rtl">{seventhTest?.desc}</Text>
           </Flex>
-          <Flex>
+          <Flex justifyContent="center" marginTop="20px">
             <Link to={`/tests/digit-symbol/${seventhTest?.id}`}>
-              <StartTestButton buttonText="ابدأ الاختبار" />
+              <StartTestButton width="200px" buttonText="ابدأ الاختبار" />
             </Link>
           </Flex>
         </Flex>

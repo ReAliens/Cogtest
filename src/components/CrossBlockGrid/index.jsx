@@ -1,15 +1,24 @@
-import { Box, Flex, Grid } from "@chakra-ui/react";
+import { Box, Flex, Grid, Icon } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
-// import { questions } from "./data";
-const Card = ({ onClick, active }) => {
+import { FaCheck } from "react-icons/fa";
+
+const Card = ({ onClick, active, activeType }) => {
   return (
     <Flex justifyContent="center">
       <Box
-        width={100}
+        borderRadius="10px"
+        width="full"
         height={150}
-        bgColor={active ? "yellow" : "red"}
+        bgColor={active && activeType === "flash" ? "red" : "blue.600"}
         onClick={onClick}
-      ></Box>
+        margin="auto"
+      >
+        <Flex justifyContent="center" alignItems="center" height="100%">
+          {active && activeType === "check" && (
+            <Icon color="#0ddf3d" height="80px" width="80px" as={FaCheck} />
+          )}
+        </Flex>
+      </Box>
     </Flex>
   );
 };
@@ -22,21 +31,27 @@ const CrossBlockGrid = ({
   started,
   setStarted,
 }) => {
+  const [activeType, setActiveType] = useState("flash");
   useEffect(() => {
     activeCards.forEach((index, i) => {
       setTimeout(() => {
         setSelectedCards([index]);
-        console.log("SETTING SELECTED", index);
-      }, (i + 1) * 500);
+      }, (i + 1) * 300);
     });
     setTimeout(() => {
       setSelectedCards([]);
       setStarted(true);
-      console.log("CLEARING");
-    }, (activeCards.length + 1) * 500);
-  }, [setSelectedCards, setStarted, activeCards]);
+      setActiveType("check");
+    }, (activeCards.length + 1) * 300);
+  }, [setSelectedCards, setStarted, activeCards, setActiveType]);
   return (
-    <Grid templateColumns="repeat(4, 1fr)" dir="ltr" gap={4}>
+    <Grid
+      // width="600px"
+      // height="400px"
+      templateColumns="repeat(5, 1fr)"
+      dir="ltr"
+      gap={4}
+    >
       {Array.from(new Array(numberOfCards))
         .map((_, i) => i)
         .map((index) => (
@@ -51,6 +66,7 @@ const CrossBlockGrid = ({
               }
               setSelectedCards(newSelectedCards);
             }}
+            activeType={activeType}
           />
         ))}
     </Grid>
