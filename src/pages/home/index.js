@@ -74,7 +74,6 @@ const Home = ({
               templateRows="1fr 1fr"
             >
               <Text
-                fontFamily="sans-serif"
                 display="inline-block"
                 fontSize="30px"
                 whiteSpace="break-spaces"
@@ -83,7 +82,6 @@ const Home = ({
               </Text>
               <Flex justifyContent="center">
                 <Text
-                  fontFamily="sans-serif"
                   display="inline-block"
                   fontSize="16px"
                   whiteSpace="break-spaces"

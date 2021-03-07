@@ -1,11 +1,14 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import StartTestButton from "../../../../../components/Button";
+import { UserInfoContext } from "../../../../../contexts/userContext";
 import useTests from "../../../../../hooks/useTests";
 
 const Introduction = () => {
   const { tests } = useTests();
+  const { userInfo } = useContext(UserInfoContext)
+  console.log("userInfo from Stroop", { userInfo })
   const firstTest = tests && tests.payload ? tests.payload[0] : null;
 
   return (

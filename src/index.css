@@ -1,13 +1,64 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'Cairo', sans-serif;
   -moz-osx-font-smoothing: grayscale;
+  background: #003374;
+  width: 100%;
+  height: 100%;
 }
 
 p {
   font-family: 'Cairo', sans-serif;
 }
 
+h1 {
+  font-family: 'Cairo', sans-serif;
+}
+
+h2 {
+  font-family: 'Cairo', sans-serif;
+}
+
+h3 {
+  font-family: 'Cairo', sans-serif;
+}
+
+h4 {
+  font-family: 'Cairo', sans-serif;
+}
+
+h5 {
+  font-family: 'Cairo', sans-serif;
+}
+
+h6 {
+  font-family: 'Cairo', sans-serif;
+}
+
+a {
+  font-family: 'Cairo', sans-serif;
+}
+
+span {
+  font-family: 'Cairo', sans-serif;
+}
+
+button {
+  font-family: 'Cairo', sans-serif;
+}
+
+input {
+  font-family: 'Cairo', sans-serif;
+}
+
+textarea {
+  font-family: 'Cairo', sans-serif;
+}
+
+div {
+  font-family: 'Cairo', sans-serif;
+}
+
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  font-family: 'Cairo', sans-serif;
 }

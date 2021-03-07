@@ -16,23 +16,21 @@ const LogicalReasoningIntroduction = lazy(() =>
 
 const Tests = () => {
   return (
-    <>
-      <Suspense fallback={<Text>Loading</Text>}>
-        <Route path="/tests/stroop" component={StroopIntroduction} />
-        <Route path="/tests/flanker" component={FlankerIntroduction} />
-        <Route path="/tests/corsi" component={CrossBlockIntroduction} />
-        <Route
-          path="/tests/reverse-corsi"
-          component={ReverseCrossBlockIntroduction}
-        />
-        <Route path="/tests/digit-symbol" component={DigitSymbolIntroduction} />
-        <Route path="/tests/inhibition" component={InhibitionIntroduction} />
-        <Route
-          path="/tests/logical-reasoning"
-          component={LogicalReasoningIntroduction}
-        />
-      </Suspense>
-    </>
+    <Suspense fallback={<Text>Loading</Text>}>
+      <Route path="/tests/stroop" component={StroopIntroduction} />
+      <Route path="/tests/flanker" component={FlankerIntroduction} />
+      <Route path="/tests/corsi" component={CrossBlockIntroduction} />
+      <Route
+        path="/tests/reverse-corsi"
+        component={ReverseCrossBlockIntroduction}
+      />
+      <Route path="/tests/digit-symbol" component={DigitSymbolIntroduction} />
+      <Route path="/tests/inhibition" component={InhibitionIntroduction} />
+      <Route
+        path="/tests/logical-reasoning"
+        component={LogicalReasoningIntroduction}
+      />
+    </Suspense>
   );
 };
 

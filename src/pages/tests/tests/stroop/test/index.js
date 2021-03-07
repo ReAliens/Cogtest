@@ -18,7 +18,6 @@ const StroopTest = () => {
 
   const nextTest = tests && tests.payload ? tests?.payload[1] : null;
   const { questions: apiQuestions } = useQuestions(params.testID);
-
   const correctAnswers = apiQuestions?.payload?.map((question) =>
     question?.answers?.find((answer) => answer.is_correct === true)
   );

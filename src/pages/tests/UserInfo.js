@@ -1,46 +1,86 @@
-import { Box, Flex, Grid, Radio, RadioGroup, Text } from "@chakra-ui/react";
-import React, { useCallback, useState } from "react";
+import {
+  Box,
+  Flex,
+  Grid,
+  Radio,
+  RadioGroup,
+  Text,
+  useToast,
+} from "@chakra-ui/react";
+import React, { useCallback, useContext, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import StartTestButton from "../../components/Button";
 import FormInput from "../../components/formInput";
 import FormSelect from "../../components/FormSelect";
+import { UserInfoContext } from "../../contexts/userContext";
 import useUserInfo from "../../hooks/useUserInfo";
 
 const UserInfo = () => {
   const [radioValue, setRadioValue] = useState();
-  console.log(radioValue);
+  const { userInfo, setUserInfo } = useContext(UserInfoContext);
   const { submitUserInfo, submitUserInfoLoading } = useUserInfo();
+  const toast = useToast();
   const history = useHistory();
   const methods = useForm();
   const { handleSubmit, watch } = methods;
-
   const watchedStaging = watch(["stage"]);
-
   const submit = useCallback(
     async (values) => {
       const userINfo = {
         ...values,
-        stage: values.stage.value,
-        major: values.type.value || {},
+        stage: values?.stage?.value,
+        major: values?.type?.value || "",
         gender: radioValue,
       };
       const data = await submitUserInfo(userINfo);
-      console.log({ data });
-      history.push("/tests/stroop");
+      if (data?.message === "قيمة البريد الالكتروني مُستخدمة من قبل") {
+        toast({
+          position: "top-right",
+          title: "حدث خطأ",
+          description: `${data?.message}`,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else if (
+        data?.message ===
+        "يجب أن يكون البريد الالكتروني عنوان بريد إلكتروني صحيح البُنية"
+      ) {
+        toast({
+          position: "top-right",
+          title: "حدث خطأ",
+          description: `${data?.message}`,
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      } else {
+        setUserInfo(data);
+        toast({
+          position: "top-right",
+          description: `${data?.message}`,
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+        history.push("/tests/stroop");
+      }
     },
-    [submitUserInfo, history, radioValue]
+    [submitUserInfo, history, radioValue, setUserInfo, toast]
   );
 
   return (
-    <Box h="50vh">
+    <Box height="100%" overflow="hidden">
       <Flex
         borderRadius="10px"
         paddingTop="20px"
-        h="70vh"
-        w="1000px"
+        h="100%"
+        overflow="auto"
+        maxW="1000px"
         bg="#f9f9fc"
         flexDir="column"
+        overflow="hidden"
       >
         <Flex marginX="20px" dir="rtl">
           <Text>تسجيل البيانات</Text>
@@ -51,13 +91,14 @@ const UserInfo = () => {
           marginTop="30px"
           bg="#E4E6EF"
           paddingX="20px"
-          h="100%"
+          // h="70vh"
           borderRadius="10px"
+          // overflow="auto"
         >
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(submit)}>
               <Grid
-                h="500px"
+                // h="500px"
                 paddingY="15px"
                 marginTop="20px"
                 justifyContent="center"
@@ -66,7 +107,7 @@ const UserInfo = () => {
                 bg="white"
                 templateRows="repeat(7,1fr)"
                 gap={2}
-                overflowY="auto"
+                // overflowY="auto"
               >
                 <Flex top="0px" justifyContent="center" alignItems="center">
                   <Text fontWeight="bold" fontSize="22px">
