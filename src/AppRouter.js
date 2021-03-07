@@ -69,8 +69,8 @@ export default function AppRouter() {
                 <IconButton
                   as={FaFacebookF}
                   size="md"
+                  color="blue.500"
                   rounded="full"
-                  // background="blue.400"
                   cursor="pointer"
                   padding="5px"
                   margin="5px"
@@ -78,18 +78,18 @@ export default function AppRouter() {
                 <IconButton
                   padding="5px"
                   as={FaYoutube}
+                  color="red.500"
                   size="md"
                   rounded="full"
-                  // background="blue.400"
                   cursor="pointer"
                   margin="5px"
                 />
                 <IconButton
                   as={FaLinkedin}
                   size="md"
+                  color="blue.500"
                   padding="5px"
                   rounded="full"
-                  // background="blue.400"
                   cursor="pointer"
                   margin="5px"
                 />
@@ -97,8 +97,8 @@ export default function AppRouter() {
                   as={FaInstagram}
                   padding="5px"
                   size="md"
+                  color="#fb3958"
                   rounded="full"
-                  // background="blue.400"
                   cursor="pointer"
                   margin="5px"
                 />
@@ -107,7 +107,7 @@ export default function AppRouter() {
                   size="md"
                   padding="5px"
                   rounded="full"
-                  // background="blue.400"
+                  color="whatsapp.600"
                   cursor="pointer"
                   margin="5px"
                 />
@@ -116,7 +116,7 @@ export default function AppRouter() {
                   size="md"
                   rounded="full"
                   padding="5px"
-                  // background="blue.400"
+                  color="yellow.400"
                   cursor="pointer"
                   margin="5px"
                 />
