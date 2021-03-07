@@ -155,7 +155,7 @@ const LogicalReasoningTest = () => {
                         }
                         setCurrQuestionIndex(currQuestionIndex + 1);
                       } else {
-                        history.push("/tests/logical-reasoning");
+                        history.push("/");
                       }
                     }}
                   />

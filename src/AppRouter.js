@@ -65,54 +65,60 @@ export default function AppRouter() {
               </Switch>
             </Router>
             <Flex w="100%" alignItems="center" justifyContent="space-between">
-              <Flex>
+              <Flex marginTop="10px">
                 <IconButton
                   as={FaFacebookF}
-                  size="xs"
+                  size="md"
                   rounded="full"
-                  background="blue.400"
+                  // background="blue.400"
                   cursor="pointer"
-                  marginRight="5px"
+                  padding="5px"
+                  margin="5px"
                 />
                 <IconButton
+                  padding="5px"
                   as={FaYoutube}
-                  size="xs"
+                  size="md"
                   rounded="full"
-                  background="blue.400"
+                  // background="blue.400"
                   cursor="pointer"
-                  marginRight="5px"
+                  margin="5px"
                 />
                 <IconButton
                   as={FaLinkedin}
-                  size="xs"
+                  size="md"
+                  padding="5px"
                   rounded="full"
-                  background="blue.400"
+                  // background="blue.400"
                   cursor="pointer"
-                  marginRight="5px"
+                  margin="5px"
                 />
                 <IconButton
                   as={FaInstagram}
-                  size="xs"
+                  padding="5px"
+                  size="md"
                   rounded="full"
-                  background="blue.400"
+                  // background="blue.400"
                   cursor="pointer"
-                  marginRight="5px"
+                  margin="5px"
                 />
                 <IconButton
                   as={FaWhatsapp}
-                  size="xs"
+                  size="md"
+                  padding="5px"
                   rounded="full"
-                  background="blue.400"
+                  // background="blue.400"
                   cursor="pointer"
-                  marginRight="5px"
+                  margin="5px"
                 />
                 <IconButton
                   as={FaSnapchat}
-                  size="xs"
+                  size="md"
                   rounded="full"
-                  background="blue.400"
+                  padding="5px"
+                  // background="blue.400"
                   cursor="pointer"
-                  marginRight="5px"
+                  margin="5px"
                 />
               </Flex>
               <Flex>
