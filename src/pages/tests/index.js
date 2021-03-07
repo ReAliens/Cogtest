@@ -1,6 +1,7 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useContext } from "react";
 import { Text } from "@chakra-ui/react";
 import { Route } from "react-router-dom";
+import { UserInfoContext } from "../../contexts/userContext";
 
 const StroopIntroduction = lazy(() => import("./tests/stroop"));
 const FlankerIntroduction = lazy(() => import("./tests/flanker"));
@@ -15,7 +16,9 @@ const LogicalReasoningIntroduction = lazy(() =>
 );
 
 const Tests = () => {
+  const { userInfo } = useContext(UserInfoContext);
   return (
+    
     <Suspense fallback={<Text>Loading</Text>}>
       <Route path="/tests/stroop" component={StroopIntroduction} />
       <Route path="/tests/flanker" component={FlankerIntroduction} />

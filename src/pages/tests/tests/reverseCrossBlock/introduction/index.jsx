@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
 import StartTestButton from "../../../../../components/Button";
@@ -7,52 +7,66 @@ import StartTestButton from "../../../../../components/Button";
 import useTests from "../../../../../hooks/useTests";
 
 const Introduction = () => {
-  const { tests } = useTests();
+  const { tests, testLoading } = useTests();
   const fourthTest = tests && tests.payload ? tests.payload[3] : null;
 
   return (
-    <Box alignItems="center" alignSelf="center" marginTop="10%">
-      <Flex
-        borderRadius="10px"
-        paddingTop="20px"
-        h="100%"
-        w="1140px"
-        bg="#f9f9fc"
-        flexDir="column"
-      >
-        <Flex marginX="20px" dir="rtl">
-          <Text> {fourthTest?.name}</Text>
-        </Flex>
-        <Flex
-          justifyContent="center"
-          paddingBottom="20px"
-          marginTop="30px"
-          bg="#E4E6EF"
-          paddingX="20px"
-          h="100%"
-          flexDir="column"
-          dir="rtl"
-          borderRadius="10px"
-        >
+    <>
+      {testLoading ? (
+        <Spinner
+          marginTop="20%"
+          height="200px"
+          width="200px"
+          color="red.500"
+          thickness="4px"
+          speed="0.9s"
+          emptyColor="gray.200"
+        />
+      ) : (
+        <Box alignItems="center" alignSelf="center" marginTop="10%">
           <Flex
-            padding="20px"
-            marginTop="20px"
-            justifyContent="center"
-            w="100%"
             borderRadius="10px"
-            bg="white"
-            dir="rtl"
+            paddingTop="20px"
+            h="100%"
+            w="1140px"
+            bg="#f9f9fc"
+            flexDir="column"
           >
-            <Text dir="rtl">{fourthTest?.desc}</Text>
+            <Flex marginX="20px" dir="rtl">
+              <Text> {fourthTest?.name}</Text>
+            </Flex>
+            <Flex
+              justifyContent="center"
+              paddingBottom="20px"
+              marginTop="30px"
+              bg="#E4E6EF"
+              paddingX="20px"
+              h="100%"
+              flexDir="column"
+              dir="rtl"
+              borderRadius="10px"
+            >
+              <Flex
+                padding="20px"
+                marginTop="20px"
+                justifyContent="center"
+                w="100%"
+                borderRadius="10px"
+                bg="white"
+                dir="rtl"
+              >
+                <Text dir="rtl">{fourthTest?.desc}</Text>
+              </Flex>
+              <Flex justifyContent="center" marginTop="20px">
+                <Link to={`/tests/reverse-corsi/${fourthTest?.id}`}>
+                  <StartTestButton width="200px" buttonText="ابدأ الاختبار" />
+                </Link>
+              </Flex>
+            </Flex>
           </Flex>
-          <Flex justifyContent="center" marginTop="20px">
-            <Link to={`/tests/reverse-corsi/${fourthTest?.id}`}>
-              <StartTestButton width="200px" buttonText="ابدأ الاختبار" />
-            </Link>
-          </Flex>
-        </Flex>
-      </Flex>
-    </Box>
+        </Box>
+      )}
+    </>
   );
 };
 

@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import StartTestButton from "../../components/Button";
 
-const TimeIsUpPage = ({ testName }) => {
+const TimeIsUpPage = ({ testName, type }) => {
   return (
     <Flex
       paddingTop="20px"
@@ -36,8 +36,12 @@ const TimeIsUpPage = ({ testName }) => {
           <Text dir="rtl">عفواً انتهى الوقت المخصص لهذا الاختبار</Text>
         </Flex>
         <Flex marginTop="20px">
-          <Link to={`/tests/${testName}`}>
-            <StartTestButton buttonText="ابدأ الاختبار التالى" />
+          <Link to={type === "lastExam" ? "/" : `/tests/${testName}`}>
+            <StartTestButton
+              buttonText={
+                type === "lastExam" ? "تسجيل خروج" : "ابدأ الاختبار التالى"
+              }
+            />
           </Link>
         </Flex>
       </Flex>

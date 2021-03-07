@@ -19,8 +19,8 @@ const Home = ({
       <Flex
         borderRadius="10px"
         paddingTop="30px"
-        h="70vh"
-        w="1000px"
+        h="100%"
+        minW="800px"
         bg="#F3F6F9"
         flexDir="column"
       >
