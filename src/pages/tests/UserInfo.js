@@ -179,7 +179,7 @@ const UserInfo = () => {
                   <FormInput
                     id="gpa"
                     placeholder="من فضلك ادخل المعدل الدراسى"
-                    type="text"
+                    type="number"
                     label="المعدل الدراسى"
                     validation={{
                       required: {
