@@ -34,87 +34,92 @@ export default function AppRouter() {
             emptyColor="gray.200"
           />
         ) : (
-          <>
-            <Flex>
+          <Flex
+            alignItems="center"
+            justifyContent="center"
+            flexDir="column"
+            marginX="100px"
+          >
+            <Flex w="100%" marginY="15px" justifyContent="flex-end">
               <Header headerImage={settings?.payload?.logo} />
             </Flex>
-            <Flex>
-              <Router>
-                <Switch>
-                  <Route exact path={routes.home.index()}>
-                    <Home
-                      ending={settings?.payload?.text4}
-                      header={settings?.payload?.title}
-                      welcome={settings?.payload?.text1}
-                      intro={settings?.payload?.text2}
-                      tip={settings?.payload?.text3}
-                      signature={settings?.payload?.text5}
-                      title={settings?.message}
-                    />
-                  </Route>
-                  <Route exact path={routes.auth.register()}>
-                    <UserInfo />
-                  </Route>
-                  <Route path={routes.tests.index()}>
-                    <Tests />
-                  </Route>
-                </Switch>
-              </Router>
+            <Router>
+              <Switch>
+                <Route exact path={routes.home.index()}>
+                  <Home
+                    ending={settings?.payload?.text4}
+                    header={settings?.payload?.title}
+                    welcome={settings?.payload?.text1}
+                    intro={settings?.payload?.text2}
+                    tip={settings?.payload?.text3}
+                    signature={settings?.payload?.text5}
+                    title={settings?.message}
+                  />
+                </Route>
+                <Route exact path={routes.auth.register()}>
+                  <UserInfo />
+                </Route>
+                <Route path={routes.tests.index()}>
+                  <Tests />
+                </Route>
+              </Switch>
+            </Router>
+            <Flex w="100%" alignItems="center" justifyContent="space-between">
+              <Flex>
+                <IconButton
+                  as={FaFacebookF}
+                  size="xs"
+                  rounded="full"
+                  background="blue.400"
+                  cursor="pointer"
+                  marginRight="5px"
+                />
+                <IconButton
+                  as={FaYoutube}
+                  size="xs"
+                  rounded="full"
+                  background="blue.400"
+                  cursor="pointer"
+                  marginRight="5px"
+                />
+                <IconButton
+                  as={FaLinkedin}
+                  size="xs"
+                  rounded="full"
+                  background="blue.400"
+                  cursor="pointer"
+                  marginRight="5px"
+                />
+                <IconButton
+                  as={FaInstagram}
+                  size="xs"
+                  rounded="full"
+                  background="blue.400"
+                  cursor="pointer"
+                  marginRight="5px"
+                />
+                <IconButton
+                  as={FaWhatsapp}
+                  size="xs"
+                  rounded="full"
+                  background="blue.400"
+                  cursor="pointer"
+                  marginRight="5px"
+                />
+                <IconButton
+                  as={FaSnapchat}
+                  size="xs"
+                  rounded="full"
+                  background="blue.400"
+                  cursor="pointer"
+                  marginRight="5px"
+                />
+              </Flex>
+              <Flex>
+                <Footer copyRignt={settings?.payload?.copyright} />
+              </Flex>
             </Flex>
-            <Flex>
-              {/* {platforms?.map((platform) => (
-              <SocialIconButton
-                key={platform}
-                platform={platform}
-                onClick={() => {}}
-                // isActive={selectedPlatforms?.includes(platform)}
-              />
-            ))} */}
-              <IconButton
-                as={FaFacebookF}
-                size="xs"
-                rounded="full"
-                background="blue.400"
-                cursor="pointer"
-              />
-              <IconButton
-                as={FaYoutube}
-                size="xs"
-                rounded="full"
-                background="blue.400"
-                cursor="pointer"
-              />
-              <IconButton
-                as={FaLinkedin}
-                size="xs"
-                rounded="full"
-                background="blue.400"
-                cursor="pointer"
-              />
-              <IconButton
-                as={FaInstagram}
-                size="xs"
-                rounded="full"
-                background="blue.400"
-                cursor="pointer"
-              />
-              <IconButton
-                as={FaWhatsapp}
-                size="xs"
-                rounded="full"
-                background="blue.400"
-                cursor="pointer"
-              />
-              <IconButton
-                as={FaSnapchat}
-                size="xs"
-                rounded="full"
-                background="blue.400"
-                cursor="pointer"
-              />
-              <Footer copyRignt={settings?.payload?.copyright} />
-            </Flex>
-          </>
+          </Flex>
         )}
       </Flex>
     </UserInfoProvider>

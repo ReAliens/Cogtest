@@ -71,12 +71,11 @@ const UserInfo = () => {
   );
 
   return (
-    <Box height="100%" overflow="hidden">
+    <Box height="100%" overflowX="hidden" overflow="hidden">
       <Flex
         borderRadius="10px"
         paddingTop="20px"
         h="100%"
-        overflow="auto"
         maxW="1000px"
         bg="#f9f9fc"
         flexDir="column"
@@ -91,14 +90,11 @@ const UserInfo = () => {
           marginTop="30px"
           bg="#E4E6EF"
           paddingX="20px"
-          // h="70vh"
           borderRadius="10px"
-          // overflow="auto"
         >
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(submit)}>
               <Grid
-                // h="500px"
                 paddingY="15px"
                 marginTop="20px"
                 justifyContent="center"
@@ -107,7 +103,6 @@ const UserInfo = () => {
                 bg="white"
                 templateRows="repeat(7,1fr)"
                 gap={2}
-                // overflowY="auto"
               >
                 <Flex top="0px" justifyContent="center" alignItems="center">
                   <Text fontWeight="bold" fontSize="22px">
