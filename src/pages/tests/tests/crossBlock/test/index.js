@@ -12,10 +12,15 @@ const CrossBlockTest = () => {
   const [started, setStarted] = useState(false);
   const params = useParams();
   const history = useHistory();
-  const { questions: apiQuestions, questionLoading } = useQuestions(
+  const { questions: allQuestions, questionLoading } = useQuestions(
     params.testID
   );
 
+  const filteredQuestion = allQuestions?.payload?.filter(
+    (question) => question.is_trial === false
+  );
+  console.log(filteredQuestion);
+  console.log(allQuestions);
   const onSetSelectedCards = useCallback(
     (cards) => {
       const newAnswers = answers.slice();
@@ -27,10 +32,10 @@ const CrossBlockTest = () => {
   );
   const currentQuestion = useMemo(
     () =>
-      apiQuestions && apiQuestions.payload
-        ? apiQuestions.payload[currQuestionIndex]
+      filteredQuestion && filteredQuestion
+        ? filteredQuestion[currQuestionIndex]
         : null,
-    [apiQuestions, currQuestionIndex]
+    [filteredQuestion, currQuestionIndex]
   );
 
   const activeCards = useMemo(
@@ -88,7 +93,7 @@ const CrossBlockTest = () => {
                     ].map((item) => item + 1);
 
                     setAnswers(newAnswers);
-                    if (currQuestionIndex >= apiQuestions?.payload.length - 1) {
+                    if (currQuestionIndex >= filteredQuestion?.length - 1) {
                       history.push("/tests/reverse-corsi");
                     } else {
                       setStarted(false);

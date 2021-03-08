@@ -13,9 +13,14 @@ const ReverseCrossBlockTest = () => {
   const params = useParams();
   const history = useHistory();
 
-  const { questions: apiQuestions, questionLoading } = useQuestions(
+  const { questions: allQuestions, questionLoading } = useQuestions(
     params.testID
   );
+  const filteredQuestion = allQuestions?.payload?.filter(
+    (question) => question.is_trial === false
+  );
+  console.log(filteredQuestion);
+  console.log(allQuestions);
   const onSetSelectedCards = useCallback(
     (cards) => {
       const newAnswers = answers.slice();
@@ -26,11 +31,8 @@ const ReverseCrossBlockTest = () => {
     [setAnswers, currQuestionIndex]
   );
   const currentQuestion = useMemo(
-    () =>
-      apiQuestions && apiQuestions.payload
-        ? apiQuestions.payload[currQuestionIndex]
-        : null,
-    [apiQuestions, currQuestionIndex]
+    () => (filteredQuestion ? filteredQuestion[currQuestionIndex] : null),
+    [filteredQuestion, currQuestionIndex]
   );
 
   const activeCards = useMemo(
@@ -82,7 +84,7 @@ const ReverseCrossBlockTest = () => {
                     answers[currQuestionIndex].length === 0
                   }
                   onClick={() => {
-                    if (currQuestionIndex >= apiQuestions?.payload.length - 1) {
+                    if (currQuestionIndex >= filteredQuestion?.length - 1) {
                       history.push("/tests/digit-symbol");
                     } else {
                       const newAnswers = answers.slice();

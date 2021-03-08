@@ -13,7 +13,12 @@ const CrossBlockTest = () => {
   // const [wrongAnswers, setWrongAnswers] = useState(0);
   // const history = useHistory();
   const params = useParams();
-  const { questions: apiQuestions } = useQuestions(params.testID);
+  const { questions: allQuestions } = useQuestions(params.testID);
+  const filteredQuestion = allQuestions?.payload?.filter(
+    (question) => question.is_trial === false
+  );
+  console.log(filteredQuestion);
+  console.log(allQuestions);
   return (
     <Box margin="auto">
       <Flex
@@ -30,7 +35,7 @@ const CrossBlockTest = () => {
           marginX="20px"
           dir="rtl"
         >
-          <Text> {apiQuestions?.message}</Text>
+          <Text> {allQuestions?.message}</Text>
           <ReactCountdownClockownClock
             seconds={45}
             color="red"
@@ -61,17 +66,17 @@ const CrossBlockTest = () => {
             alignItems="center"
             flexDir="column"
           >
-            {apiQuestions?.payload && (
+            {allQuestions?.payload && (
               <Image
                 fit="cover"
                 width="100px"
-                src={apiQuestions?.payload[currQuestionIndex]?.photo}
+                src={allQuestions?.payload[currQuestionIndex]?.photo}
               />
             )}
           </Flex> */}
           {/* <Grid gap={5} marginTop="20px" templateColumns="1fr 1fr 1fr 1fr">
-            {apiQuestions?.payload &&
-              apiQuestions?.payload[currQuestionIndex].answers.map((option) => (
+            {allQuestions?.payload &&
+              allQuestions?.payload[currQuestionIndex].answers.map((option) => (
                 <Box
                   justifyContent="center"
                   alignItems="center"
@@ -107,7 +112,7 @@ const CrossBlockTest = () => {
               type="next"
               buttonText="التالى"
               onClick={() => {
-                if (currQuestionIndex >= apiQuestions?.payload.length - 1) {
+                if (currQuestionIndex >= allQuestions?.payload.length - 1) {
                   console.log("ok ok ok");
                   // const userAnswer = answers[currQuestionIndex];
                   // if (

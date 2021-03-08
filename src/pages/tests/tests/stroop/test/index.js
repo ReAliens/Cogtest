@@ -17,10 +17,16 @@ const StroopTest = () => {
   const { tests } = useTests();
 
   const nextTest = tests && tests.payload ? tests?.payload[1] : null;
-  const { questions: apiQuestions, questionLoading } = useQuestions(
+  const { questions: allQuestions, questionLoading } = useQuestions(
     params.testID
   );
-  const correctAnswers = apiQuestions?.payload?.map((question) =>
+
+  const filteredQuestion = allQuestions?.payload?.filter(
+    (question) => question.is_trial === false
+  );
+  console.log(filteredQuestion);
+  console.log(allQuestions);
+  const correctAnswers = filteredQuestion?.map((question) =>
     question?.answers?.find((answer) => answer.is_correct === true)
   );
 
@@ -53,7 +59,7 @@ const StroopTest = () => {
                 marginX="20px"
                 dir="rtl"
               >
-                <Text> {apiQuestions?.message}</Text>
+                <Text> {allQuestions?.message}</Text>
                 <ReactCountdownClockownClock
                   seconds={45}
                   color="red"
@@ -85,12 +91,12 @@ const StroopTest = () => {
                   alignItems="center"
                   flexDir="column"
                 >
-                  {apiQuestions?.payload && (
+                  {filteredQuestion && (
                     <Text
                       fontSize="5xl"
-                      color={apiQuestions?.payload[currQuestionIndex]?.color}
+                      color={filteredQuestion[currQuestionIndex]?.color}
                     >
-                      {apiQuestions?.payload[currQuestionIndex]?.color_text}
+                      {filteredQuestion[currQuestionIndex]?.color_text}
                     </Text>
                   )}
                 </Flex>
@@ -99,8 +105,8 @@ const StroopTest = () => {
                   marginTop="20px"
                   templateColumns="1fr 1fr 1fr 1fr"
                 >
-                  {apiQuestions?.payload &&
-                    apiQuestions?.payload[currQuestionIndex]?.answers?.map(
+                  {filteredQuestion &&
+                    filteredQuestion[currQuestionIndex]?.answers?.map(
                       (option) => (
                         <Box
                           justifyContent="center"
@@ -139,10 +145,7 @@ const StroopTest = () => {
                     disabled={!answers[currQuestionIndex]}
                     buttonText="التالى"
                     onClick={() => {
-                      if (
-                        currQuestionIndex <
-                        apiQuestions?.payload.length - 1
-                      ) {
+                      if (currQuestionIndex < filteredQuestion.length - 1) {
                         const userAnswer = answers[currQuestionIndex];
                         if (
                           userAnswer !==
