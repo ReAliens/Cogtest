@@ -14,9 +14,6 @@ const useTests = () => {
         setTests(response.data);
         setTestLoading(false);
       } catch (err) {
-        console.log(
-          "=============== REQUEST ERROR =========================== "
-        );
         console.log(err);
         setTestLoading(false);
         return null;

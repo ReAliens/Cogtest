@@ -15,9 +15,6 @@ const useSettings = (testID) => {
         setSettingsLoading(false);
         setSettings(response.data);
       } catch (err) {
-        console.log(
-          "=============== REQUEST ERROR =========================== "
-        );
         console.log(err);
         setSettingsLoading(false);
         return null;

@@ -20,27 +20,34 @@ const FlankerTest = () => {
   const { questions: allQuestions, questionLoading } = useQuestions(
     params.testID
   );
-  const filteredQuestion = allQuestions?.payload?.filter(
-    (question) => question.is_trial === false
-  );
-  const correctAnswers = filteredQuestion?.map((question) =>
+  const correctAnswers = allQuestions?.payload?.map((question) =>
     question?.answers?.find((answer) => answer.is_correct === true)
   );
-  console.log(filteredQuestion);
-  console.log(allQuestions);
 
   return (
     <>
-      {questionLoading ? (
-        <Spinner
-          marginTop="20%"
-          height="200px"
-          width="200px"
-          color="red.500"
-          thickness="4px"
-          speed="0.9s"
-          emptyColor="gray.200"
-        />
+      {questionLoading || !allQuestions ? (
+        <Box
+          top="0"
+          left="0"
+          bottom="0"
+          display="flex"
+          width="100%"
+          justifyContent="center"
+          zIndex="2"
+          position="absolute"
+          background="#003374"
+        >
+          <Spinner
+            marginTop="20%"
+            height="200px"
+            width="200px"
+            color="red.500"
+            thickness="4px"
+            speed="0.9s"
+            emptyColor="gray.200"
+          />
+        </Box>
       ) : (
         <Box margin="auto">
           {isTimeout === false ? (
@@ -90,17 +97,17 @@ const FlankerTest = () => {
                   alignItems="center"
                   flexDir="column"
                 >
-                  {filteredQuestion && (
+                  {allQuestions?.payload && (
                     <Image
                       fit="cover"
                       width="100px"
-                      src={filteredQuestion[currQuestionIndex]?.photo}
+                      src={allQuestions?.payload[currQuestionIndex]?.photo}
                     />
                   )}
                 </Flex>
                 <Grid gap={5} marginTop="20px" templateColumns="1fr 1fr">
-                  {filteredQuestion &&
-                    filteredQuestion[currQuestionIndex].answers.map(
+                  {allQuestions?.payload &&
+                    allQuestions?.payload[currQuestionIndex].answers.map(
                       (option) => (
                         <Box
                           justifyContent="center"
@@ -123,7 +130,7 @@ const FlankerTest = () => {
                           onClick={() => {
                             setAnswers({
                               ...answers,
-                              [currQuestionIndex]: option?.answer,
+                              [currQuestionIndex]: option?.id,
                             });
                           }}
                         >
@@ -139,11 +146,13 @@ const FlankerTest = () => {
                     buttonText="التالى"
                     disabled={!answers[currQuestionIndex]}
                     onClick={() => {
-                      if (currQuestionIndex < filteredQuestion?.length - 1) {
+                      if (
+                        currQuestionIndex <
+                        allQuestions?.payload.length - 1
+                      ) {
                         const userAnswer = answers[currQuestionIndex];
                         if (
-                          userAnswer !==
-                          correctAnswers[currQuestionIndex]?.answer
+                          userAnswer !== correctAnswers[currQuestionIndex]?.id
                         ) {
                           setWrongAnswers(wrongAnswers + 1);
                         }

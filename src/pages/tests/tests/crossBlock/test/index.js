@@ -16,11 +16,6 @@ const CrossBlockTest = () => {
     params.testID
   );
 
-  const filteredQuestion = allQuestions?.payload?.filter(
-    (question) => question.is_trial === false
-  );
-  console.log(filteredQuestion);
-  console.log(allQuestions);
   const onSetSelectedCards = useCallback(
     (cards) => {
       const newAnswers = answers.slice();
@@ -32,10 +27,10 @@ const CrossBlockTest = () => {
   );
   const currentQuestion = useMemo(
     () =>
-      filteredQuestion && filteredQuestion
-        ? filteredQuestion[currQuestionIndex]
+      allQuestions && allQuestions.payload
+        ? allQuestions.payload[currQuestionIndex]
         : null,
-    [filteredQuestion, currQuestionIndex]
+    [allQuestions, currQuestionIndex]
   );
 
   const activeCards = useMemo(
@@ -48,16 +43,28 @@ const CrossBlockTest = () => {
 
   return (
     <>
-      {questionLoading ? (
-        <Spinner
-          marginTop="20%"
-          height="200px"
-          width="200px"
-          color="red.500"
-          thickness="4px"
-          speed="0.9s"
-          emptyColor="gray.200"
-        />
+      {questionLoading || !allQuestions ? (
+        <Box
+          top="0"
+          left="0"
+          bottom="0"
+          display="flex"
+          width="100%"
+          justifyContent="center"
+          zIndex="2"
+          position="absolute"
+          background="#003374"
+        >
+          <Spinner
+            marginTop="20%"
+            height="200px"
+            width="200px"
+            color="red.500"
+            thickness="4px"
+            speed="0.9s"
+            emptyColor="gray.200"
+          />
+        </Box>
       ) : (
         <Box margin="auto">
           {currentQuestion && (
@@ -93,7 +100,7 @@ const CrossBlockTest = () => {
                     ].map((item) => item + 1);
 
                     setAnswers(newAnswers);
-                    if (currQuestionIndex >= filteredQuestion?.length - 1) {
+                    if (currQuestionIndex >= allQuestions?.payload.length - 1) {
                       history.push("/tests/reverse-corsi");
                     } else {
                       setStarted(false);

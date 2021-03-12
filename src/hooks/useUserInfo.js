@@ -13,7 +13,7 @@ const useUserInfo = () => {
         setSubmitUserInfoLoading(false);
         return res.data;
       } catch (err) {
-        console.dev(err);
+        console.log(err);
         setSubmitUserInfoLoading(false);
         throw err;
       }
