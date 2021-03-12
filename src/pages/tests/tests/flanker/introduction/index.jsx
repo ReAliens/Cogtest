@@ -35,7 +35,7 @@ const FlankerIntroduction = () => {
         <Introduction
           testName={seconedTest?.name}
           testDesc={seconedTest?.desc}
-          testLink={`/tests/flanker/${seconedTest?.id}`}
+          testLink={`/tests/flanker/trial`}
         />
       )}
     </>

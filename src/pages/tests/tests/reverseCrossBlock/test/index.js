@@ -95,7 +95,7 @@ const ReverseCrossBlockTest = () => {
                   }
                   onClick={() => {
                     if (currQuestionIndex >= allQuestions?.payload.length - 1) {
-                      history.push("/tests/digit-symbol");
+                      history.push("/tests/digit-span");
                     } else {
                       const newAnswers = answers.slice();
                       newAnswers[currQuestionIndex] = newAnswers[

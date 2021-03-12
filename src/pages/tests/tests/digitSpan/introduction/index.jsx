@@ -5,8 +5,8 @@ import StartTestButton from "../../../../../components/Button";
 import useTests from "../../../../../hooks/useTests";
 
 const Introduction = () => {
-  // const { tests } = useTests();
-  // const seconedTest = tests && tests.payload ? tests.payload[1] : null;
+  const { tests } = useTests();
+  const fifthTest = tests && tests.payload ? tests.payload[4] : null;
 
   return (
     <Box margin="auto">
@@ -19,7 +19,7 @@ const Introduction = () => {
         flexDir="column"
       >
         <Flex marginX="20px" dir="rtl">
-          {/* <Text> {seconedTest?.name}</Text> */}
+          <Text> {fifthTest?.name}</Text>
         </Flex>
         <Flex
           justifyContent="center"
@@ -47,12 +47,11 @@ const Introduction = () => {
             </Text>
           </Flex>
           <Flex>
-            <Link to={`/tests/digit-span/1`}>
+            <Link to={`/tests/digit-span/${fifthTest?.id}`}>
               <StartTestButton buttonText="ابدأ الاختبار" />
             </Link>
           </Flex>
         </Flex>
-        test cross block intro
       </Flex>
     </Box>
   );
