@@ -1,102 +1,104 @@
 export const questions = [
-  {
-    id: 1,
-    question: "اخضر",
-    color: "#48BB78",
-    answers: {
-      questionID: 1,
-      options: ["احمر", "ازرق", "اخضر", "رمادى"],
-    },
-    correctAnswer: "اخضر",
-  },
-  {
-    id: 2,
-    question: "احمر",
-    color: "#C53030",
-    answers: {
-      questionID: 2,
-      options: ["احمر", "ازرق", "اخضر", "رمادى"],
-    },
-    correctAnswer: "احمر",
-  },
-  {
-    id: 3,
-    question: "ازرق",
-    color: "#4299E1",
-    answers: {
-      questionID: 3,
-      options: ["احمر", "ازرق", "اخضر", "رمادى"],
-    },
-    correctAnswer: "ازرق",
-  },
-  {
-    id: 4,
-    question: "اصفر",
-    color: "#F6E05E",
-    answers: {
-      questionID: 4,
-      options: ["احمر", "ازرق", "اخضر", "اصفر"],
-    },
-    correctAnswer: "اصفر",
-  },
-  {
-    id: 5,
-    question: "برتقالى",
-    color: "#ED8936",
-    answers: {
-      questionID: 5,
-      options: ["احمر", "ازرق", "اخضر", "برتقالى"],
-    },
-    correctAnswer: "برتقالى",
-  },
-  {
-    id: 6,
-    question: "بنفسجى",
-    color: "#9F7AEA",
-    answers: {
-      questionID: 6,
-      options: ["احمر", "ازرق", "اخضر", "بنفسجى"],
-    },
-    correctAnswer: "بنفسجى",
-  },
-  {
-    id: 7,
-    question: "زهري",
-    color: "#ED64A6",
-    answers: {
-      questionID: 7,
-      options: ["احمر", "ازرق", "اخضر", "زهري"],
-    },
-    correctAnswer: "زهري",
-  },
-  {
-    id: 8,
-    question: "سماوى",
-    color: "#0BC5EA",
-    answers: {
-      questionID: 8,
-      options: ["احمر", "ازرق", "اخضر", "سماوى"],
-    },
-    correctAnswer: "سماوى",
-  },
-  {
-    id: 9,
-    question: "رمادى",
-    color: "#A0AEC0",
-    answers: {
-      questionID: 9,
-      options: ["احمر", "ازرق", "اخضر", "رمادى"],
-    },
-    correctAnswer: "رمادى",
-  },
-  {
-    id: 10,
-    question: "اسود",
-    color: "#000",
-    answers: {
-      questionID: 10,
-      options: ["احمر", "ازرق", "اخضر", "اسود"],
-    },
-    correctAnswer: "اسود",
-  },
-];
+        {
+            "id": 19,
+            "cogtest_id": 5,
+            "cogtest_name": "المكون اللفظي - digit-span",
+            "cogtest_code": "digit-span",
+            "number_series": "[4,9]",
+            "is_trial": false,
+            "answers": [
+                {
+                    "id": 53,
+                    "question_id": 19,
+                    "answer": "[4,9]",
+                    "answer_image": null,
+                    "is_correct": true
+                }
+            ]
+        },
+        {
+            "id": 43,
+            "cogtest_id": 5,
+            "cogtest_name": "المكون اللفظي - digit-span",
+            "cogtest_code": "digit-span",
+            "number_series": "[1,2,3,8,5]",
+            "is_trial": false,
+            "answers": [
+                {
+                    "id": 93,
+                    "question_id": 43,
+                    "answer": "[1,2,3,8,5]",
+                    "answer_image": null,
+                    "is_correct": true
+                }
+            ]
+        },
+        {
+            "id": 64,
+            "cogtest_id": 5,
+            "cogtest_name": "المكون اللفظي - digit-span",
+            "cogtest_code": "digit-span",
+            "number_series": "[9,5,7,6]",
+            "is_trial": false,
+            "answers": [
+                {
+                    "id": 119,
+                    "question_id": 64,
+                    "answer": "[9,5,7,6]",
+                    "answer_image": null,
+                    "is_correct": true
+                }
+            ]
+        },
+        {
+            "id": 65,
+            "cogtest_id": 5,
+            "cogtest_name": "المكون اللفظي - digit-span",
+            "cogtest_code": "digit-span",
+            "number_series": "[6,1,2,8]",
+            "is_trial": false,
+            "answers": [
+                {
+                    "id": 120,
+                    "question_id": 65,
+                    "answer": "[6,1,2,8]",
+                    "answer_image": null,
+                    "is_correct": true
+                }
+            ]
+        },
+        {
+            "id": 66,
+            "cogtest_id": 5,
+            "cogtest_name": "المكون اللفظي - digit-span",
+            "cogtest_code": "digit-span",
+            "number_series": "[3,8,6,7]",
+            "is_trial": false,
+            "answers": [
+                {
+                    "id": 121,
+                    "question_id": 66,
+                    "answer": "[3,8,6,7]",
+                    "answer_image": null,
+                    "is_correct": true
+                }
+            ]
+        },
+        {
+            "id": 67,
+            "cogtest_id": 5,
+            "cogtest_name": "المكون اللفظي - digit-span",
+            "cogtest_code": "digit-span",
+            "number_series": "[2,3,6,7,9]",
+            "is_trial": false,
+            "answers": [
+                {
+                    "id": 122,
+                    "question_id": 67,
+                    "answer": "[2,3,6,7,9]",
+                    "answer_image": null,
+                    "is_correct": true
+                }
+            ]
+        }
+    ]

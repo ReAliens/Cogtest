@@ -1,47 +1,130 @@
-import { Box, Flex, Grid, Image, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import {
+  Box,
+  Flex,
+  Grid,
+  Image,
+  Input,
+  Progress,
+  Spinner,
+  Text
+} from '@chakra-ui/react'
+import React, { useEffect, useMemo, useState } from 'react'
 // import StartTestButton from "../../../../../components/Button";
 // import { questions } from "./data";
 // import ReactCountdownClockownClock from "react-countdown-clock";
-import { useParams } from "react-router-dom";
-import useQuestions from "../../../../../hooks/useQuestions";
+import { useParams } from 'react-router-dom'
+import StartTestButton from '../../../../../components/Button'
+import useQuestions from '../../../../../hooks/useQuestions'
+import { questions } from './data'
+
+function DigitSpan ({ symbols, onChange, speedMS }) {
+  const [currentNumber, setCurrentNumber] = useState(null)
+  const [percentage, setPercentage] = useState(0)
+  const [ready, setReady] = useState(false)
+
+  const [answer, setAnswer] = useState('')
+
+  useEffect(() => {
+    setReady(false)
+    setPercentage(0)
+    setAnswer('')
+    setCurrentNumber(null)
+    symbols.forEach((symbol, index) => {
+      setTimeout(() => {
+        setCurrentNumber(symbol)
+        setPercentage(((index + 1) / symbols.length) * 100)
+        if (index === symbols.length - 1) {
+          setTimeout(() => {
+            setPercentage(0)
+            setReady(true)
+          }, speedMS)
+        }
+      }, (index + 1) * speedMS)
+    })
+  }, [symbols, setCurrentNumber, setPercentage, setReady])
+
+  return (
+    <Flex
+      background='white'
+      p='20px'
+      width='400px'
+      flexDir='column'
+      justifyContent='center'
+      alignItems='center'
+    >
+      <Text>{ready ? '...' : currentNumber}</Text>
+      <Progress
+        colorScheme='green'
+        size='lg'
+        width='100%'
+        dir='ltr'
+        value={percentage}
+      />
+
+      <Input
+        isDisabled={!ready}
+        value={answer}
+        type='number'
+        onChange={e => {
+          const a = e.target.value
+          const percentage = (a.toString().length / symbols.length) * 100
+          setAnswer(a)
+          onChange(a)
+          setPercentage(percentage > 100 ? 100 : percentage)
+        }}
+      />
+      <Text>{symbols.length} Symbols</Text>
+    </Flex>
+  )
+}
 
 const CrossBlockTest = () => {
-  // const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
-  // const [answers, setAnswers] = useState({});
+  const [currQuestionIndex, setCurrQuestionIndex] = useState(0)
+  const [answers, setAnswers] = useState({})
   // const [count, setCount] = useState(0);
   // const [wrongAnswers, setWrongAnswers] = useState(0);
   // const history = useHistory();
-  const params = useParams();
-  const { questions: allQuestions, questionLoading } = useQuestions(
-    params.testID
-  );
-  const filteredQuestion = allQuestions?.payload?.filter(
-    (question) => question.is_trial === false
-  );
-  console.log(filteredQuestion);
-  console.log(allQuestions);
+  const params = useParams()
+  // const { questions: allQuestions, questionLoading } = useQuestions(
+  //   params.testID
+  // );
+  // const filteredQuestion = allQuestions?.payload?.filter(
+  //   (question) => question.is_trial === false
+  // );
+  // console.log(filteredQuestion);
+  // console.log(allQuestions);
+
+  const allQuestions = questions
+
+  const currentSymbols = useMemo(
+    () =>
+      allQuestions && allQuestions[currQuestionIndex]
+        ? JSON.parse(allQuestions[currQuestionIndex].number_series)
+        : null,
+    [allQuestions, currQuestionIndex]
+  )
+
   return (
     <>
-      {questionLoading ? (
+      {false ? (
         <Spinner
-          marginTop="20%"
-          height="200px"
-          width="200px"
-          color="red.500"
-          thickness="4px"
-          speed="0.9s"
-          emptyColor="gray.200"
+          marginTop='20%'
+          height='200px'
+          width='200px'
+          color='red.500'
+          thickness='4px'
+          speed='0.9s'
+          emptyColor='gray.200'
         />
       ) : (
-        <Box margin="auto">
+        <Box margin='auto'>
           <Flex
-            borderRadius="10px"
-            paddingTop="20px"
-            h="100%"
-            w="1140px"
-            bg="#f9f9fc"
-            flexDir="column"
+            borderRadius='10px'
+            paddingTop='20px'
+            h='100%'
+            w='1140px'
+            bg='#f9f9fc'
+            flexDir='column'
           >
             {/* <Flex
             alignItems="center"
@@ -59,15 +142,27 @@ const CrossBlockTest = () => {
             />
           </Flex> */}
             <Flex
-              justifyContent="center"
-              paddingBottom="100px"
-              marginTop="30px"
-              bg="#E4E6EF"
-              paddingX="20px"
-              h="500px"
-              flexDir="column"
-              dir="rtl"
+              justifyContent='center'
+              paddingBottom='100px'
+              marginTop='30px'
+              bg='#E4E6EF'
+              paddingX='20px'
+              h='500px'
+              flexDir='column'
+              dir='rtl'
             >
+              {currentSymbols && (
+                <DigitSpan
+                  symbols={currentSymbols}
+                  speedMS={1000}
+                  onChange={answer => {
+                    setAnswers({
+                      ...answers,
+                      [currQuestionIndex]: (answer || '').split('')
+                    })
+                  }}
+                />
+              )}
               {/* <Flex
               padding="20px"
               marginTop="20px"
@@ -120,36 +215,28 @@ const CrossBlockTest = () => {
                   </Box>
                 ))}
             </Grid> */}
-              {/* <Flex width="50%" marginTop="20px">
-              <StartTestButton
-                width="200px"
-                type="next"
-                buttonText="التالى"
-                onClick={() => {
-                  if (currQuestionIndex >= allQuestions?.payload.length - 1) {
-                    console.log("ok ok ok");
-                    // const userAnswer = answers[currQuestionIndex];
-                    // if (
-                    //   userAnswer === questions[currQuestionIndex].correctAnswer
-                    // ) {
-                    //   setCount(count + 1);
+              <Flex width='50%' marginTop='20px'>
+                <StartTestButton
+                  width='200px'
+                  type='next'
+                  buttonText='التالى'
+                  disabled={!answers[currQuestionIndex]}
+                  onClick={() => {
+                    // if (currQuestionIndex >= allQuestions?.payload.length - 1) {
+                    //   console.log('ok ok ok')
                     // } else {
-                    //   setWrongAnswers(wrongAnswers + 1);
+                    //   setCurrQuestionIndex(currQuestionIndex + 1)
                     // }
-                    // if (wrongAnswers === 5) {
-                    //   history.push("/");
-                  } else {
-                    setCurrQuestionIndex(currQuestionIndex + 1);
-                  }
-                }}
-              />
-            </Flex> */}
+                    setCurrQuestionIndex(currQuestionIndex + 1)
+                  }}
+                />
+              </Flex>
             </Flex>
           </Flex>
         </Box>
       )}
     </>
-  );
-};
+  )
+}
 
-export default CrossBlockTest;
+export default CrossBlockTest
