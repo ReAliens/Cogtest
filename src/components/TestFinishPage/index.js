@@ -1,9 +1,8 @@
 import { Flex, Text } from "@chakra-ui/react";
 import React from "react";
-import { Link } from "react-router-dom";
 import StartTestButton from "../../components/Button";
 
-const TimeIsUpPage = ({ testName, type }) => {
+const FinishPage = ({ testName, type }) => {
   return (
     <Flex
       paddingTop="20px"
@@ -33,27 +32,21 @@ const TimeIsUpPage = ({ testName, type }) => {
           bg="white"
           dir="rtl"
         >
-          <Text dir="rtl">عفواً انتهى الوقت المخصص لهذا الاختبار</Text>
+          <Text dir="rtl">
+            تم انتهاء الاختبار بنجاح الرجاء تسجيل الخروج ﻹتمام تسجيل الدرجة
+          </Text>
         </Flex>
         <Flex marginTop="20px">
-          {type === "lastExam" ? (
-            <StartTestButton
-              buttonText="تسجيل خروج"
-              onClick={() => (window.location.href = "/")}
-            />
-          ) : (
-            <Link to={`/tests/${testName}`}>
-              <StartTestButton
-                buttonText={
-                  type === "lastExam" ? "تسجيل خروج" : "ابدأ الاختبار التالى"
-                }
-              />
-            </Link>
-          )}
+          <StartTestButton
+            buttonText={
+              type === "lastExam" ? "تسجيل خروج" : "ابدأ الاختبار التالى"
+            }
+            onClick={() => (window.location.href = "/")}
+          />
         </Flex>
       </Flex>
     </Flex>
   );
 };
 
-export default TimeIsUpPage;
+export default FinishPage;

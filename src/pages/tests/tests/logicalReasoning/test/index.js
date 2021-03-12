@@ -7,11 +7,13 @@ import { useHistory, useParams } from "react-router-dom";
 import useQuestions from "../../../../../hooks/useQuestions";
 import useTests from "../../../../../hooks/useTests";
 import TimeIsUpPage from "../../../../../components/timeIsUP";
+import FinishPage from "../../../../../components/TestFinishPage";
 
 const LogicalReasoningTest = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [isTimeout, setIsTimeOut] = useState(false);
+  const [isFinish, setIsFinish] = useState(false);
   const history = useHistory();
   const [wrongAnswers, setWrongAnswers] = useState(0);
   const params = useParams();
@@ -20,30 +22,37 @@ const LogicalReasoningTest = () => {
   const { questions: allQuestions, questionLoading } = useQuestions(
     params.testID
   );
-  const filteredQuestion = allQuestions?.payload?.filter(
-    (question) => question.is_trial === false
-  );
-  console.log(filteredQuestion);
-  console.log(allQuestions);
-  const correctAnswers = filteredQuestion?.map((question) =>
+  const correctAnswers = allQuestions?.payload?.map((question) =>
     question?.answers?.find((answer) => answer.is_correct === true)
   );
 
   return (
     <>
-      {questionLoading ? (
-        <Spinner
-          marginTop="20%"
-          height="200px"
-          width="200px"
-          color="red.500"
-          thickness="4px"
-          speed="0.9s"
-          emptyColor="gray.200"
-        />
+      {questionLoading || !allQuestions ? (
+        <Box
+          top="0"
+          left="0"
+          bottom="0"
+          display="flex"
+          width="100%"
+          justifyContent="center"
+          zIndex="2"
+          position="absolute"
+          background="#003374"
+        >
+          <Spinner
+            marginTop="20%"
+            height="200px"
+            width="200px"
+            color="red.500"
+            thickness="4px"
+            speed="0.9s"
+            emptyColor="gray.200"
+          />
+        </Box>
       ) : (
         <Box margin="auto">
-          {isTimeout === false ? (
+          {isTimeout === false && isFinish === false ? (
             <Flex
               borderRadius="10px"
               paddingTop="20px"
@@ -90,11 +99,11 @@ const LogicalReasoningTest = () => {
                   alignItems="center"
                   flexDir="column"
                 >
-                  {filteredQuestion && (
+                  {allQuestions?.payload && (
                     <Image
                       fit="cover"
                       width="100px"
-                      src={filteredQuestion[currQuestionIndex]?.photo}
+                      src={allQuestions?.payload[currQuestionIndex]?.photo}
                     />
                   )}
                 </Flex>
@@ -103,8 +112,8 @@ const LogicalReasoningTest = () => {
                   marginTop="20px"
                   templateColumns="1fr 1fr 1fr 1fr"
                 >
-                  {filteredQuestion &&
-                    filteredQuestion[currQuestionIndex].answers.map(
+                  {allQuestions?.payload &&
+                    allQuestions?.payload[currQuestionIndex].answers.map(
                       (option) => (
                         <Box
                           justifyContent="center"
@@ -144,7 +153,10 @@ const LogicalReasoningTest = () => {
                     type="next"
                     buttonText="التالى"
                     onClick={() => {
-                      if (currQuestionIndex < filteredQuestion.length - 1) {
+                      if (
+                        currQuestionIndex <
+                        allQuestions?.payload.length - 1
+                      ) {
                         const userAnswer = answers[currQuestionIndex];
                         if (
                           userAnswer !==
@@ -157,15 +169,19 @@ const LogicalReasoningTest = () => {
                         }
                         setCurrQuestionIndex(currQuestionIndex + 1);
                       } else {
-                        history.push("/");
+                        setIsFinish(true);
                       }
                     }}
                   />
                 </Flex>
               </Flex>
             </Flex>
-          ) : (
+          ) : isTimeout === true ? (
             <TimeIsUpPage type="lastExam" testName={nextTest?.code} />
+          ) : isFinish === true ? (
+            <FinishPage type="lastExam" />
+          ) : (
+            ""
           )}
         </Box>
       )}

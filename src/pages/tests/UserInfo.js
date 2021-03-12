@@ -18,7 +18,7 @@ import useUserInfo from "../../hooks/useUserInfo";
 
 const UserInfo = () => {
   const [radioValue, setRadioValue] = useState();
-  const { userInfo, setUserInfo } = useContext(UserInfoContext);
+  const { setUserInfo } = useContext(UserInfoContext);
   const { submitUserInfo, submitUserInfoLoading } = useUserInfo();
   const toast = useToast();
   const history = useHistory();
