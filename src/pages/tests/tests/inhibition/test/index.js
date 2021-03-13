@@ -1,5 +1,13 @@
-import { Box, Flex, Grid, Image, Spinner, Text } from "@chakra-ui/react";
-import React, { useState } from "react";
+import {
+  Box,
+  Flex,
+  Grid,
+  Spinner,
+  Text,
+  useToast,
+  Image,
+} from "@chakra-ui/react";
+import React, { useCallback, useContext, useState } from "react";
 import StartTestButton from "../../../../../components/Button";
 // import { questions } from "./data";
 import ReactCountdownClockownClock from "react-countdown-clock";
@@ -7,8 +15,11 @@ import { useHistory, useParams } from "react-router-dom";
 import useQuestions from "../../../../../hooks/useQuestions";
 import useTests from "../../../../../hooks/useTests";
 import TimeIsUpPage from "../../../../../components/timeIsUP";
+import useAnswer from "../../../../../hooks/useAnswer";
+import { UserInfoContext } from "../../../../../contexts/userContext";
 
 const InhibitionTest = () => {
+  const { userInfo } = useContext(UserInfoContext);
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [isTimeout, setIsTimeOut] = useState(false);
@@ -16,10 +27,43 @@ const InhibitionTest = () => {
   const history = useHistory();
   const params = useParams();
   const { tests } = useTests();
+  const toast = useToast();
+
   const nextTest = tests && tests.payload ? tests?.payload[8] : null;
   const { questions: allQuestions, questionLoading } = useQuestions(
     params.testID
   );
+
+  const { submitAnswerTest } = useAnswer();
+
+  const onSubmitAnswertTest = useCallback(() => {
+    try {
+      const answersPayload = [];
+      Object.keys(answers).forEach((key) => {
+        const questionID = allQuestions.payload[key].id;
+        answersPayload.push({
+          question_id: questionID,
+          answer_id: answers[key],
+        });
+      });
+      const testAnswerPayload = {
+        cogtest_id: params.testID,
+        answers: answersPayload,
+        user_id: userInfo?.payload?.id,
+      };
+      submitAnswerTest(testAnswerPayload);
+      toast({
+        position: "top-right",
+        description: "تم تسجيل الاجابات بنجاح",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }, [answers, params, userInfo, submitAnswerTest, allQuestions, toast]);
+
   const correctAnswers = allQuestions?.payload?.map((question) =>
     question?.answers?.find((answer) => answer.is_correct === true)
   );
@@ -71,7 +115,10 @@ const InhibitionTest = () => {
                   color="red"
                   alpha={0.9}
                   size={50}
-                  onComplete={() => setIsTimeOut(true)}
+                  onComplete={() => {
+                    onSubmitAnswertTest();
+                    setIsTimeOut(true);
+                  }}
                 />
               </Flex>
               <Flex
@@ -123,7 +170,7 @@ const InhibitionTest = () => {
                             bg: "#68D391",
                           }}
                           bg={
-                            answers[currQuestionIndex] === option?.answer_image
+                            answers[currQuestionIndex] === option?.id
                               ? "#68D391"
                               : null
                           }
@@ -132,7 +179,7 @@ const InhibitionTest = () => {
                           onClick={() => {
                             setAnswers({
                               ...answers,
-                              [currQuestionIndex]: option?.answer_image,
+                              [currQuestionIndex]: option?.id,
                             });
                           }}
                         >
@@ -164,6 +211,7 @@ const InhibitionTest = () => {
                         }
                         setCurrQuestionIndex(currQuestionIndex + 1);
                       } else {
+                        onSubmitAnswertTest();
                         history.push("/tests/logical-reasoning");
                       }
                     }}

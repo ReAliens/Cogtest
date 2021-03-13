@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
-import { Text } from "@chakra-ui/react";
 import { Route } from "react-router-dom";
+import Loader from "../../../../components/Loader";
 
 const CrossBlockIntroduction = lazy(() => import("./introduction/index"));
 const CrossBlockTest = lazy(() => import("./test"));
@@ -8,7 +8,7 @@ const CrossBlockTest = lazy(() => import("./test"));
 const Tests = () => {
   return (
     <>
-      <Suspense fallback={<Text>Loading</Text>}>
+      <Suspense fallback={<Loader />}>
         <Route exact path="/tests/corsi" component={CrossBlockIntroduction} />
         <Route path="/tests/corsi/:testID" component={CrossBlockTest} />
       </Suspense>

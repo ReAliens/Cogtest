@@ -6,10 +6,10 @@ const useAnswer = () => {
   const [submitTestAnswerLoading, setSubmitTestAnswerLoading] = useState(false);
 
   const submitAnswerTest = useCallback(
-    async (userInfo) => {
+    async (answers) => {
       setSubmitTestAnswerLoading(true);
       try {
-        const res = await axios.post(`${API_ROOT}/add-user`, userInfo);
+        const res = await axios.post(`${API_ROOT}/add-user`, answers);
         setSubmitTestAnswerLoading(false);
         return res.data;
       } catch (err) {

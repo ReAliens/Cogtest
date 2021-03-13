@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
-import { Text } from "@chakra-ui/react";
 import { Route, Switch } from "react-router-dom";
+import Loader from "../../../../components/Loader";
 
 const FlankerIntroduction = lazy(() => import("./introduction/index"));
 const FlankerTest = lazy(() => import("./test"));
@@ -9,7 +9,7 @@ const FlankerTrial = lazy(() => import("./trial"));
 const Tests = () => {
   return (
     <>
-      <Suspense fallback={<Text>Loading</Text>}>
+      <Suspense fallback={<Loader />}>
         <Switch>
           <Route exact path="/tests/flanker" component={FlankerIntroduction} />
           <Route exact path="/tests/flanker/trial" component={FlankerTrial} />
