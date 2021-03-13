@@ -27,7 +27,7 @@ const Tests = () => {
   return (
     <>
       <Suspense fallback={<Text>Loading</Text>}>
-        {userInfo ? (
+        {/* {userInfo ? ( */}
           <>
             <Route path="/tests/stroop" component={StroopIntroduction} />
             <Route path="/tests/flanker" component={FlankerIntroduction} />
@@ -50,9 +50,9 @@ const Tests = () => {
             />
             <Route path="/tests/digit-span" component={DigitSpanIntroduction} />
           </>
-        ) : (
+        {/* ) : (
           history.push("/")
-        )}
+        )} */}
       </Suspense>
     </>
   );

@@ -121,7 +121,7 @@ const FlankerTest = () => {
                             bg: "#68D391",
                           }}
                           bg={
-                            answers[currQuestionIndex] === option?.answer
+                            answers[currQuestionIndex] === option?.id
                               ? "#68D391"
                               : null
                           }

@@ -35,7 +35,7 @@ const InhibitionIntroduction = () => {
         <Introduction
           testName={eightsTest?.name}
           testDesc={eightsTest?.desc}
-          testLink={`/tests/inhibition/${eightsTest?.id}`}
+          testLink={`/tests/inhibition/trial`}
         />
       )}
     </>
