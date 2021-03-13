@@ -20,7 +20,7 @@ const Home = ({
         borderRadius="10px"
         paddingTop="30px"
         h="100%"
-        minW="800px"
+        minW="400px"
         bg="#F3F6F9"
         flexDir="column"
       >

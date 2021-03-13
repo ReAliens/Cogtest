@@ -56,7 +56,8 @@ const StroopTest = () => {
               borderRadius="10px"
               paddingTop="20px"
               h="100%"
-              w="1140px"
+              // width="1000px"
+              minW={["300px", "600px", "800px", "1000px"]}
               bg="#f9f9fc"
               flexDir="column"
             >
@@ -72,7 +73,7 @@ const StroopTest = () => {
                   color="red"
                   alpha={0.9}
                   size={50}
-                  onComplete={() => setIsTimeOut(true)}
+                  // onComplete={() => setIsTimeOut(true)}
                 />
               </Flex>
               <Flex

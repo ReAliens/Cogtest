@@ -56,7 +56,7 @@ const DigitSymbolTest = () => {
               borderRadius="10px"
               paddingTop="20px"
               h="100%"
-              w="1140px"
+              minW={["300px", "600px", "800px", "1000px"]}
               bg="#f9f9fc"
               flexDir="column"
             >

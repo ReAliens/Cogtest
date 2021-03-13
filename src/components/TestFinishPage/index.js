@@ -7,7 +7,7 @@ const FinishPage = ({ testName, type }) => {
     <Flex
       paddingTop="20px"
       h="100%"
-      w="1140px"
+      minW={["300px", "600px", "800px", "1000px"]}
       flexDir="column"
       borderRadius="20px"
     >
