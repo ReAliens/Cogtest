@@ -73,7 +73,7 @@ const StroopTest = () => {
                   color="red"
                   alpha={0.9}
                   size={50}
-                  // onComplete={() => setIsTimeOut(true)}
+                  onComplete={() => setIsTimeOut(true)}
                 />
               </Flex>
               <Flex

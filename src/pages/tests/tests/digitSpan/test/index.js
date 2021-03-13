@@ -38,21 +38,28 @@ function DigitSpan({ symbols, onChange, speedMS }) {
     <Flex
       background="white"
       p="20px"
-      width="400px"
+      width="100%"
+      height="100%"
+      marginTop="20px"
       flexDir="column"
       justifyContent="center"
       alignItems="center"
+      borderRadius="10px"
     >
-      <Text>{ready ? "..." : currentNumber}</Text>
+      <Text dir="rtl">{ready ? "..." : currentNumber}</Text>
       <Progress
+        marginTop="20px"
         colorScheme="blue"
         size="md"
-        width="100%"
+        width="50%"
         dir="ltr"
         value={percentage}
       />
 
       <Input
+        width="50%"
+        marginTop="20px"
+        borderColor="blue"
         isDisabled={!ready}
         value={answer}
         type="number"
@@ -64,7 +71,9 @@ function DigitSpan({ symbols, onChange, speedMS }) {
           setPercentage(percentage > 100 ? 100 : percentage);
         }}
       />
-      <Text>{symbols.length} رموز</Text>
+      <Text marginTop="20px" dir="rtl">
+        عدد الرموز: {symbols.length}
+      </Text>
     </Flex>
   );
 }
@@ -75,7 +84,7 @@ const CrossBlockTest = () => {
   // const [count, setCount] = useState(0);
   // const [wrongAnswers, setWrongAnswers] = useState(0);
   const history = useHistory();
-  const params = useParams();
+  // const params = useParams();
   // const { questions: allQuestions, questionLoading } = useQuestions(
   //   params.testID
   // );
@@ -113,7 +122,7 @@ const CrossBlockTest = () => {
             borderRadius="10px"
             paddingTop="20px"
             h="100%"
-            w="1140px"
+            minW={["300px", "600px", "800px", "1000px"]}
             bg="#f9f9fc"
             flexDir="column"
           >

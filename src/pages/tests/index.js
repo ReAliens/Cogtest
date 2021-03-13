@@ -27,29 +27,32 @@ const Tests = () => {
   return (
     <>
       <Suspense fallback={<Text>Loading</Text>}>
-        {/* {userInfo ? ( */}
-        <>
-          <Route path="/tests/stroop" component={StroopIntroduction} />
-          <Route path="/tests/flanker" component={FlankerIntroduction} />
-          <Route path="/tests/corsi" component={CrossBlockIntroduction} />
-          <Route
-            path="/tests/reverse-corsi"
-            component={ReverseCrossBlockIntroduction}
-          />
-          <Route
-            path="/tests/digit-symbol"
-            component={DigitSymbolIntroduction}
-          />
-          <Route path="/tests/inhibition" component={InhibitionIntroduction} />
-          <Route
-            path="/tests/logical-reasoning"
-            component={LogicalReasoningIntroduction}
-          />
-          <Route path="/tests/digit-span" component={DigitSpanIntroduction} />
-        </>
-        {/* ) : (
+        {userInfo ? (
+          <>
+            <Route path="/tests/stroop" component={StroopIntroduction} />
+            <Route path="/tests/flanker" component={FlankerIntroduction} />
+            <Route path="/tests/corsi" component={CrossBlockIntroduction} />
+            <Route
+              path="/tests/reverse-corsi"
+              component={ReverseCrossBlockIntroduction}
+            />
+            <Route
+              path="/tests/digit-symbol"
+              component={DigitSymbolIntroduction}
+            />
+            <Route
+              path="/tests/inhibition"
+              component={InhibitionIntroduction}
+            />
+            <Route
+              path="/tests/logical-reasoning"
+              component={LogicalReasoningIntroduction}
+            />
+            <Route path="/tests/digit-span" component={DigitSpanIntroduction} />
+          </>
+        ) : (
           history.push("/")
-        )} */}
+        )}
       </Suspense>
     </>
   );
