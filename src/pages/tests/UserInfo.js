@@ -123,6 +123,10 @@ const UserInfo = () => {
                         value: true,
                         message: "هذا الحقل مطلوب",
                       },
+                      minLength: {
+                        value: 3,
+                        message: "يجب الا يقل الاسم عن ثلاثة اخرف",
+                      },
                     }}
                     width="500px"
                   />
