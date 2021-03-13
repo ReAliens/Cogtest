@@ -10,7 +10,7 @@ const Introduction = ({ testName, testDesc, testLink }) => (
         borderRadius="10px"
         paddingTop="20px"
         h="100%"
-        w="1140px"
+        maxW="1000px"
         bg="#f9f9fc"
         flexDir="column"
       >

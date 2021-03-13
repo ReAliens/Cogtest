@@ -76,7 +76,8 @@ const UserInfo = () => {
         borderRadius="10px"
         paddingTop="20px"
         h="100%"
-        maxW="1000px"
+        maxW="800px"
+        minW="400px"
         bg="#f9f9fc"
         flexDir="column"
         overflow="hidden"
@@ -96,9 +97,11 @@ const UserInfo = () => {
             <form onSubmit={handleSubmit(submit)}>
               <Grid
                 paddingY="15px"
+                paddingX="30px"
                 marginTop="20px"
                 justifyContent="center"
-                w="800px"
+                // W="800px"
+                w={["30vh", "60vh", "80vh", "100vh"]}
                 borderRadius="10px"
                 bg="white"
                 templateRows="repeat(7,1fr)"
@@ -234,7 +237,7 @@ const UserInfo = () => {
                       <Radio dir="rtl" value="m">
                         ذكر
                       </Radio>
-                      <Radio dir="rtl" value="f">
+                      <Radio marginRight="20px" dir="rtl" value="f">
                         أنثى
                       </Radio>
                     </Flex>
