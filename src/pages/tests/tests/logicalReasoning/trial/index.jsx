@@ -107,7 +107,7 @@ const InhibitionTrial = () => {
                 {trialQuestions?.payload && (
                   <Image
                     fit="cover"
-                    width="100px"
+                    width="200px"
                     src={trialQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}
