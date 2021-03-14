@@ -129,7 +129,7 @@ const Test = ({
                 {allQuestions?.payload && (
                   <Image
                     fit="cover"
-                    width="100px"
+                    width="200px"
                     src={allQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}
