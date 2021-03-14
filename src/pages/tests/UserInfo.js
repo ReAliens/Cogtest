@@ -193,6 +193,14 @@ const UserInfo = () => {
                         value: true,
                         message: "هذا الحقل مطلوب",
                       },
+                      min: {
+                        value: 0,
+                        message: "المعدل الدراسي يجب ان يكون بين الصفر والمائة",
+                      },
+                      max: {
+                        value: 100,
+                        message: "المعدل الدراسي يجب ان يكون بين الصفر والمائة",
+                      },
                     }}
                     width="500px"
                   />
@@ -211,6 +219,10 @@ const UserInfo = () => {
                       min: {
                         value: 5,
                         message: "اقل عمر يمكن ادخاله خمس سنوات",
+                      },
+                      max: {
+                        value: 100,
+                        message: "اقصى عمر يمكن ادخاله مائة عام",
                       },
                     }}
                     width="500px"
