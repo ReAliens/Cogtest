@@ -1,21 +1,32 @@
-import { Box, Grid, Flex, Spinner } from "@chakra-ui/react";
-import React, { useCallback, useMemo, useState } from "react";
-// import { questions } from "./data";
+import { Box, Flex, Text, useToast } from "@chakra-ui/react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
+import ReactCountdownClockownClock from "react-countdown-clock";
 import { useHistory, useParams } from "react-router-dom";
 import useQuestions from "../../../../../hooks/useQuestions";
 import CrossBlockGrid from "../../../../../components/CrossBlockGrid";
 import StartTestButton from "../../../../../components/Button";
+import Loader from "../../../../../components/Loader";
+import { UserInfoContext } from "../../../../../contexts/userContext";
+import useAnswer from "../../../../../hooks/useAnswer";
+import useTests from "../../../../../hooks/useTests";
 
-const ReverseCrossBlockTest = () => {
+const CrossBlockTest = () => {
+  const { userInfo } = useContext(UserInfoContext);
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [started, setStarted] = useState(false);
+  const [wrongAnswersNumbers, setWrongAnswersNumbers] = useState(0);
   const params = useParams();
   const history = useHistory();
-
   const { questions: allQuestions, questionLoading } = useQuestions(
     params.testID
   );
+  const { tests } = useTests();
+
+  const toast = useToast();
+
+  const { submitAnswerTest } = useAnswer();
+
   const onSetSelectedCards = useCallback(
     (cards) => {
       const newAnswers = answers.slice();
@@ -41,50 +52,104 @@ const ReverseCrossBlockTest = () => {
     [currentQuestion]
   );
 
+  const testDuration = useMemo(
+    () => (tests && tests?.payload ? tests?.payload[3]?.duration : null),
+    [tests]
+  );
+
+  const onSubmitAnswertTest = useCallback(() => {
+    try {
+      const answersPayload = [];
+      Object.keys(answers).forEach((key) => {
+        const questionID = allQuestions.payload[key].id;
+        answersPayload.push({
+          question_id: questionID,
+          answer_id: answers[key],
+        });
+      });
+      const testAnswerPayload = {
+        cogtest_id: params.testID,
+        answers: answersPayload,
+        user_id: userInfo?.payload?.id,
+      };
+      submitAnswerTest(testAnswerPayload);
+      toast({
+        position: "top-right",
+        description: "تم تسجيل الاجابات بنجاح",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }, [answers, params, userInfo, submitAnswerTest, allQuestions, toast]);
+
   return (
     <>
       {questionLoading || !allQuestions ? (
-        <Box
-          top="0"
-          left="0"
-          bottom="0"
-          display="flex"
-          width="100%"
-          justifyContent="center"
-          zIndex="2"
-          position="absolute"
-          background="#003374"
-        >
-          <Spinner
-            marginTop="20%"
-            height="200px"
-            width="200px"
-            color="red.500"
-            thickness="4px"
-            speed="0.9s"
-            emptyColor="gray.200"
-          />
-        </Box>
+        <Loader />
       ) : (
         <Box margin="auto">
-          {currentQuestion && (
-            <Grid
-              marginTop="5%"
-              h="100%"
-              w="1140px"
-              borderRadius="10px"
-              padding="20px"
-              bg="#f9f9fc"
+          <Flex
+            borderRadius="10px"
+            paddingTop="20px"
+            h="100%"
+            minW={["300px", "600px", "800px", "1000px"]}
+            bg="#f9f9fc"
+            flexDir="column"
+          >
+            <Flex
+              alignItems="center"
+              justifyContent="space-between"
+              marginX="20px"
+              dir="rtl"
             >
-              <CrossBlockGrid
-                key={currQuestionIndex}
-                selectedCards={answers[currQuestionIndex]}
-                setSelectedCards={onSetSelectedCards}
-                numberOfCards={currentQuestion.boxes_count}
-                activeCards={activeCards}
-                started={started}
-                setStarted={setStarted}
+              <Text> {allQuestions?.message}</Text>
+              <ReactCountdownClockownClock
+                seconds={testDuration}
+                color="red"
+                alpha={0.9}
+                size={50}
+                onComplete={() => {
+                  if (testDuration) {
+                    onSubmitAnswertTest();
+                    history.push("/tests/digit-span");
+                  }
+                }}
               />
+            </Flex>
+            <Flex
+              justifyContent="center"
+              paddingBottom="10px"
+              borderRadius="10px"
+              marginTop="30px"
+              bg="#E4E6EF"
+              paddingX="20px"
+              flexDir="column"
+              dir="rtl"
+            >
+              {currentQuestion && (
+                <Flex
+                  // flexWrap="wrap"
+                  margin="20px"
+                  h="100%"
+                  minW={["300px", "600px", "700px", "1000px"]}
+                  borderRadius="10px"
+                  padding="20px"
+                  bg="#f9f9fc"
+                >
+                  <CrossBlockGrid
+                    key={currQuestionIndex}
+                    selectedCards={answers[currQuestionIndex]}
+                    setSelectedCards={onSetSelectedCards}
+                    numberOfCards={currentQuestion.boxes_count}
+                    activeCards={activeCards}
+                    started={started}
+                    setStarted={setStarted}
+                  />
+                </Flex>
+              )}
               <Flex marginTop="20px" justifyContent="center">
                 <StartTestButton
                   buttonText="التالى"
@@ -94,26 +159,54 @@ const ReverseCrossBlockTest = () => {
                     answers[currQuestionIndex].length === 0
                   }
                   onClick={() => {
+                    const newAnswers = answers.slice();
+                    let newWrongAnswersNumbers = wrongAnswersNumbers;
+                    newAnswers[currQuestionIndex] = newAnswers[
+                      currQuestionIndex
+                    ].map((item) => item + 1);
+                    const currentCorrectAnswer = currentQuestion.answers.find(
+                      (answer) => answer.is_correct
+                    );
+
+                    const correctAnsArray = JSON.parse(
+                      currentCorrectAnswer.answer
+                    );
+                    console.log({
+                      correctAnsArray,
+                      curretntAns: newAnswers[currQuestionIndex],
+                    });
+                    if (
+                      correctAnsArray.join("") !==
+                      newAnswers[currQuestionIndex].join("")
+                    ) {
+                      newWrongAnswersNumbers += 1;
+                    } else {
+                      newWrongAnswersNumbers = 0;
+                    }
+
+                    setWrongAnswersNumbers(newWrongAnswersNumbers);
+                    console.log({ newWrongAnswersNumbers });
+                    if (newWrongAnswersNumbers >= 3) {
+                      history.push("/tests/digit-span");
+                    }
+
+                    setAnswers(newAnswers);
                     if (currQuestionIndex >= allQuestions?.payload.length - 1) {
+                      onSubmitAnswertTest();
                       history.push("/tests/digit-span");
                     } else {
-                      const newAnswers = answers.slice();
-                      newAnswers[currQuestionIndex] = newAnswers[
-                        currQuestionIndex
-                      ].map((item) => item + 1);
-                      setAnswers(newAnswers);
                       setStarted(false);
                       setCurrQuestionIndex(currQuestionIndex + 1);
                     }
                   }}
                 />
               </Flex>
-            </Grid>
-          )}
+            </Flex>
+          </Flex>
         </Box>
       )}
     </>
   );
 };
 
-export default ReverseCrossBlockTest;
+export default CrossBlockTest;

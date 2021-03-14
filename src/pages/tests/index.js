@@ -36,6 +36,7 @@ const Tests = () => {
             path="/tests/reverse-corsi"
             component={ReverseCrossBlockIntroduction}
           />
+          <Route path="/tests/digit-span" component={DigitSpanIntroduction} />
           <Route
             path="/tests/digit-symbol"
             component={DigitSymbolIntroduction}
@@ -45,7 +46,6 @@ const Tests = () => {
             path="/tests/logical-reasoning"
             component={LogicalReasoningIntroduction}
           />
-          <Route path="/tests/digit-span" component={DigitSpanIntroduction} />
         </>
         {/* ) : (
           history.push("/")

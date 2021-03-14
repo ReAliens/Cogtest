@@ -2,13 +2,13 @@ import { Box, Flex, Grid, Icon } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa";
 
-const Card = ({ onClick, active, activeType }) => {
+const Card = ({ onClick, active, activeType, cardsNumber }) => {
   return (
     <Flex justifyContent="center">
       <Box
         borderRadius="10px"
-        width="full"
-        height={150}
+        width={["50px", "120px", "180px", "180px"]}
+        height={[75, 100, 150, 150]}
         bgColor={active && activeType === "flash" ? "red" : "blue.600"}
         onClick={onClick}
         margin="auto"
@@ -46,16 +46,18 @@ const CrossBlockGrid = ({
   }, [setSelectedCards, setStarted, activeCards, setActiveType]);
   return (
     <Grid
-      // width="600px"
-      // height="400px"
-      templateColumns="repeat(5, 1fr)"
+      minW={["300px", "600px", "800px", "1000px"]}
+      margin="auto"
+      templateColumns={`repeat(${(numberOfCards / 2) >> 0}, 1fr)`}
       dir="ltr"
+      h="100%"
       gap={4}
     >
       {Array.from(new Array(numberOfCards))
         .map((_, i) => i)
         .map((index) => (
           <Card
+            cardsNumber={numberOfCards}
             active={(selectedCards || []).indexOf(index) !== -1}
             key={index}
             onClick={() => {
