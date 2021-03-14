@@ -67,7 +67,7 @@ const FlankerTrial = () => {
               marginX="20px"
               dir="rtl"
             >
-              <Text> {trialQuestions?.message}</Text>
+              <Text> {trialQuestions?.message} التجريبية</Text>
               {!answer[currQuestionIndex] ? (
                 ""
               ) : answer[currQuestionIndex] === currentQuestionCorrectAnswer ? (
@@ -106,7 +106,7 @@ const FlankerTrial = () => {
                 {trialQuestions?.payload && (
                   <Image
                     fit="cover"
-                    width="100px"
+                    width="200px"
                     src={trialQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}

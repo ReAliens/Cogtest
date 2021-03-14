@@ -68,7 +68,7 @@ const InhibitionTrial = () => {
               marginX="20px"
               dir="rtl"
             >
-              <Text> {trialQuestions?.message}</Text>
+              <Text> {trialQuestions?.message} التجريبية</Text>
               {!answer[currQuestionIndex] ? (
                 ""
               ) : answer[currQuestionIndex] === currentQuestionCorrectAnswer ? (
