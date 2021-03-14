@@ -1,10 +1,19 @@
-import { Box, Flex, Input, Progress, Text } from "@chakra-ui/react";
-import React, { useEffect, useMemo, useState } from "react";
-
+import { Box, Flex, Input, Progress, Text, useToast } from "@chakra-ui/react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
+import ReactCountdownClockownClock from "react-countdown-clock";
 import { useHistory, useParams } from "react-router-dom";
 import StartTestButton from "../../../../../components/Button";
 import Loader from "../../../../../components/Loader";
+import { UserInfoContext } from "../../../../../contexts/userContext";
+import useAnswer from "../../../../../hooks/useAnswer";
 import useQuestions from "../../../../../hooks/useQuestions";
+import useTests from "../../../../../hooks/useTests";
 
 function DigitSpan({ symbols, onChange, speedMS }) {
   const [currentNumber, setCurrentNumber] = useState(null);
@@ -79,11 +88,16 @@ function DigitSpan({ symbols, onChange, speedMS }) {
   );
 }
 
-const CrossBlockTest = () => {
+const DigitSpanTest = () => {
+  const { userInfo } = useContext(UserInfoContext);
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const history = useHistory();
   const params = useParams();
+  const { tests } = useTests();
+  const toast = useToast();
+  const { submitAnswerTest } = useAnswer();
+
   const { questions: allQuestions, questionLoading } = useQuestions(
     params.testID
   );
@@ -95,6 +109,39 @@ const CrossBlockTest = () => {
         : null,
     [allQuestions, currQuestionIndex]
   );
+
+  const testDuration = useMemo(
+    () => (tests && tests?.payload ? tests?.payload[4]?.duration : null),
+    [tests]
+  );
+
+  const onSubmitAnswertTest = useCallback(() => {
+    try {
+      const answersPayload = [];
+      Object.keys(answers).forEach((key) => {
+        const questionID = allQuestions.payload[key].id;
+        answersPayload.push({
+          question_id: questionID,
+          answer_id: answers[key],
+        });
+      });
+      const testAnswerPayload = {
+        cogtest_id: params.testID,
+        answers: answersPayload,
+        user_id: userInfo?.payload?.id,
+      };
+      submitAnswerTest(testAnswerPayload);
+      toast({
+        position: "top-right",
+        description: "تم تسجيل الاجابات بنجاح",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }, [answers, params, userInfo, submitAnswerTest, allQuestions, toast]);
 
   return (
     <>
@@ -111,12 +158,32 @@ const CrossBlockTest = () => {
             flexDir="column"
           >
             <Flex
+              alignItems="center"
+              justifyContent="space-between"
+              marginX="20px"
+              dir="rtl"
+            >
+              <Text> {allQuestions?.message} </Text>
+              <ReactCountdownClockownClock
+                seconds={testDuration}
+                color="red"
+                alpha={0.9}
+                size={50}
+                onComplete={() => {
+                  if (testDuration) {
+                    onSubmitAnswertTest();
+                    history.push("/tests/reverse-digit-span");
+                  }
+                }}
+              />
+            </Flex>
+            <Flex
               justifyContent="center"
-              paddingBottom="100px"
+              paddingBottom="20px"
               marginTop="30px"
               bg="#E4E6EF"
               paddingX="20px"
-              h="500px"
+              // h="500px"
               flexDir="column"
               dir="rtl"
             >
@@ -132,7 +199,7 @@ const CrossBlockTest = () => {
                   }}
                 />
               )}
-              <Flex width="50%" marginTop="20px">
+              <Flex justifyContent="center" width="100%" marginTop="20px">
                 <StartTestButton
                   width="200px"
                   type="next"
@@ -142,7 +209,8 @@ const CrossBlockTest = () => {
                     if (currQuestionIndex < allQuestions?.payload.length - 1) {
                       setCurrQuestionIndex(currQuestionIndex + 1);
                     } else {
-                      history.push("/tests/digit-symbol");
+                      onSubmitAnswertTest();
+                      history.push("/tests/reverse-digit-span");
                     }
                   }}
                 />
@@ -155,4 +223,4 @@ const CrossBlockTest = () => {
   );
 };
 
-export default CrossBlockTest;
+export default DigitSpanTest;

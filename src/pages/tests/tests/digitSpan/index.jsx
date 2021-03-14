@@ -4,6 +4,7 @@ import Loader from "../../../../components/Loader";
 
 const DigitSpanIntroduction = lazy(() => import("./introduction/index"));
 const DigitSpanTest = lazy(() => import("./test"));
+const DigitSpanTrial = lazy(() => import("./trial"));
 
 const Tests = () => {
   return (
@@ -14,6 +15,11 @@ const Tests = () => {
             exact
             path="/tests/digit-span"
             component={DigitSpanIntroduction}
+          />
+          <Route
+            exact
+            path="/tests/digit-span/trial"
+            component={DigitSpanTrial}
           />
           <Route path="/tests/digit-span/:testID" component={DigitSpanTest} />
         </Switch>

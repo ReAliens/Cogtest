@@ -16,6 +16,9 @@ const LogicalReasoningIntroduction = lazy(() =>
 );
 
 const DigitSpanIntroduction = lazy(() => import("./tests/digitSpan"));
+const ReverseDigitSpanIntroduction = lazy(() =>
+  import("./tests/reverseDigitSpan")
+);
 
 const Tests = () => {
   const { userInfo } = useContext(UserInfoContext);
@@ -37,6 +40,11 @@ const Tests = () => {
             component={ReverseCrossBlockIntroduction}
           />
           <Route path="/tests/digit-span" component={DigitSpanIntroduction} />
+          <Route
+            path="/tests/reverse-digit-span"
+            component={ReverseDigitSpanIntroduction}
+          />
+
           <Route
             path="/tests/digit-symbol"
             component={DigitSymbolIntroduction}

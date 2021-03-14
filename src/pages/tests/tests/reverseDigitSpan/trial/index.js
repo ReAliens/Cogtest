@@ -1,18 +1,10 @@
-import { Box, Flex, Input, Progress, Text, useToast } from "@chakra-ui/react";
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
-import ReactCountdownClockownClock from "react-countdown-clock";
-import { useHistory, useParams } from "react-router-dom";
+import { Box, Flex, Input, Progress, Text } from "@chakra-ui/react";
+import React, { useEffect, useMemo, useState } from "react";
+
+import { useHistory } from "react-router-dom";
 import StartTestButton from "../../../../../components/Button";
 import Loader from "../../../../../components/Loader";
-import { UserInfoContext } from "../../../../../contexts/userContext";
-import useAnswer from "../../../../../hooks/useAnswer";
-import useQuestions from "../../../../../hooks/useQuestions";
+import useTrialQuestions from "../../../../../hooks/useTerial";
 import useTests from "../../../../../hooks/useTests";
 
 function DigitSpan({ symbols, onChange, speedMS }) {
@@ -88,64 +80,38 @@ function DigitSpan({ symbols, onChange, speedMS }) {
   );
 }
 
-const ReverseDigitSpanTest = () => {
-  const { userInfo } = useContext(UserInfoContext);
+const ReverseDigitSpanTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const history = useHistory();
-  const params = useParams();
   const { tests } = useTests();
-  const toast = useToast();
-  const { submitAnswerTest } = useAnswer();
-
-  const { questions: allQuestions, questionLoading } = useQuestions(
-    params.testID
+  const trialReverseDigitSpanData = tests?.payload?.find(
+    (load) => load?.code === "reverse-digit-span"
   );
-
+  const reverseDigitSpanID = trialReverseDigitSpanData?.id;
+  const { trialQuestions, trialQuestionLoading } = useTrialQuestions(
+    reverseDigitSpanID
+  );
+  console.log(trialQuestions);
   const currentSymbols = useMemo(
     () =>
-      allQuestions && allQuestions?.payload
-        ? JSON.parse(allQuestions?.payload[currQuestionIndex]?.number_series)
+      trialQuestions && trialQuestions?.payload
+        ? JSON.parse(trialQuestions?.payload[currQuestionIndex]?.number_series)
         : null,
-    [allQuestions, currQuestionIndex]
+    [trialQuestions, currQuestionIndex]
   );
 
-  const testDuration = useMemo(
-    () => (tests && tests?.payload ? tests?.payload[5]?.duration : null),
-    [tests]
-  );
-
-  const onSubmitAnswertTest = useCallback(() => {
-    try {
-      const answersPayload = [];
-      Object.keys(answers).forEach((key) => {
-        const questionID = allQuestions.payload[key].id;
-        answersPayload.push({
-          question_id: questionID,
-          answer_id: answers[key],
-        });
-      });
-      const testAnswerPayload = {
-        cogtest_id: params.testID,
-        answers: answersPayload,
-        user_id: userInfo?.payload?.id,
-      };
-      submitAnswerTest(testAnswerPayload);
-      toast({
-        position: "top-right",
-        description: "تم تسجيل الاجابات بنجاح",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }, [answers, params, userInfo, submitAnswerTest, allQuestions, toast]);
+  // const currentQuestionCorrectAnswer = useMemo(
+  //   () =>
+  //     trialQuestions && trialQuestions?.payload
+  //       ? trialQuestions?.payload[currQuestionIndex]?.answers[0]
+  //       : null,
+  //   [trialQuestions, currQuestionIndex]
+  // );
 
   return (
     <>
-      {questionLoading ? (
+      {trialQuestionLoading ? (
         <Loader />
       ) : (
         <Box margin="auto">
@@ -163,19 +129,19 @@ const ReverseDigitSpanTest = () => {
               marginX="20px"
               dir="rtl"
             >
-              <Text> {allQuestions?.message} </Text>
-              <ReactCountdownClockownClock
-                seconds={testDuration}
-                color="red"
-                alpha={0.9}
-                size={50}
-                onComplete={() => {
-                  if (testDuration) {
-                    onSubmitAnswertTest();
-                    history.push("/tests/digit-symbol");
-                  }
-                }}
-              />
+              <Text> {trialQuestions?.message} التجريبية</Text>
+              {/* {!answers[currQuestionIndex] ? (
+                ""
+              ) : answers[currQuestionIndex] ===
+                currentQuestionCorrectAnswer ? (
+                <Text fontSize="3xl" fontWeight="bold" color="green.400">
+                  إجابة صحيحة
+                </Text>
+              ) : (
+                <Text fontSize="3xl" fontWeight="bold" color="red.400">
+                  إجابة خاطئة
+                </Text>
+              )} */}
             </Flex>
             <Flex
               justifyContent="center"
@@ -206,11 +172,15 @@ const ReverseDigitSpanTest = () => {
                   buttonText="التالى"
                   disabled={!answers[currQuestionIndex]}
                   onClick={() => {
-                    if (currQuestionIndex < allQuestions?.payload.length - 1) {
+                    if (
+                      currQuestionIndex <
+                      trialQuestions?.payload.length - 1
+                    ) {
                       setCurrQuestionIndex(currQuestionIndex + 1);
                     } else {
-                      onSubmitAnswertTest();
-                      history.push("/tests/digit-symbol");
+                      history.push(
+                        `/tests/reverse-digit-span/${reverseDigitSpanID}`
+                      );
                     }
                   }}
                 />
@@ -223,4 +193,4 @@ const ReverseDigitSpanTest = () => {
   );
 };
 
-export default ReverseDigitSpanTest;
+export default ReverseDigitSpanTrial;
