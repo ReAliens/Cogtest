@@ -7,7 +7,7 @@ import UserInfo from "./pages/tests/UserInfo";
 import Header from "./components/appHeader";
 import Footer from "./components/footer";
 import useSettings from "./hooks/useSettings";
-import { Flex, IconButton, Spinner } from "@chakra-ui/react";
+import { Flex, IconButton } from "@chakra-ui/react";
 import {
   FaFacebookF,
   FaYoutube,
@@ -17,22 +17,17 @@ import {
   FaSnapchat,
 } from "react-icons/fa";
 import UserInfoProvider from "./contexts/userContext";
+import Loader from "./components/Loader";
+import { useCurrentBreakpointName } from "react-socks";
 
 export default function AppRouter() {
   const { settings, settingsLoading } = useSettings();
+  const breakPointName = useCurrentBreakpointName();
   return (
     <UserInfoProvider>
       <Flex alignItems="center" margin="auto" flexDir="column">
         {settingsLoading === true ? (
-          <Spinner
-            marginTop="20%"
-            height="200px"
-            width="200px"
-            color="red.500"
-            thickness="4px"
-            speed="0.9s"
-            emptyColor="gray.200"
-          />
+          <Loader />
         ) : (
           <Flex
             alignItems="center"
@@ -65,13 +60,7 @@ export default function AppRouter() {
               </Switch>
             </Router>
             <Flex w="100%" alignItems="center" justifyContent="space-between">
-              <Flex
-                // minW={["300px", "600px", "800px", "100%"]}
-                minW="100%"
-                // paddingX="50px"
-                justifyContent="space-between"
-                marginTop="10px"
-              >
+              <Flex minW="100%" justifyContent="space-between" marginTop="10px">
                 <Flex>
                   {settings?.payload?.facebook && (
                     <a
@@ -81,7 +70,12 @@ export default function AppRouter() {
                     >
                       <IconButton
                         as={FaFacebookF}
-                        size="md"
+                        size={
+                          breakPointName === "small" ||
+                          breakPointName === "xsmall"
+                            ? "sm"
+                            : "md"
+                        }
                         color="blue.500"
                         rounded="full"
                         cursor="pointer"
@@ -100,7 +94,12 @@ export default function AppRouter() {
                         padding="5px"
                         as={FaYoutube}
                         color="red.500"
-                        size="md"
+                        size={
+                          breakPointName === "small" ||
+                          breakPointName === "xsmall"
+                            ? "sm"
+                            : "md"
+                        }
                         rounded="full"
                         cursor="pointer"
                         margin="5px"
@@ -115,7 +114,12 @@ export default function AppRouter() {
                     >
                       <IconButton
                         as={FaLinkedin}
-                        size="md"
+                        size={
+                          breakPointName === "small" ||
+                          breakPointName === "xsmall"
+                            ? "sm"
+                            : "md"
+                        }
                         color="blue.500"
                         padding="5px"
                         rounded="full"
@@ -133,7 +137,12 @@ export default function AppRouter() {
                       <IconButton
                         as={FaInstagram}
                         padding="5px"
-                        size="md"
+                        size={
+                          breakPointName === "small" ||
+                          breakPointName === "xsmall"
+                            ? "sm"
+                            : "md"
+                        }
                         color="#fb3958"
                         rounded="full"
                         cursor="pointer"
@@ -149,7 +158,12 @@ export default function AppRouter() {
                     >
                       <IconButton
                         as={FaWhatsapp}
-                        size="md"
+                        size={
+                          breakPointName === "small" ||
+                          breakPointName === "xsmall"
+                            ? "sm"
+                            : "md"
+                        }
                         padding="5px"
                         rounded="full"
                         color="whatsapp.600"
@@ -166,7 +180,12 @@ export default function AppRouter() {
                     >
                       <IconButton
                         as={FaSnapchat}
-                        size="md"
+                        size={
+                          breakPointName === "small" ||
+                          breakPointName === "xsmall"
+                            ? "sm"
+                            : "md"
+                        }
                         rounded="full"
                         padding="5px"
                         color="yellow.400"

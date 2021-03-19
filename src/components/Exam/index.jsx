@@ -1,6 +1,7 @@
 import { Box, Flex, Grid, Image, Text } from "@chakra-ui/react";
 import React from "react";
 import ReactCountdownClockownClock from "react-countdown-clock";
+import { Breakpoint } from "react-socks";
 import StartTestButton from "../Button";
 
 const Test = ({
@@ -19,12 +20,12 @@ const Test = ({
   examName,
 }) => {
   return (
-    <>
+    <Box margin="auto">
       <Flex
         borderRadius="10px"
         paddingTop="20px"
         h="100%"
-        minW={["300px", "600px", "800px", "1000px"]}
+        w="70vw"
         bg="#f9f9fc"
         flexDir="column"
       >
@@ -34,7 +35,9 @@ const Test = ({
           marginX="20px"
           dir="rtl"
         >
-          <Text> {allQuestions?.message}</Text>
+          <Text fontSize={["12px", "16px", "16px", "16px"]}>
+            {allQuestions?.message}
+          </Text>
           <ReactCountdownClockownClock
             seconds={duration}
             color="red"
@@ -50,7 +53,13 @@ const Test = ({
           marginTop="30px"
           bg="#E4E6EF"
           paddingX="20px"
-          h="500px"
+          h={
+            examName === "inhibtion"
+              ? "100%"
+              : examName === "logicalReasoning"
+              ? "630"
+              : "500px"
+          }
           flexDir="column"
           dir="rtl"
         >
@@ -77,40 +86,82 @@ const Test = ({
                   </Text>
                 )}
               </Flex>
-              <Grid gap={5} marginTop="20px" templateColumns="1fr 1fr 1fr 1fr">
-                {allQuestions?.payload &&
-                  allQuestions?.payload[currQuestionIndex]?.answers?.map(
-                    (option) => (
-                      <Box
-                        justifyContent="center"
-                        alignItems="center"
-                        as="buton"
-                        cursor="pointer"
-                        borderWidth="1px"
-                        borderRadius="md"
-                        boxShadow="md"
-                        _hover={{
-                          bg: "#68D391",
-                        }}
-                        bg={
-                          answers[currQuestionIndex] === option?.id
-                            ? "#68D391"
-                            : null
-                        }
-                        px={5}
-                        py={3}
-                        onClick={() => {
-                          setAnswers({
-                            ...answers,
-                            [currQuestionIndex]: option?.id,
-                          });
-                        }}
-                      >
-                        <Text>{option.answer}</Text>
-                      </Box>
-                    )
-                  )}
-              </Grid>
+              <Breakpoint medium up>
+                <Grid
+                  gap={5}
+                  marginTop="20px"
+                  templateColumns="1fr 1fr 1fr 1fr"
+                >
+                  {allQuestions?.payload &&
+                    allQuestions?.payload[currQuestionIndex]?.answers?.map(
+                      (option) => (
+                        <Box
+                          justifyContent="center"
+                          alignItems="center"
+                          as="buton"
+                          cursor="pointer"
+                          borderWidth="1px"
+                          borderRadius="md"
+                          boxShadow="md"
+                          _hover={{
+                            bg: "#68D391",
+                          }}
+                          bg={
+                            answers[currQuestionIndex] === option?.id
+                              ? "#68D391"
+                              : null
+                          }
+                          px={5}
+                          py={3}
+                          onClick={() => {
+                            setAnswers({
+                              ...answers,
+                              [currQuestionIndex]: option?.id,
+                            });
+                          }}
+                        >
+                          <Text>{option.answer}</Text>
+                        </Box>
+                      )
+                    )}
+                </Grid>
+              </Breakpoint>
+              <Breakpoint small down>
+                <Grid gap={5} marginTop="20px" templateRows="1fr 1fr 1fr 1fr">
+                  {allQuestions?.payload &&
+                    allQuestions?.payload[currQuestionIndex]?.answers?.map(
+                      (option) => (
+                        <Box
+                          justifyContent="center"
+                          alignItems="center"
+                          as="buton"
+                          cursor="pointer"
+                          borderWidth="1px"
+                          borderRadius="md"
+                          boxShadow="md"
+                          _hover={{
+                            bg: "#68D391",
+                          }}
+                          bg={
+                            answers[currQuestionIndex] === option?.id
+                              ? "#68D391"
+                              : null
+                          }
+                          px={5}
+                          py={3}
+                          onClick={() => {
+                            setAnswers({
+                              ...answers,
+                              [currQuestionIndex]: option?.id,
+                            });
+                          }}
+                        >
+                          <Text>{option.answer}</Text>
+                        </Box>
+                      )
+                    )}
+                </Grid>
+              </Breakpoint>
             </>
           ) : examName === "flanker" ? (
             <>
@@ -191,40 +242,78 @@ const Test = ({
                   />
                 )}
               </Flex>
-              <Grid gap={5} marginTop="20px" templateColumns="1fr 1fr 1fr 1fr">
-                {allQuestions?.payload &&
-                  allQuestions?.payload[currQuestionIndex].answers.map(
-                    (option) => (
-                      <Box
-                        justifyContent="center"
-                        alignItems="center"
-                        as="buton"
-                        cursor="pointer"
-                        borderWidth="1px"
-                        borderRadius="md"
-                        boxShadow="md"
-                        _hover={{
-                          bg: "#68D391",
-                        }}
-                        bg={
-                          answers[currQuestionIndex] === option?.id
-                            ? "#68D391"
-                            : null
-                        }
-                        px={5}
-                        py={3}
-                        onClick={() => {
-                          setAnswers({
-                            ...answers,
-                            [currQuestionIndex]: option?.id,
-                          });
-                        }}
-                      >
-                        <Text>{option.answer}</Text>
-                      </Box>
-                    )
-                  )}
-              </Grid>
+              <Breakpoint medium up>
+                <Grid gap={5} marginTop="20px" templateColumns="1fr 1fr 1fr">
+                  {allQuestions?.payload &&
+                    allQuestions?.payload[currQuestionIndex].answers.map(
+                      (option) => (
+                        <Box
+                          justifyContent="center"
+                          alignItems="center"
+                          as="buton"
+                          cursor="pointer"
+                          borderWidth="1px"
+                          borderRadius="md"
+                          boxShadow="md"
+                          _hover={{
+                            bg: "#68D391",
+                          }}
+                          bg={
+                            answers[currQuestionIndex] === option?.id
+                              ? "#68D391"
+                              : null
+                          }
+                          px={5}
+                          py={3}
+                          onClick={() => {
+                            setAnswers({
+                              ...answers,
+                              [currQuestionIndex]: option?.id,
+                            });
+                          }}
+                        >
+                          <Text>{option.answer}</Text>
+                        </Box>
+                      )
+                    )}
+                </Grid>
+              </Breakpoint>
+              <Breakpoint small down>
+                <Grid gap={5} marginTop="20px" templateRows="1fr 1fr 1fr">
+                  {allQuestions?.payload &&
+                    allQuestions?.payload[currQuestionIndex].answers.map(
+                      (option) => (
+                        <Box
+                          justifyContent="center"
+                          alignItems="center"
+                          as="buton"
+                          cursor="pointer"
+                          borderWidth="1px"
+                          borderRadius="md"
+                          boxShadow="md"
+                          _hover={{
+                            bg: "#68D391",
+                          }}
+                          bg={
+                            answers[currQuestionIndex] === option?.id
+                              ? "#68D391"
+                              : null
+                          }
+                          px={5}
+                          py={3}
+                          onClick={() => {
+                            setAnswers({
+                              ...answers,
+                              [currQuestionIndex]: option?.id,
+                            });
+                          }}
+                        >
+                          <Text>{option.answer}</Text>
+                        </Box>
+                      )
+                    )}
+                </Grid>
+              </Breakpoint>
             </>
           ) : examName === "inhibtion" ? (
             <>
@@ -248,42 +337,83 @@ const Test = ({
                   />
                 )}
               </Flex>
-              <Grid gap={5} marginTop="20px" templateColumns="1fr 1fr 1fr">
-                {allQuestions?.payload &&
-                  allQuestions?.payload[currQuestionIndex].answers.map(
-                    (option) => (
-                      <Box
-                        justifyContent="center"
-                        alignItems="center"
-                        margin="auto"
-                        as="buton"
-                        cursor="pointer"
-                        borderWidth="1px"
-                        borderRadius="md"
-                        boxShadow="md"
-                        background="white"
-                        _hover={{
-                          bg: "#68D391",
-                        }}
-                        bg={
-                          answers[currQuestionIndex] === option?.id
-                            ? "#68D391"
-                            : null
-                        }
-                        px={5}
-                        py={3}
-                        onClick={() => {
-                          setAnswers({
-                            ...answers,
-                            [currQuestionIndex]: option?.id,
-                          });
-                        }}
-                      >
-                        <Image margin="auto" src={option?.answer_image} />
-                      </Box>
-                    )
-                  )}
-              </Grid>
+
+              <Breakpoint medium up>
+                <Grid gap={5} marginTop="20px" templateColumns="1fr 1fr 1fr">
+                  {allQuestions?.payload &&
+                    allQuestions?.payload[currQuestionIndex].answers.map(
+                      (option) => (
+                        <Box
+                          justifyContent="center"
+                          alignItems="center"
+                          margin="auto"
+                          as="buton"
+                          cursor="pointer"
+                          borderWidth="1px"
+                          borderRadius="md"
+                          boxShadow="md"
+                          background="white"
+                          _hover={{
+                            bg: "#68D391",
+                          }}
+                          bg={
+                            answers[currQuestionIndex] === option?.id
+                              ? "#68D391"
+                              : null
+                          }
+                          px={5}
+                          py={3}
+                          onClick={() => {
+                            setAnswers({
+                              ...answers,
+                              [currQuestionIndex]: option?.id,
+                            });
+                          }}
+                        >
+                          <Image margin="auto" src={option?.answer_image} />
+                        </Box>
+                      )
+                    )}
+                </Grid>
+              </Breakpoint>
+              <Breakpoint small down>
+                <Grid gap={5} marginTop="20px" templateRows="1fr 1fr 1fr">
+                  {allQuestions?.payload &&
+                    allQuestions?.payload[currQuestionIndex].answers.map(
+                      (option) => (
+                        <Box
+                          justifyContent="center"
+                          alignItems="center"
+                          margin="auto"
+                          as="buton"
+                          cursor="pointer"
+                          borderWidth="1px"
+                          borderRadius="md"
+                          boxShadow="md"
+                          background="white"
+                          _hover={{
+                            bg: "#68D391",
+                          }}
+                          bg={
+                            answers[currQuestionIndex] === option?.id
+                              ? "#68D391"
+                              : null
+                          }
+                          px={5}
+                          py={3}
+                          onClick={() => {
+                            setAnswers({
+                              ...answers,
+                              [currQuestionIndex]: option?.id,
+                            });
+                          }}
+                        >
+                          <Image margin="auto" src={option?.answer_image} />
+                        </Box>
+                      )
+                    )}
+                </Grid>
+              </Breakpoint>
             </>
           ) : examName === "logicalReasoning" ? (
             <>
@@ -307,41 +437,84 @@ const Test = ({
                   />
                 )}
               </Flex>
-              <Grid gap={5} marginTop="20px" templateColumns="1fr 1fr 1fr 1fr">
-                {allQuestions?.payload &&
-                  allQuestions?.payload[currQuestionIndex].answers.map(
-                    (option) => (
-                      <Box
-                        justifyContent="center"
-                        alignItems="center"
-                        as="buton"
-                        cursor="pointer"
-                        borderWidth="1px"
-                        borderRadius="md"
-                        boxShadow="md"
-                        background="white"
-                        _hover={{
-                          bg: "#68D391",
-                        }}
-                        bg={
-                          answers[currQuestionIndex] === option?.id
-                            ? "#68D391"
-                            : null
-                        }
-                        px={5}
-                        py={3}
-                        onClick={() => {
-                          setAnswers({
-                            ...answers,
-                            [currQuestionIndex]: option?.id,
-                          });
-                        }}
-                      >
-                        <Image margin="auto" src={option.answer_image} />
-                      </Box>
-                    )
-                  )}
-              </Grid>
+              <Breakpoint medium up>
+                <Grid
+                  gap={5}
+                  marginTop="20px"
+                  templateColumns="1fr 1fr 1fr 1fr"
+                >
+                  {allQuestions?.payload &&
+                    allQuestions?.payload[currQuestionIndex].answers.map(
+                      (option) => (
+                        <Box
+                          justifyContent="center"
+                          alignItems="center"
+                          as="buton"
+                          cursor="pointer"
+                          borderWidth="1px"
+                          borderRadius="md"
+                          boxShadow="md"
+                          background="white"
+                          _hover={{
+                            bg: "#68D391",
+                          }}
+                          bg={
+                            answers[currQuestionIndex] === option?.id
+                              ? "#68D391"
+                              : null
+                          }
+                          px={5}
+                          py={3}
+                          onClick={() => {
+                            setAnswers({
+                              ...answers,
+                              [currQuestionIndex]: option?.id,
+                            });
+                          }}
+                        >
+                          <Image margin="auto" src={option.answer_image} />
+                        </Box>
+                      )
+                    )}
+                </Grid>
+              </Breakpoint>
+              <Breakpoint small down>
+                <Grid gap={5} marginTop="20px" templateRows="1fr 1fr 1fr 1fr">
+                  {allQuestions?.payload &&
+                    allQuestions?.payload[currQuestionIndex].answers.map(
+                      (option) => (
+                        <Box
+                          justifyContent="center"
+                          alignItems="center"
+                          as="buton"
+                          cursor="pointer"
+                          borderWidth="1px"
+                          borderRadius="md"
+                          boxShadow="md"
+                          background="white"
+                          _hover={{
+                            bg: "#68D391",
+                          }}
+                          bg={
+                            answers[currQuestionIndex] === option?.id
+                              ? "#68D391"
+                              : null
+                          }
+                          px={5}
+                          py={3}
+                          onClick={() => {
+                            setAnswers({
+                              ...answers,
+                              [currQuestionIndex]: option?.id,
+                            });
+                          }}
+                        >
+                          <Image margin="auto" src={option.answer_image} />
+                        </Box>
+                      )
+                    )}
+                </Grid>
+              </Breakpoint>
             </>
           ) : (
             ""
@@ -373,7 +546,7 @@ const Test = ({
           </Flex>
         </Flex>
       </Flex>
-    </>
+    </Box>
   );
 };
 

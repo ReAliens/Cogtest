@@ -20,6 +20,7 @@ const FormInput = ({
   containerProps,
   placeholder,
   width,
+  maxW,
   ...props
 }) => {
   const { register, errors } = useFormContext();
@@ -39,6 +40,7 @@ const FormInput = ({
         </FormLabel>
       ) : null}
       <Input
+        w="100%"
         type={type}
         id={id}
         name={id}

@@ -1,7 +1,14 @@
 import { Button, Text } from "@chakra-ui/react";
 import React from "react";
 
-const StartTestButton = ({ type, onClick, buttonText, disabled, ...props }) => (
+const StartTestButton = ({
+  type,
+  onClick,
+  buttonText,
+  disabled,
+  textSize,
+  ...props
+}) => (
   <Button
     type={type}
     disabled={disabled}
@@ -14,7 +21,9 @@ const StartTestButton = ({ type, onClick, buttonText, disabled, ...props }) => (
     onClick={onClick}
     {...props}
   >
-    <Text color="white">{buttonText}</Text>
+    <Text fontSize={textSize} color="white">
+      {buttonText}
+    </Text>
   </Button>
 );
 

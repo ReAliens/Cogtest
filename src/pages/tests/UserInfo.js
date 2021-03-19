@@ -62,13 +62,12 @@ const UserInfo = () => {
   );
 
   return (
-    <Box height="100%" overflowX="hidden" overflow="hidden">
+    <Box margin="auto" overflowX="hidden" overflow="hidden">
       <Flex
         borderRadius="10px"
         paddingTop="20px"
         h="100%"
-        maxW="800px"
-        minW="400px"
+        minW="200px"
         bg="#f9f9fc"
         flexDir="column"
         overflow="hidden"
@@ -92,7 +91,7 @@ const UserInfo = () => {
                 marginTop="20px"
                 justifyContent="center"
                 // W="800px"
-                w={["30vh", "60vh", "80vh", "100vh"]}
+                w="70vw"
                 borderRadius="10px"
                 bg="white"
                 templateRows="repeat(6,1fr)"
@@ -103,27 +102,34 @@ const UserInfo = () => {
                     تسجيل البيانات
                   </Text>
                 </Flex>
-                <Flex>
+                <Flex
+                  w={["200px", "400px", "500px", "600px"]}
+                  justifyContent="flex-end"
+                >
                   <FormInput
                     id="name"
                     placeholder="من فضلك ادخل اسمك"
                     type="text"
                     label="اسمك  (اختيارى)"
+                    labelSize={["12px", "14px", "16px", "16px"]}
                     validation={{
                       minLength: {
                         value: 3,
                         message: "يجب الا يقل الاسم عن ثلاثة اخرف",
                       },
                     }}
-                    width="500px"
                   />
                 </Flex>
-                <Flex width="100%">
+                <Flex
+                  w={["200px", "400px", "500px", "600px"]}
+                  justifyContent="flex-end"
+                >
                   <FormSelect
                     id="stage"
                     name="stage"
                     placeholder="اختر المرحلة الدراسية"
                     label="المرحلة الدراسية"
+                    labelSize={["12px", "14px", "16px", "16px"]}
                     options={[
                       { value: "primary", label: "ابتدائى" },
                       {
@@ -148,11 +154,15 @@ const UserInfo = () => {
                   />
                 </Flex>
                 {watchedStaging?.stage?.value === "master" && (
-                  <Flex w="100%">
+                  <Flex
+                    w={["200px", "400px", "500px", "600px"]}
+                    justifyContent="flex-end"
+                  >
                     <FormSelect
                       id="type"
                       placeholder=" من فضلك اختر التخصص "
                       label=" اختر التخصص"
+                      labelSize={["12px", "14px", "16px", "16px"]}
                       options={[
                         { value: "humanScience", label: "علوم انسانية" },
                         {
@@ -169,12 +179,16 @@ const UserInfo = () => {
                     />
                   </Flex>
                 )}
-                <Flex>
+                <Flex
+                  w={["200px", "400px", "500px", "600px"]}
+                  justifyContent="flex-end"
+                >
                   <FormInput
                     id="gpa"
                     placeholder="من فضلك ادخل المعدل الدراسى"
                     type="number"
                     label="المعدل الدراسى"
+                    labelSize={["12px", "14px", "16px", "16px"]}
                     validation={{
                       required: {
                         value: true,
@@ -189,13 +203,16 @@ const UserInfo = () => {
                         message: "المعدل الدراسي يجب ان يكون بين الصفر والمائة",
                       },
                     }}
-                    width="500px"
                   />
                 </Flex>
-                <Flex>
+                <Flex
+                  w={["200px", "400px", "500px", "600px"]}
+                  justifyContent="flex-end"
+                >
                   <FormInput
                     id="age"
                     placeholder="العمر"
+                    labelSize={["12px", "14px", "16px", "16px"]}
                     type="number"
                     label=" العمر"
                     validation={{
@@ -212,7 +229,6 @@ const UserInfo = () => {
                         message: "اقصى عمر يمكن ادخاله مائة عام",
                       },
                     }}
-                    width="500px"
                   />
                 </Flex>
                 <Flex dir="rtl">
