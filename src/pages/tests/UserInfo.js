@@ -33,29 +33,9 @@ const UserInfo = () => {
         major: values?.type?.value || "",
         gender: radioValue,
       };
-      const data = await submitUserInfo(userINfo);
-      if (data?.message === "قيمة البريد الالكتروني مُستخدمة من قبل") {
-        toast({
-          position: "top-right",
-          title: "حدث خطأ",
-          description: `${data?.message}`,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-      } else if (
-        data?.message ===
-        "يجب أن يكون البريد الالكتروني عنوان بريد إلكتروني صحيح البُنية"
-      ) {
-        toast({
-          position: "top-right",
-          title: "حدث خطأ",
-          description: `${data?.message}`,
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
-      } else {
+
+      try {
+        const data = await submitUserInfo(userINfo);
         setUserInfo(data);
         toast({
           position: "top-right",
@@ -65,6 +45,17 @@ const UserInfo = () => {
           isClosable: true,
         });
         history.push("/tests/stroop");
+      } catch (err) {
+        console.log(err);
+        toast({
+          position: "top-right",
+          title: "حدث خطأ",
+          description:
+            "حدث خطأ اثناء عملية تسجيل البيانات الرجاء المحاولة مرة اخرى",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
       }
     },
     [submitUserInfo, history, radioValue, setUserInfo, toast]
@@ -104,7 +95,7 @@ const UserInfo = () => {
                 w={["30vh", "60vh", "80vh", "100vh"]}
                 borderRadius="10px"
                 bg="white"
-                templateRows="repeat(7,1fr)"
+                templateRows="repeat(6,1fr)"
                 gap={2}
               >
                 <Flex top="0px" justifyContent="center" alignItems="center">
@@ -117,12 +108,8 @@ const UserInfo = () => {
                     id="name"
                     placeholder="من فضلك ادخل اسمك"
                     type="text"
-                    label="اسمك"
+                    label="اسمك  (اختيارى)"
                     validation={{
-                      required: {
-                        value: true,
-                        message: "هذا الحقل مطلوب",
-                      },
                       minLength: {
                         value: 3,
                         message: "يجب الا يقل الاسم عن ثلاثة اخرف",
@@ -225,15 +212,6 @@ const UserInfo = () => {
                         message: "اقصى عمر يمكن ادخاله مائة عام",
                       },
                     }}
-                    width="500px"
-                  />
-                </Flex>
-                <Flex>
-                  <FormInput
-                    id="email"
-                    placeholder="البريد الإلكترونى"
-                    type="email"
-                    label=" البريد الإلكترونى"
                     width="500px"
                   />
                 </Flex>

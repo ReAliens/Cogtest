@@ -35,7 +35,7 @@ const LogicalReasoningIntroduction = () => {
         <Introduction
           testName={ninthTest?.name}
           testDesc={ninthTest?.desc}
-          testLink={`/tests/logical-reasoning/${ninthTest?.id}`}
+          testLink={`/tests/logical-reasoning/trial`}
         />
       )}
     </>

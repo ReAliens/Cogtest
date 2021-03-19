@@ -35,7 +35,7 @@ const CrossBlockIntroduction = () => {
         <Introduction
           testName={thirdTest?.name}
           testDesc={thirdTest?.desc}
-          testLink={`/tests/corsi/${thirdTest?.id}`}
+          testLink={`/tests/corsi/trial`}
         />
       )}
     </>

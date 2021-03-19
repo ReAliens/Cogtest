@@ -35,7 +35,7 @@ const ReversCrossBlockIntroduction = () => {
         <Introduction
           testName={fourthTest?.name}
           testDesc={fourthTest?.desc}
-          testLink={`/tests/reverse-corsi/${fourthTest?.id}`}
+          testLink={`/tests/reverse-corsi/trial`}
         />
       )}
     </>

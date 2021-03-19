@@ -35,7 +35,7 @@ const DigitSymbolIntroduction = () => {
         <Introduction
           testName={seventhTest?.name}
           testDesc={seventhTest?.desc}
-          testLink={`/tests/digit-symbol/${seventhTest?.id}`}
+          testLink={`/tests/digit-symbol/trial`}
         />
       )}
     </>
