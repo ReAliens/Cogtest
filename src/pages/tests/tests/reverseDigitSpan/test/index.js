@@ -90,6 +90,7 @@ function DigitSpan({ symbols, onChange, speedMS }) {
 
 const ReverseDigitSpanTest = () => {
   const { userInfo } = useContext(UserInfoContext);
+  const [wrongAnswers, setWrongAnswers] = useState(0);
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const history = useHistory();
@@ -206,6 +207,21 @@ const ReverseDigitSpanTest = () => {
                   buttonText="التالى"
                   disabled={!answers[currQuestionIndex]}
                   onClick={() => {
+                    const isCorrectAnswer =
+                      answers[currQuestionIndex].join("") ===
+                      currentSymbols.join("");
+                    console.log({ isCorrectAnswer });
+                    if (isCorrectAnswer) {
+                      setWrongAnswers(0);
+                    } else {
+                      const newWrong = wrongAnswers + 1;
+                      setWrongAnswers(newWrong);
+                      if (newWrong >= 3) {
+                        onSubmitAnswertTest();
+                        history.push("/tests/reverse-digit-span");
+                      }
+                    }
+
                     if (currQuestionIndex < allQuestions?.payload.length - 1) {
                       setCurrQuestionIndex(currQuestionIndex + 1);
                     } else {

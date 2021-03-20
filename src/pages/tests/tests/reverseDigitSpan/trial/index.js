@@ -101,13 +101,23 @@ const ReverseDigitSpanTrial = () => {
     [trialQuestions, currQuestionIndex]
   );
 
-  // const currentQuestionCorrectAnswer = useMemo(
-  //   () =>
-  //     trialQuestions && trialQuestions?.payload
-  //       ? trialQuestions?.payload[currQuestionIndex]?.answers[0]
-  //       : null,
-  //   [trialQuestions, currQuestionIndex]
-  // );
+  const currentCorrectAnswer = currentSymbols;
+
+  const isCurrQuestionCorrect = useMemo(() => {
+    if (!currentSymbols || !currentCorrectAnswer || !answers[currQuestionIndex])
+      return false;
+
+    return (
+      currentCorrectAnswer.join("") === answers[currQuestionIndex].join("")
+    );
+  }, [currentSymbols, currentCorrectAnswer, answers, currQuestionIndex]);
+
+  const hideAnswerStatus = useMemo(
+    () =>
+      !answers[currQuestionIndex] ||
+      answers[currQuestionIndex]?.length < currentCorrectAnswer?.length,
+    [answers, currQuestionIndex, currentCorrectAnswer]
+  );
 
   return (
     <>
@@ -130,18 +140,25 @@ const ReverseDigitSpanTrial = () => {
               dir="rtl"
             >
               <Text> {trialQuestions?.message} التجريبية</Text>
-              {/* {!answers[currQuestionIndex] ? (
+              {hideAnswerStatus ? (
                 ""
-              ) : answers[currQuestionIndex] ===
-                currentQuestionCorrectAnswer ? (
-                <Text fontSize="3xl" fontWeight="bold" color="green.400">
+              ) : isCurrQuestionCorrect ? (
+                <Text
+                  fontSize={["large", "3xl", "3xl", "3xl"]}
+                  fontWeight="bold"
+                  color="green.400"
+                >
                   إجابة صحيحة
                 </Text>
               ) : (
-                <Text fontSize="3xl" fontWeight="bold" color="red.400">
+                <Text
+                  fontSize={["large", "3xl", "3xl", "3xl"]}
+                  fontWeight="bold"
+                  color="red.400"
+                >
                   إجابة خاطئة
                 </Text>
-              )} */}
+              )}
             </Flex>
             <Flex
               justifyContent="center"
@@ -170,7 +187,9 @@ const ReverseDigitSpanTrial = () => {
                   width="200px"
                   type="next"
                   buttonText="التالى"
-                  disabled={!answers[currQuestionIndex]}
+                  disabled={
+                    !answers[currQuestionIndex] || !isCurrQuestionCorrect
+                  }
                   onClick={() => {
                     if (
                       currQuestionIndex <

@@ -1,14 +1,15 @@
 import { Box, Flex, Grid, Icon } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { FaCheck } from "react-icons/fa";
+import { useCurrentBreakpointName } from "react-socks";
 
 const Card = ({ onClick, active, activeType, cardsNumber }) => {
   return (
     <Flex justifyContent="center">
       <Box
         borderRadius="10px"
-        width={["50px", "120px", "180px", "180px"]}
-        height={[75, 100, 150, 150]}
+        width={[45, 100, 100, 120]}
+        height={[45, 100, 70, 70]}
         bgColor={active && activeType === "flash" ? "red" : "blue.600"}
         onClick={onClick}
         margin="auto"
@@ -30,25 +31,47 @@ const CrossBlockGrid = ({
   setSelectedCards,
   started,
   setStarted,
+  timeBetweenFlashes = 300,
 }) => {
+  const breakPointName = useCurrentBreakpointName();
   const [activeType, setActiveType] = useState("flash");
   useEffect(() => {
-    activeCards.forEach((index, i) => {
+    console.log("fisrt render");
+  }, []);
+  useEffect(() => {
+    console.log("UseEFFECT", { activeCards });
+    setActiveType("flash");
+    if (activeCards.length > 0) {
+      activeCards.forEach((index, i) => {
+        setTimeout(() => {
+          setSelectedCards([index]);
+        }, (i + 1) * timeBetweenFlashes);
+      });
       setTimeout(() => {
-        setSelectedCards([index]);
-      }, (i + 1) * 300);
-    });
-    setTimeout(() => {
-      setSelectedCards([]);
-      setStarted(true);
-      setActiveType("check");
-    }, (activeCards.length + 1) * 300);
-  }, [setSelectedCards, setStarted, activeCards, setActiveType]);
+        setSelectedCards([]);
+        setStarted(true);
+        setActiveType("check");
+      }, (activeCards.length + 1) * timeBetweenFlashes);
+    }
+  }, [
+    setSelectedCards,
+    setStarted,
+    setActiveType,
+    activeCards,
+    timeBetweenFlashes,
+  ]);
   return (
     <Grid
-      minW={["300px", "600px", "800px", "1000px"]}
       margin="auto"
-      templateColumns={`repeat(${(numberOfCards / 2) >> 0}, 1fr)`}
+      templateColumns={
+        breakPointName === "medium"
+          ? `repeat(${(numberOfCards / 3) >> 0}, 1fr)`
+          : breakPointName === "small" || breakPointName === "xsmall"
+          ? `repeat(${(numberOfCards / 5) >> 0}, 1fr)`
+          : breakPointName === "large"
+          ? `repeat(${(numberOfCards / 4) >> 0}, 1fr)`
+          : `repeat(${(numberOfCards / 2) >> 0}, 1fr)`
+      }
       dir="ltr"
       h="100%"
       gap={4}

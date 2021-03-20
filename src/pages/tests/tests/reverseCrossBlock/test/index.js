@@ -95,8 +95,8 @@ const CrossBlockTest = () => {
             borderRadius="10px"
             paddingTop="20px"
             h="100%"
-            minW={["300px", "600px", "800px", "1000px"]}
             bg="#f9f9fc"
+            w="70vw"
             flexDir="column"
           >
             <Flex
@@ -134,7 +134,7 @@ const CrossBlockTest = () => {
                   // flexWrap="wrap"
                   margin="20px"
                   h="100%"
-                  minW={["300px", "600px", "700px", "1000px"]}
+                  w="auto"
                   borderRadius="10px"
                   padding="20px"
                   bg="#f9f9fc"

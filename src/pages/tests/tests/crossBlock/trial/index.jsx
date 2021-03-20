@@ -11,7 +11,6 @@ const CrossBlockTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [started, setStarted] = useState(false);
-  // const [wrongAnswersNumbers, setWrongAnswersNumbers] = useState(0);
   const history = useHistory();
   const { tests } = useTests();
 
@@ -42,6 +41,33 @@ const CrossBlockTrial = () => {
     [trialQuestions, currQuestionIndex]
   );
 
+  const currentCorrectAnswer = useMemo(
+    () =>
+      currentQuestion ? JSON.parse(currentQuestion.answers[0].answer) : null,
+    [currentQuestion]
+  );
+
+  const isCurrQuestionCorrect = useMemo(() => {
+    if (
+      !currentQuestion ||
+      !currentCorrectAnswer ||
+      !answers[currQuestionIndex]
+    )
+      return false;
+
+    return (
+      JSON.stringify(currentCorrectAnswer) ===
+      JSON.stringify(answers[currQuestionIndex].map((ans) => ans + 1))
+    );
+  }, [currentQuestion, currentCorrectAnswer, answers, currQuestionIndex]);
+
+  const hideAnswerStatus = useMemo(
+    () =>
+      !answers[currQuestionIndex] ||
+      answers[currQuestionIndex]?.length < currentCorrectAnswer?.length,
+    [answers, currQuestionIndex, currentCorrectAnswer]
+  );
+
   const activeCards = useMemo(
     () =>
       currentQuestion
@@ -60,7 +86,7 @@ const CrossBlockTrial = () => {
             borderRadius="10px"
             paddingTop="20px"
             h="100%"
-            minW={["300px", "600px", "800px", "1000px"]}
+            w="70vw"
             bg="#f9f9fc"
             flexDir="column"
           >
@@ -71,6 +97,25 @@ const CrossBlockTrial = () => {
               dir="rtl"
             >
               <Text> {trialQuestions?.message} التجريبية</Text>
+              {hideAnswerStatus ? (
+                ""
+              ) : isCurrQuestionCorrect ? (
+                <Text
+                  fontSize={["large", "3xl", "3xl", "3xl"]}
+                  fontWeight="bold"
+                  color="green.400"
+                >
+                  إجابة صحيحة
+                </Text>
+              ) : (
+                <Text
+                  fontSize={["large", "3xl", "3xl", "3xl"]}
+                  fontWeight="bold"
+                  color="red.400"
+                >
+                  إجابة خاطئة
+                </Text>
+              )}
             </Flex>
             <Flex
               justifyContent="center"
@@ -84,10 +129,9 @@ const CrossBlockTrial = () => {
             >
               {currentQuestion && (
                 <Flex
-                  // flexWrap="wrap"
                   margin="20px"
                   h="100%"
-                  minW={["300px", "600px", "700px", "1000px"]}
+                  w="auto"
                   borderRadius="10px"
                   padding="20px"
                   bg="#f9f9fc"
@@ -100,32 +144,43 @@ const CrossBlockTrial = () => {
                     activeCards={activeCards}
                     started={started}
                     setStarted={setStarted}
+                    timeBetweenFlashes={700}
                   />
                 </Flex>
               )}
               <Flex marginTop="20px" justifyContent="center">
                 <StartTestButton
-                  buttonText="التالى"
+                  buttonText={
+                    hideAnswerStatus || isCurrQuestionCorrect
+                      ? "التالى"
+                      : "اعد المحاولة"
+                  }
                   disabled={
                     !started ||
                     !answers[currQuestionIndex] ||
                     answers[currQuestionIndex].length === 0
                   }
                   onClick={() => {
-                    const newAnswers = answers.slice();
-                    newAnswers[currQuestionIndex] = newAnswers[
-                      currQuestionIndex
-                    ].map((item) => item + 1);
+                    if (isCurrQuestionCorrect) {
+                      const newAnswers = answers.slice();
+                      newAnswers[currQuestionIndex] = newAnswers[
+                        currQuestionIndex
+                      ].map((item) => item + 1);
 
-                    setAnswers(newAnswers);
-                    if (
-                      currQuestionIndex >=
-                      trialQuestions?.payload.length - 1
-                    ) {
-                      history.push(`/tests/corsi/${trialCrossBlockID}`);
+                      setAnswers(newAnswers);
+                      if (
+                        currQuestionIndex >=
+                        trialQuestions?.payload.length - 1
+                      ) {
+                        history.push(`/tests/corsi/${trialCrossBlockID}`);
+                      } else {
+                        setStarted(false);
+                        setCurrQuestionIndex(currQuestionIndex + 1);
+                      }
                     } else {
-                      setStarted(false);
-                      setCurrQuestionIndex(currQuestionIndex + 1);
+                      const newAnswers = answers.slice();
+                      newAnswers[currQuestionIndex] = [];
+                      setAnswers(newAnswers);
                     }
                   }}
                 />

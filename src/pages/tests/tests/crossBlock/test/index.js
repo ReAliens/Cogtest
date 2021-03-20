@@ -94,7 +94,7 @@ const CrossBlockTest = () => {
             borderRadius="10px"
             paddingTop="20px"
             h="100%"
-            minW={["300px", "600px", "800px", "1000px"]}
+            w="70vw"
             bg="#f9f9fc"
             flexDir="column"
           >
@@ -133,7 +133,7 @@ const CrossBlockTest = () => {
                   // flexWrap="wrap"
                   margin="20px"
                   h="100%"
-                  minW={["300px", "600px", "700px", "1000px"]}
+                  w="auto"
                   borderRadius="10px"
                   padding="20px"
                   bg="#f9f9fc"
@@ -170,10 +170,6 @@ const CrossBlockTest = () => {
                     const correctAnsArray = JSON.parse(
                       currentCorrectAnswer.answer
                     );
-                    console.log({
-                      correctAnsArray,
-                      curretntAns: newAnswers[currQuestionIndex],
-                    });
                     if (
                       correctAnsArray.join("") !==
                       newAnswers[currQuestionIndex].join("")
@@ -184,8 +180,8 @@ const CrossBlockTest = () => {
                     }
 
                     setWrongAnswersNumbers(newWrongAnswersNumbers);
-                    console.log({ newWrongAnswersNumbers });
                     if (newWrongAnswersNumbers >= 3) {
+                      onSubmitAnswertTest();
                       history.push("/tests/reverse-corsi");
                     }
 
