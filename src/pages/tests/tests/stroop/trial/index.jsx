@@ -4,10 +4,13 @@ import useTests from "../../../../../hooks/useTests";
 import { useHistory } from "react-router";
 import TrialExam from "../../../../../components/TrialExam";
 import Loader from "../../../../../components/Loader";
+import { useDisclosure } from "@chakra-ui/hooks";
+import TrialConfirmModal from "../../../../../components/trialConfirmationModal/idex";
 
 const StroopTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answer, setAnswer] = useState({});
+  const { onOpen, isOpen, onClose } = useDisclosure();
   const history = useHistory();
   const { tests } = useTests();
   const trialStroopData = tests?.payload?.find(
@@ -32,21 +35,28 @@ const StroopTrial = () => {
       {trialQuestionLoading || !trialQuestions ? (
         <Loader />
       ) : (
-        <TrialExam
-          examName="stroop"
-          trialQuestions={trialQuestions}
-          answer={answer}
-          currQuestionIndex={currQuestionIndex}
-          currentQuestionCorrectAnswer={currentQuestionCorrectAnswer}
-          setAnswer={setAnswer}
-          onClick={() => {
-            if (currQuestionIndex < trialQuestions?.payload.length - 1) {
-              setCurrQuestionIndex(currQuestionIndex + 1);
-            } else {
-              history.push(`/tests/stroop/${trialStroopID}`);
-            }
-          }}
-        />
+        <>
+          <TrialExam
+            examName="stroop"
+            trialQuestions={trialQuestions}
+            answer={answer}
+            currQuestionIndex={currQuestionIndex}
+            currentQuestionCorrectAnswer={currentQuestionCorrectAnswer}
+            setAnswer={setAnswer}
+            onClick={() => {
+              if (currQuestionIndex < trialQuestions?.payload.length - 1) {
+                setCurrQuestionIndex(currQuestionIndex + 1);
+              } else {
+                onOpen();
+              }
+            }}
+          />
+          <TrialConfirmModal
+            isOpen={isOpen}
+            onClose={onClose}
+            onClick={() => history.push(`/tests/stroop/${trialStroopID}`)}
+          />
+        </>
       )}
     </>
   );

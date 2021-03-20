@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import React, { useCallback, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import CrossBlockGrid from "../../../../../components/CrossBlockGrid";
@@ -6,11 +6,13 @@ import StartTestButton from "../../../../../components/Button";
 import Loader from "../../../../../components/Loader";
 import useTests from "../../../../../hooks/useTests";
 import useTrialQuestions from "../../../../../hooks/useTerial";
+import TrialConfirmModal from "../../../../../components/trialConfirmationModal/idex";
 
 const CrossBlockTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [started, setStarted] = useState(false);
+  const { onOpen, isOpen, onClose } = useDisclosure();
   const history = useHistory();
   const { tests } = useTests();
 
@@ -172,7 +174,7 @@ const CrossBlockTrial = () => {
                         currQuestionIndex >=
                         trialQuestions?.payload.length - 1
                       ) {
-                        history.push(`/tests/corsi/${trialCrossBlockID}`);
+                        onOpen();
                       } else {
                         setStarted(false);
                         setCurrQuestionIndex(currQuestionIndex + 1);
@@ -187,6 +189,11 @@ const CrossBlockTrial = () => {
               </Flex>
             </Flex>
           </Flex>
+          <TrialConfirmModal
+            isOpen={isOpen}
+            onClose={onClose}
+            onClick={() => history.push(`/tests/corsi/${trialCrossBlockID}`)}
+          />
         </Box>
       )}
     </>

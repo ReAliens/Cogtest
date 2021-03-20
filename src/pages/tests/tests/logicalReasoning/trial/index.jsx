@@ -4,10 +4,13 @@ import useTests from "../../../../../hooks/useTests";
 import { useHistory } from "react-router";
 import Loader from "../../../../../components/Loader";
 import TrialExam from "../../../../../components/TrialExam";
+import TrialConfirmModal from "../../../../../components/trialConfirmationModal/idex";
+import { useDisclosure } from "@chakra-ui/hooks";
 
 const InhibitionTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answer, setAnswer] = useState({});
+  const { onOpen, isOpen, onClose } = useDisclosure();
   const history = useHistory();
   const { tests } = useTests();
   const trialLogicalData = tests?.payload?.find(
@@ -33,21 +36,30 @@ const InhibitionTrial = () => {
       {trialQuestionLoading || !trialQuestions ? (
         <Loader />
       ) : (
-        <TrialExam
-          examName="logicalReasoning"
-          trialQuestions={trialQuestions}
-          answer={answer}
-          currQuestionIndex={currQuestionIndex}
-          currentQuestionCorrectAnswer={currentQuestionCorrectAnswer}
-          setAnswer={setAnswer}
-          onClick={() => {
-            if (currQuestionIndex < trialQuestions?.payload.length - 1) {
-              setCurrQuestionIndex(currQuestionIndex + 1);
-            } else {
-              history.push(`/tests/logical-reasoning/${trialLogicalID}`);
+        <>
+          <TrialExam
+            examName="logicalReasoning"
+            trialQuestions={trialQuestions}
+            answer={answer}
+            currQuestionIndex={currQuestionIndex}
+            currentQuestionCorrectAnswer={currentQuestionCorrectAnswer}
+            setAnswer={setAnswer}
+            onClick={() => {
+              if (currQuestionIndex < trialQuestions?.payload.length - 1) {
+                setCurrQuestionIndex(currQuestionIndex + 1);
+              } else {
+                onOpen();
+              }
+            }}
+          />
+          <TrialConfirmModal
+            isOpen={isOpen}
+            onClose={onClose}
+            onClick={() =>
+              history.push(`/tests/logical-reasoning/${trialLogicalID}`)
             }
-          }}
-        />
+          />
+        </>
       )}
     </>
   );

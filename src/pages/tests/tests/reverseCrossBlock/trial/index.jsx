@@ -1,4 +1,4 @@
-import { Box, Flex, Text } from "@chakra-ui/react";
+import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
 import React, { useCallback, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import CrossBlockGrid from "../../../../../components/CrossBlockGrid";
@@ -6,11 +6,13 @@ import StartTestButton from "../../../../../components/Button";
 import Loader from "../../../../../components/Loader";
 import useTests from "../../../../../hooks/useTests";
 import useTrialQuestions from "../../../../../hooks/useTerial";
+import TrialConfirmModal from "../../../../../components/trialConfirmationModal/idex";
 
 const ReverseCrossBlockTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [started, setStarted] = useState(false);
+  const { onOpen, isOpen, onClose } = useDisclosure();
   const history = useHistory();
   const { tests } = useTests();
 
@@ -173,9 +175,7 @@ const ReverseCrossBlockTrial = () => {
                         currQuestionIndex >=
                         trialQuestions?.payload.length - 1
                       ) {
-                        history.push(
-                          `/tests/reverse-corsi/${trialReverseCrossBlockID}`
-                        );
+                        onOpen();
                       } else {
                         setStarted(false);
                         setCurrQuestionIndex(currQuestionIndex + 1);
@@ -190,6 +190,13 @@ const ReverseCrossBlockTrial = () => {
               </Flex>
             </Flex>
           </Flex>
+          <TrialConfirmModal
+            isOpen={isOpen}
+            onClose={onClose}
+            onClick={() =>
+              history.push(`/tests/reverse-corsi/${trialReverseCrossBlockID}`)
+            }
+          />
         </Box>
       )}
     </>

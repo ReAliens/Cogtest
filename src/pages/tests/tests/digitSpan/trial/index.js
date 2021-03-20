@@ -1,9 +1,17 @@
-import { Box, Flex, Input, Progress, Text } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Input,
+  Progress,
+  Text,
+  useDisclosure,
+} from "@chakra-ui/react";
 import React, { useEffect, useMemo, useState } from "react";
 
 import { useHistory } from "react-router-dom";
 import StartTestButton from "../../../../../components/Button";
 import Loader from "../../../../../components/Loader";
+import TrialConfirmModal from "../../../../../components/trialConfirmationModal/idex";
 import useTrialQuestions from "../../../../../hooks/useTerial";
 import useTests from "../../../../../hooks/useTests";
 
@@ -83,6 +91,7 @@ function DigitSpan({ symbols, onChange, speedMS }) {
 const DigitSpanTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
+  const { onOpen, isOpen, onClose } = useDisclosure();
   const history = useHistory();
   const { tests } = useTests();
   const trialDigitSpanData = tests?.payload?.find(
@@ -197,13 +206,18 @@ const DigitSpanTrial = () => {
                     ) {
                       setCurrQuestionIndex(currQuestionIndex + 1);
                     } else {
-                      history.push(`/tests/digit-span/${digitSpanID}`);
+                      onOpen();
                     }
                   }}
                 />
               </Flex>
             </Flex>
           </Flex>
+          <TrialConfirmModal
+            isOpen={isOpen}
+            onClose={onClose}
+            onClick={() => history.push(`/tests/digit-span/${digitSpanID}`)}
+          />
         </Box>
       )}
     </>
