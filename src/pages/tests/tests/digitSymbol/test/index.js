@@ -89,6 +89,7 @@ const DigitSymbolTest = () => {
               wrongAnswers={wrongAnswers}
               setWrongAnswers={setWrongAnswers}
               onExamFail={() => {
+                onSubmitAnswertTest();
                 history.push("/tests/inhibition");
               }}
               onExamComplete={() => {

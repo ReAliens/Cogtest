@@ -89,6 +89,7 @@ const FlankerTest = () => {
               wrongAnswers={wrongAnswers}
               setWrongAnswers={setWrongAnswers}
               onExamFail={() => {
+                onSubmitAnswertTest();
                 history.push("/tests/corsi");
               }}
               onExamComplete={() => {

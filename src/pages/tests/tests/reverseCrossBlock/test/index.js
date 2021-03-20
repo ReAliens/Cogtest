@@ -187,6 +187,7 @@ const CrossBlockTest = () => {
                     setWrongAnswersNumbers(newWrongAnswersNumbers);
                     console.log({ newWrongAnswersNumbers });
                     if (newWrongAnswersNumbers >= 3) {
+                      onSubmitAnswertTest();
                       history.push("/tests/digit-span");
                     }
 

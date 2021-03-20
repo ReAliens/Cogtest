@@ -89,6 +89,7 @@ const InhibitionTest = () => {
               wrongAnswers={wrongAnswers}
               setWrongAnswers={setWrongAnswers}
               onExamFail={() => {
+                onSubmitAnswertTest();
                 history.push("/tests/logical-reasoning");
               }}
               onExamComplete={() => {

@@ -90,6 +90,7 @@ const LogicalReasoningTest = () => {
               wrongAnswers={wrongAnswers}
               setWrongAnswers={setWrongAnswers}
               onExamFail={() => {
+                onSubmitAnswertTest();
                 setIsFinish(true);
               }}
               onExamComplete={() => {
