@@ -534,7 +534,7 @@ const Test = ({
                   ) {
                     setWrongAnswers(wrongAnswers + 1);
                   }
-                  if (wrongAnswers === 1) {
+                  if (wrongAnswers === 4) {
                     onExamFail();
                   }
                   setCurrQuestionIndex(currQuestionIndex + 1);

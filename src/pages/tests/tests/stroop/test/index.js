@@ -89,6 +89,7 @@ const StroopTest = () => {
               wrongAnswers={wrongAnswers}
               setWrongAnswers={setWrongAnswers}
               onExamFail={() => {
+                onSubmitAnswertTest();
                 history.push("/tests/flanker");
               }}
               onExamComplete={() => {
