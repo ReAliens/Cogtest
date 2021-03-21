@@ -26,7 +26,7 @@ const FormInput = ({
   const { register, errors } = useFormContext();
 
   return (
-    <FormControl {...containerProps}>
+    <FormControl maxW="100%" {...containerProps}>
       {label ? (
         <FormLabel
           htmlFor={id}
@@ -50,7 +50,6 @@ const FormInput = ({
         errorBorderColor="red"
         dir="rtl"
         placeholder={placeholder}
-        width={width}
         {...props}
       />
       {handleErrors(errors, id) && (

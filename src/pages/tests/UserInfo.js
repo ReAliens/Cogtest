@@ -89,8 +89,6 @@ const UserInfo = () => {
                 paddingY="15px"
                 paddingX="30px"
                 marginTop="20px"
-                justifyContent="center"
-                // W="800px"
                 w="70vw"
                 borderRadius="10px"
                 bg="white"
@@ -103,8 +101,8 @@ const UserInfo = () => {
                   </Text>
                 </Flex>
                 <Flex
-                  w={["200px", "400px", "500px", "600px"]}
-                  justifyContent="flex-end"
+                  justifyContent="center"
+                  paddingX={["0px", "0px", "40px", "100px"]}
                 >
                   <FormInput
                     id="name"
@@ -121,8 +119,8 @@ const UserInfo = () => {
                   />
                 </Flex>
                 <Flex
-                  w={["200px", "400px", "500px", "600px"]}
-                  justifyContent="flex-end"
+                  justifyContent="center"
+                  paddingX={["0px", "0px", "40px", "100px"]}
                 >
                   <FormSelect
                     id="stage"
@@ -155,8 +153,8 @@ const UserInfo = () => {
                 </Flex>
                 {watchedStaging?.stage?.value === "master" && (
                   <Flex
-                    w={["200px", "400px", "500px", "600px"]}
-                    justifyContent="flex-end"
+                    justifyContent="center"
+                    paddingX={["0px", "0px", "40px", "100px"]}
                   >
                     <FormSelect
                       id="type"
@@ -180,8 +178,8 @@ const UserInfo = () => {
                   </Flex>
                 )}
                 <Flex
-                  w={["200px", "400px", "500px", "600px"]}
-                  justifyContent="flex-end"
+                  justifyContent="center"
+                  paddingX={["0px", "0px", "40px", "100px"]}
                 >
                   <FormInput
                     id="gpa"
@@ -206,8 +204,8 @@ const UserInfo = () => {
                   />
                 </Flex>
                 <Flex
-                  w={["200px", "400px", "500px", "600px"]}
-                  justifyContent="flex-end"
+                  justifyContent="center"
+                  paddingX={["0px", "0px", "40px", "100px"]}
                 >
                   <FormInput
                     id="age"
@@ -231,7 +229,11 @@ const UserInfo = () => {
                     }}
                   />
                 </Flex>
-                <Flex dir="rtl">
+                <Flex
+                  justifyContent="center"
+                  paddingX={["0px", "0px", "40px", "100px"]}
+                  dir="rtl"
+                >
                   <RadioGroup
                     id="gender"
                     name="gender"
@@ -247,7 +249,7 @@ const UserInfo = () => {
                       <Radio dir="rtl" value="m">
                         ذكر
                       </Radio>
-                      <Radio marginRight="20px" dir="rtl" value="f">
+                      <Radio marginRight="50px" dir="rtl" value="f">
                         أنثى
                       </Radio>
                     </Flex>
