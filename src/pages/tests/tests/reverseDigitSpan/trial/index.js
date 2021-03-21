@@ -101,7 +101,6 @@ const ReverseDigitSpanTrial = () => {
   const { trialQuestions, trialQuestionLoading } = useTrialQuestions(
     reverseDigitSpanID
   );
-  console.log(trialQuestions);
   const currentSymbols = useMemo(
     () =>
       trialQuestions && trialQuestions?.payload
@@ -110,7 +109,15 @@ const ReverseDigitSpanTrial = () => {
     [trialQuestions, currQuestionIndex]
   );
 
-  const currentCorrectAnswer = currentSymbols;
+  const currentCorrectAnswer = useMemo(
+    () =>
+      trialQuestions && trialQuestions?.payload
+        ? JSON.parse(
+            trialQuestions?.payload[currQuestionIndex]?.answers[0]?.answer
+          )
+        : null,
+    [trialQuestions, currQuestionIndex]
+  );
 
   const isCurrQuestionCorrect = useMemo(() => {
     if (!currentSymbols || !currentCorrectAnswer || !answers[currQuestionIndex])
@@ -127,7 +134,6 @@ const ReverseDigitSpanTrial = () => {
       answers[currQuestionIndex]?.length < currentCorrectAnswer?.length,
     [answers, currQuestionIndex, currentCorrectAnswer]
   );
-
   return (
     <>
       {trialQuestionLoading ? (
