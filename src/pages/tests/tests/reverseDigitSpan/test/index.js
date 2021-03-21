@@ -218,7 +218,7 @@ const ReverseDigitSpanTest = () => {
                       setWrongAnswers(newWrong);
                       if (newWrong >= 3) {
                         onSubmitAnswertTest();
-                        history.push("/tests/reverse-digit-span");
+                        history.push("/tests/digit-symbol");
                       }
                     }
 
