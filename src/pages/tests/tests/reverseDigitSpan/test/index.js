@@ -210,7 +210,6 @@ const ReverseDigitSpanTest = () => {
                     const isCorrectAnswer =
                       answers[currQuestionIndex].join("") ===
                       currentSymbols.join("");
-                    console.log({ isCorrectAnswer });
                     if (isCorrectAnswer) {
                       setWrongAnswers(0);
                     } else {

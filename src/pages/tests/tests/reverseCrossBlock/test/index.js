@@ -171,10 +171,6 @@ const CrossBlockTest = () => {
                     const correctAnsArray = JSON.parse(
                       currentCorrectAnswer.answer
                     );
-                    console.log({
-                      correctAnsArray,
-                      curretntAns: newAnswers[currQuestionIndex],
-                    });
                     if (
                       correctAnsArray.join("") !==
                       newAnswers[currQuestionIndex].join("")
@@ -185,7 +181,6 @@ const CrossBlockTest = () => {
                     }
 
                     setWrongAnswersNumbers(newWrongAnswersNumbers);
-                    console.log({ newWrongAnswersNumbers });
                     if (newWrongAnswersNumbers >= 3) {
                       onSubmitAnswertTest();
                       history.push("/tests/digit-span");

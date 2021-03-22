@@ -9,7 +9,7 @@ const useAnswer = () => {
     async (answers) => {
       setSubmitTestAnswerLoading(true);
       try {
-        const res = await axios.post(`${API_ROOT}/add-user`, answers);
+        const res = await axios.post(`${API_ROOT}/answer-test`, answers);
         setSubmitTestAnswerLoading(false);
         return res.data;
       } catch (err) {

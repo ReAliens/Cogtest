@@ -36,10 +36,6 @@ const CrossBlockGrid = ({
   const breakPointName = useCurrentBreakpointName();
   const [activeType, setActiveType] = useState("flash");
   useEffect(() => {
-    console.log("fisrt render");
-  }, []);
-  useEffect(() => {
-    console.log("UseEFFECT", { activeCards });
     setActiveType("flash");
     if (activeCards.length > 0) {
       activeCards.forEach((index, i) => {

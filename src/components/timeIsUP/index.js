@@ -17,7 +17,7 @@ const TimeIsUpPage = ({ testName, type }) => {
     async (values) => {
       const UpdatedUserInfo = {
         ...values,
-        id: userInfo?.id,
+        id: userInfo?.payload?.id,
       };
 
       const data = await submitUpdateUserInfo(UpdatedUserInfo);
