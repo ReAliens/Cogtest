@@ -8,7 +8,10 @@ import useUpdateUserInfo from "../../hooks/useUpdateUserInfo";
 
 const FinishPage = ({ testName, type }) => {
   const { userInfo } = useContext(UserInfoContext);
-  const { submitUpdateUserInfo } = useUpdateUserInfo();
+  const {
+    submitUpdateUserInfo,
+    submitUpdateUserInfoLoading,
+  } = useUpdateUserInfo();
   const toast = useToast();
   const methods = useForm();
   const { handleSubmit } = methods;
@@ -49,6 +52,7 @@ const FinishPage = ({ testName, type }) => {
           duration: 5000,
           isClosable: true,
         });
+        window.location.href = "/";
       }
     },
     [userInfo, submitUpdateUserInfo, toast]
@@ -116,10 +120,8 @@ const FinishPage = ({ testName, type }) => {
                 buttonText={
                   type === "lastExam" ? "تسجيل خروج" : "ابدأ الاختبار التالى"
                 }
-                onClick={() => {
-                  handleSubmit(submit);
-                  window.location.href = "/";
-                }}
+                isLoading={submitUpdateUserInfoLoading}
+                onClick={handleSubmit(submit)}
               />
             </Flex>
           </Flex>

@@ -14,9 +14,12 @@ import StartTestButton from "../../components/Button";
 import FormInput from "../../components/formInput";
 import FormSelect from "../../components/FormSelect";
 import { UserInfoContext } from "../../contexts/userContext";
+import useTests from "../../hooks/useTests";
 import useUserInfo from "../../hooks/useUserInfo";
 
 const UserInfo = () => {
+  const { tests } = useTests();
+  const firstTest = tests?.payload?.find((test) => test.is_open === true);
   const [radioValue, setRadioValue] = useState();
   const { setUserInfo } = useContext(UserInfoContext);
   const { submitUserInfo, submitUserInfoLoading } = useUserInfo();
@@ -44,7 +47,7 @@ const UserInfo = () => {
           duration: 5000,
           isClosable: true,
         });
-        history.push("/tests/stroop");
+        history.push(`/tests/${firstTest?.code}`);
       } catch (err) {
         console.log(err);
         toast({
@@ -58,7 +61,7 @@ const UserInfo = () => {
         });
       }
     },
-    [submitUserInfo, history, radioValue, setUserInfo, toast]
+    [radioValue, submitUserInfo, setUserInfo, toast, history, firstTest]
   );
 
   return (
@@ -73,7 +76,7 @@ const UserInfo = () => {
         overflow="hidden"
       >
         <Flex marginX="20px" dir="rtl">
-          <Text>تسجيل البيانات</Text>
+          <Text> البيانات الأولية</Text>
         </Flex>
         <Flex
           justifyContent="center"
@@ -97,7 +100,7 @@ const UserInfo = () => {
               >
                 <Flex top="0px" justifyContent="center" alignItems="center">
                   <Text fontWeight="bold" fontSize="22px">
-                    تسجيل البيانات
+                    البيانات الأولية
                   </Text>
                 </Flex>
                 <Flex

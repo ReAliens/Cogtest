@@ -74,12 +74,12 @@ const FlankerTest = () => {
             <Test
               examName="flanker"
               allQuestions={allQuestions}
-              onComplete={() => {
-                if (testDuration) {
-                  onSubmitAnswertTest();
-                  setIsTimeOut(true);
-                }
-              }}
+              // onComplete={() => {
+              //   if (testDuration) {
+              //     onSubmitAnswertTest();
+              //     setIsTimeOut(true);
+              //   }
+              // }}
               duration={testDuration}
               currQuestionIndex={currQuestionIndex}
               setCurrQuestionIndex={setCurrQuestionIndex}

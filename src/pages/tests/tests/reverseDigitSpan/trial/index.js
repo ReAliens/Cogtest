@@ -134,6 +134,12 @@ const ReverseDigitSpanTrial = () => {
       answers[currQuestionIndex]?.length < currentCorrectAnswer?.length,
     [answers, currQuestionIndex, currentCorrectAnswer]
   );
+
+  const audioTrack = useMemo(() => {
+    return trialQuestions && trialQuestions?.payload
+      ? trialQuestions?.payload[currQuestionIndex]?.audio
+      : null;
+  }, [trialQuestions, currQuestionIndex]);
   return (
     <>
       {trialQuestionLoading ? (
@@ -155,6 +161,9 @@ const ReverseDigitSpanTrial = () => {
               dir="rtl"
             >
               <Text> {trialQuestions?.message} التجريبية</Text>
+              {audioTrack ? (
+                <audio autoPlay={true} key={audioTrack} src={audioTrack} />
+              ) : null}
               {hideAnswerStatus ? (
                 ""
               ) : isCurrQuestionCorrect ? (

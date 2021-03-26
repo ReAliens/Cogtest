@@ -63,7 +63,7 @@ const CrossBlockTest = () => {
         const questionID = allQuestions.payload[key].id;
         answersPayload.push({
           question_id: questionID,
-          answer_id: answers[key],
+          answer_array: answers[key],
         });
       });
       const testAnswerPayload = {

@@ -14,7 +14,12 @@ const Introduction = ({ testName, testDesc, testLink }) => (
         bg="#f9f9fc"
         flexDir="column"
       >
-        <Flex marginX="20px" dir="rtl">
+        <Flex
+          marginX="20px"
+          dir="rtl"
+          fontSize={["14px", "18px", "18px", "18px"]}
+          fontWeight="bold"
+        >
           <Text> {testName}</Text>
         </Flex>
         <Flex

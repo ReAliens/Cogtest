@@ -128,6 +128,14 @@ const DigitSpanTrial = () => {
     [answers, currQuestionIndex, currentCorrectAnswer]
   );
 
+  const audioTrack = useMemo(() => {
+    return trialQuestions && trialQuestions?.payload
+      ? trialQuestions?.payload[currQuestionIndex]?.audio
+      : null;
+  }, [trialQuestions, currQuestionIndex]);
+
+  console.log(audioTrack);
+
   return (
     <>
       {trialQuestionLoading ? (
@@ -149,6 +157,9 @@ const DigitSpanTrial = () => {
               dir="rtl"
             >
               <Text> {trialQuestions?.message} التجريبية</Text>
+              {audioTrack ? (
+                <audio autoPlay={true} key={audioTrack} src={audioTrack} />
+              ) : null}
               {hideAnswerStatus ? (
                 ""
               ) : isCurrQuestionCorrect ? (

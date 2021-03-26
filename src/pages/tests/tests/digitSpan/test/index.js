@@ -122,7 +122,7 @@ const DigitSpanTest = () => {
         const questionID = allQuestions.payload[key].id;
         answersPayload.push({
           question_id: questionID,
-          answer_id: answers[key],
+          answer_array: answers[key],
         });
       });
       const testAnswerPayload = {
@@ -142,6 +142,12 @@ const DigitSpanTest = () => {
       console.log(err);
     }
   }, [answers, params, userInfo, submitAnswerTest, allQuestions, toast]);
+
+  const audioTrack = useMemo(() => {
+    return allQuestions && allQuestions?.payload
+      ? allQuestions?.payload[currQuestionIndex]?.audio
+      : null;
+  }, [allQuestions, currQuestionIndex]);
 
   return (
     <>
@@ -164,9 +170,13 @@ const DigitSpanTest = () => {
               dir="rtl"
             >
               <Text> {allQuestions?.message} </Text>
+              {audioTrack ? (
+                <audio autoPlay={true} key={audioTrack} src={audioTrack} />
+              ) : null}
+
               <ReactCountdownClockownClock
                 seconds={testDuration}
-                color="red"
+                color="transparent"
                 alpha={0.9}
                 size={50}
                 onComplete={() => {

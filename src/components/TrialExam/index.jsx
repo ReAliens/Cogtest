@@ -28,7 +28,7 @@ const TrialExam = ({
           marginX="20px"
           dir="rtl"
         >
-          <Text fontSize={["12px", "16px", "16px", "16px"]}>
+          <Text fontSize={["14px", "18px", "18px", "18px"]} fontWeight="bold">
             {trialQuestions?.message} التجريبية
           </Text>
           {!answer[currQuestionIndex] ? (
@@ -58,13 +58,15 @@ const TrialExam = ({
           marginTop="30px"
           bg="#E4E6EF"
           paddingX="20px"
-          h={
-            examName === "inhibition"
-              ? "100%"
-              : examName === "logicalReasoning"
-              ? "630"
-              : "500px"
-          }
+          // h={
+          //   examName === "inhibition"
+          //     ? "100%"
+          //     : examName === "logicalReasoning"
+          //     ? "630px"
+          //     : examName === "flanker"
+          //     ? "680px"
+          //     : "500px"
+          // }
           flexDir="column"
           dir="rtl"
         >
@@ -184,8 +186,10 @@ const TrialExam = ({
               >
                 {trialQuestions?.payload && (
                   <Image
-                    fit="cover"
-                    width="200px"
+                    marginY="20px"
+                    fit="fill"
+                    // height="300px"
+                    // width="450px"
                     src={trialQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}
@@ -347,11 +351,7 @@ const TrialExam = ({
                 )}
               </Flex>
               <Breakpoint medium up>
-                <Grid
-                  gap={5}
-                  marginTop="20px"
-                  templateColumns="1fr 1fr 1fr"
-                >
+                <Grid gap={5} marginTop="20px" templateColumns="1fr 1fr 1fr">
                   {trialQuestions?.payload &&
                     trialQuestions?.payload[currQuestionIndex]?.answers?.map(
                       (option) => (
@@ -428,116 +428,115 @@ const TrialExam = ({
               </Breakpoint>
             </>
           ) : examName === "logicalReasoning" ? (
-            console.log(trialQuestions) || (
-              <>
-                <Flex
-                  padding="20px"
+            <>
+              <Flex
+                padding="20px"
+                marginTop="20px"
+                justifyContent="center"
+                w="100%"
+                borderRadius="10px"
+                bg="white"
+                dir="rtl"
+                height="60%"
+                alignItems="center"
+                flexDir="column"
+              >
+                {trialQuestions?.payload && (
+                  <Image
+                    fit="fill"
+                    width="100px"
+                    src={trialQuestions?.payload[currQuestionIndex]?.photo}
+                  />
+                )}
+              </Flex>
+              <Breakpoint medium up>
+                <Grid
+                  gap={5}
                   marginTop="20px"
-                  justifyContent="center"
-                  w="100%"
-                  borderRadius="10px"
-                  bg="white"
-                  dir="rtl"
-                  height="60%"
-                  alignItems="center"
-                  flexDir="column"
+                  templateColumns="1fr 1fr 1fr 1fr"
                 >
-                  {trialQuestions?.payload && (
-                    <Image
-                      fit="fill"
-                      width="100px"
-                      src={trialQuestions?.payload[currQuestionIndex]?.photo}
-                    />
-                  )}
-                </Flex>
-                <Breakpoint medium up>
-                  <Grid
-                    gap={5}
-                    marginTop="20px"
-                    templateColumns="1fr 1fr 1fr 1fr"
-                  >
-                    {trialQuestions?.payload &&
-                      trialQuestions?.payload[currQuestionIndex]?.answers?.map(
-                        (option) => (
-                          <Box
-                            justifyContent="center"
-                            alignItems="center"
-                            margin="auto"
-                            as="buton"
-                            cursor="pointer"
-                            borderWidth="1px"
-                            borderRadius="md"
-                            boxShadow="md"
-                            background="white"
-                            _hover={{
-                              bg: "#68D391",
-                            }}
-                            bg={
-                              answer[currQuestionIndex] === option?.answer_image
-                                ? "#68D391"
-                                : null
-                            }
-                            px={5}
-                            py={3}
-                            onClick={() => {
-                              setAnswer({
-                                ...answer,
-                                [currQuestionIndex]: option?.answer_image,
-                              });
-                            }}
-                          >
-                            <Image margin="auto" src={option.answer_image} />
-                          </Box>
-                        )
-                      )}
-                  </Grid>
-                </Breakpoint>
-                <Breakpoint small down>
-                  <Grid gap={2} marginTop="20px" templateRows="1fr 1fr 1fr 1fr">
-                    {trialQuestions?.payload &&
-                      trialQuestions?.payload[currQuestionIndex]?.answers?.map(
-                        (option) => (
-                          <Box
-                            justifyContent="center"
-                            alignItems="center"
-                            margin="auto"
-                            as="buton"
-                            cursor="pointer"
-                            borderWidth="1px"
-                            borderRadius="md"
-                            boxShadow="md"
-                            background="white"
-                            _hover={{
-                              bg: "#68D391",
-                            }}
-                            bg={
-                              answer[currQuestionIndex] === option?.answer_image
-                                ? "#68D391"
-                                : null
-                            }
-                            px={5}
-                            py={3}
-                            onClick={() => {
-                              setAnswer({
-                                ...answer,
-                                [currQuestionIndex]: option?.answer_image,
-                              });
-                            }}
-                          >
-                            <Image margin="auto" src={option.answer_image} />
-                          </Box>
-                        )
-                      )}
-                  </Grid>
-                </Breakpoint>
-              </>
-            )
+                  {trialQuestions?.payload &&
+                    trialQuestions?.payload[currQuestionIndex]?.answers?.map(
+                      (option) => (
+                        <Box
+                          justifyContent="center"
+                          alignItems="center"
+                          margin="auto"
+                          as="buton"
+                          cursor="pointer"
+                          borderWidth="1px"
+                          borderRadius="md"
+                          boxShadow="md"
+                          background="white"
+                          _hover={{
+                            bg: "#68D391",
+                          }}
+                          bg={
+                            answer[currQuestionIndex] === option?.answer_image
+                              ? "#68D391"
+                              : null
+                          }
+                          px={5}
+                          py={3}
+                          onClick={() => {
+                            setAnswer({
+                              ...answer,
+                              [currQuestionIndex]: option?.answer_image,
+                            });
+                          }}
+                        >
+                          <Image margin="auto" src={option.answer_image} />
+                        </Box>
+                      )
+                    )}
+                </Grid>
+              </Breakpoint>
+              <Breakpoint small down>
+                <Grid gap={2} marginTop="20px" templateRows="1fr 1fr 1fr 1fr">
+                  {trialQuestions?.payload &&
+                    trialQuestions?.payload[currQuestionIndex]?.answers?.map(
+                      (option) => (
+                        <Box
+                          justifyContent="center"
+                          alignItems="center"
+                          margin="auto"
+                          as="buton"
+                          cursor="pointer"
+                          borderWidth="1px"
+                          borderRadius="md"
+                          boxShadow="md"
+                          background="white"
+                          _hover={{
+                            bg: "#68D391",
+                          }}
+                          bg={
+                            answer[currQuestionIndex] === option?.answer_image
+                              ? "#68D391"
+                              : null
+                          }
+                          px={5}
+                          py={3}
+                          onClick={() => {
+                            setAnswer({
+                              ...answer,
+                              [currQuestionIndex]: option?.answer_image,
+                            });
+                          }}
+                        >
+                          <Image margin="auto" src={option.answer_image} />
+                        </Box>
+                      )
+                    )}
+                </Grid>
+              </Breakpoint>
+            </>
           ) : (
             ""
           )}
 
           <Flex justifyContent="center" width="100%" marginTop="20px">
             <StartTestButton
+              marginBottom="20px"
               width="200px"
               type="next"
               disabled={

@@ -35,12 +35,12 @@ const Test = ({
           marginX="20px"
           dir="rtl"
         >
-          <Text fontSize={["12px", "16px", "16px", "16px"]}>
+          <Text fontSize={["14px", "18px", "18px", "18px"]} fontWeight="bold">
             {allQuestions?.message}
           </Text>
           <ReactCountdownClockownClock
             seconds={duration}
-            color="red"
+            color="transparent"
             alpha={0.9}
             size={50}
             onComplete={onComplete}
@@ -53,13 +53,15 @@ const Test = ({
           marginTop="30px"
           bg="#E4E6EF"
           paddingX="20px"
-          h={
-            examName === "inhibtion"
-              ? "100%"
-              : examName === "logicalReasoning"
-              ? "630"
-              : "500px"
-          }
+          // h={
+          //   examName === "inhibtion"
+          //     ? "100%"
+          //     : examName === "logicalReasoning"
+          //     ? "630"
+          //     : examName === "flanker"
+          //     ? "680px"
+          //     : "500px"
+          // }
           flexDir="column"
           dir="rtl"
         >
@@ -179,8 +181,10 @@ const Test = ({
               >
                 {allQuestions?.payload && (
                   <Image
-                    fit="cover"
-                    width="200px"
+                    fit="fill"
+                    // width="200px"
+                    height="full"
+                    width="full"
                     src={allQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}
