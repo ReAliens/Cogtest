@@ -7,7 +7,7 @@ import {
   Text,
   useToast,
 } from "@chakra-ui/react";
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useMemo, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import StartTestButton from "../../components/Button";
@@ -15,17 +15,22 @@ import FormInput from "../../components/formInput";
 import FormSelect from "../../components/FormSelect";
 import { UserInfoContext } from "../../contexts/userContext";
 import useTests from "../../hooks/useTests";
+import useStaging from "../../hooks/useStaging";
 import useUserInfo from "../../hooks/useUserInfo";
 
 const UserInfo = () => {
-  const { tests } = useTests();
-  const firstTest = tests?.payload?.find((test) => test.is_open === true);
   const [radioValue, setRadioValue] = useState();
   const { setUserInfo } = useContext(UserInfoContext);
   const { submitUserInfo, submitUserInfoLoading } = useUserInfo();
+  const { tests } = useTests();
+  const { stage } = useStaging();
+  const options = useMemo(() => {
+    return stage && stage?.payload ? stage.payload : null;
+  }, [stage]);
   const toast = useToast();
   const history = useHistory();
   const methods = useForm();
+  const firstTest = tests?.payload?.find((test) => test.is_open === true);
   const { handleSubmit, watch } = methods;
   const watchedStaging = watch(["stage"]);
   const submit = useCallback(
@@ -131,21 +136,7 @@ const UserInfo = () => {
                     placeholder="اختر المرحلة الدراسية"
                     label="المرحلة الدراسية"
                     labelSize={["12px", "14px", "16px", "16px"]}
-                    options={[
-                      { value: "primary", label: "ابتدائى" },
-                      {
-                        value: "middle",
-                        label: "متوسط",
-                      },
-                      {
-                        value: "secondary",
-                        label: "ثانوي",
-                      },
-                      {
-                        value: "master",
-                        label: "دراسات عليا",
-                      },
-                    ]}
+                    options={options}
                     validation={{
                       required: {
                         value: true,
