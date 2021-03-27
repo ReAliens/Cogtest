@@ -91,7 +91,7 @@ function DigitSpan({ symbols, onChange, speedMS }) {
 const DigitSpanTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
-  const [currentSymbols, setCurrentSympols] = useState([]);
+  const [currentSymbols, setCurrentSympols] = useState(null);
 
   const { onOpen, isOpen, onClose } = useDisclosure();
   const history = useHistory();
@@ -151,6 +151,7 @@ const DigitSpanTrial = () => {
       );
     }
   }, [currQuestionIndex, trialQuestions, setCurrentSympols]);
+
   return (
     <>
       {trialQuestionLoading ? (
@@ -172,9 +173,7 @@ const DigitSpanTrial = () => {
               dir="rtl"
             >
               <Text> {trialQuestions?.message} التجريبية</Text>
-              {audioTrack ? (
-                <audio autoPlay={true} key={audioTrack} src={audioTrack} />
-              ) : null}
+              {audioTrack ? <audio key={audioTrack} src={audioTrack} /> : null}
               {hideAnswerStatus ? (
                 ""
               ) : isCurrQuestionCorrect ? (
@@ -221,16 +220,45 @@ const DigitSpanTrial = () => {
                 <StartTestButton
                   width="200px"
                   type="next"
-                  buttonText="التالى"
+                  buttonText={
+                    hideAnswerStatus || isCurrQuestionCorrect
+                      ? "التالى"
+                      : "اعد المحاولة"
+                  }
                   disabled={
-                    !answers[currQuestionIndex] || !isCurrQuestionCorrect
+                    !answers[currQuestionIndex] ||
+                    !currentCorrectAnswer ||
+                    answers[currQuestionIndex].length <
+                      currentCorrectAnswer.length
                   }
                   onClick={() => {
-                    if (
+                    if (!isCurrQuestionCorrect) {
+                      setCurrentSympols(null);
+                      setTimeout(() => {
+                        setCurrentSympols(
+                          trialQuestions && trialQuestions?.payload
+                            ? JSON.parse(
+                                trialQuestions?.payload[currQuestionIndex]
+                                  ?.number_series
+                              )
+                            : null
+                        );
+                      }, 500);
+                    } else if (
                       currQuestionIndex <
                       trialQuestions?.payload.length - 1
                     ) {
-                      setCurrQuestionIndex(currQuestionIndex + 1);
+                      const newQuestionIndex = currQuestionIndex + 1;
+                      setCurrQuestionIndex(newQuestionIndex);
+                      setCurrentSympols([]);
+                      setCurrentSympols(
+                        trialQuestions && trialQuestions?.payload
+                          ? JSON.parse(
+                              trialQuestions?.payload[newQuestionIndex]
+                                ?.number_series
+                            )
+                          : null
+                      );
                     } else {
                       onOpen();
                     }

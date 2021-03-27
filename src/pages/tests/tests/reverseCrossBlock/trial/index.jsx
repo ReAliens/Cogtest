@@ -1,5 +1,5 @@
 import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import CrossBlockGrid from "../../../../../components/CrossBlockGrid";
 import StartTestButton from "../../../../../components/Button";
@@ -11,6 +11,8 @@ import TrialConfirmModal from "../../../../../components/trialConfirmationModal/
 const ReverseCrossBlockTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
+
   const [started, setStarted] = useState(false);
   const { onOpen, isOpen, onClose } = useDisclosure();
   const history = useHistory();
@@ -35,13 +37,13 @@ const ReverseCrossBlockTrial = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [setAnswers, currQuestionIndex]
   );
-  const currentQuestion = useMemo(
-    () =>
-      trialQuestions && trialQuestions.payload
-        ? trialQuestions.payload[currQuestionIndex]
-        : null,
-    [trialQuestions, currQuestionIndex]
-  );
+  // const currentQuestion = useMemo(
+  //   () =>
+  //     trialQuestions && trialQuestions.payload
+  //       ? trialQuestions.payload[currQuestionIndex]
+  //       : null,
+  //   [trialQuestions, currQuestionIndex]
+  // );
 
   const activeCards = useMemo(
     () =>
@@ -77,6 +79,20 @@ const ReverseCrossBlockTrial = () => {
       answers[currQuestionIndex]?.length < currentCorrectAnswer?.length,
     [answers, currQuestionIndex, currentCorrectAnswer]
   );
+
+  useEffect(() => {
+    if (
+      trialQuestions &&
+      trialQuestions?.payload &&
+      trialQuestions?.payload[currQuestionIndex]
+    ) {
+      setCurrentQuestion(
+        trialQuestions && trialQuestions.payload
+          ? trialQuestions.payload[currQuestionIndex]
+          : null
+      );
+    }
+  }, [currQuestionIndex, trialQuestions, setCurrentQuestion]);
 
   return (
     <>
@@ -178,12 +194,26 @@ const ReverseCrossBlockTrial = () => {
                         onOpen();
                       } else {
                         setStarted(false);
-                        setCurrQuestionIndex(currQuestionIndex + 1);
+                        const newQuestionIndex = currQuestionIndex + 1;
+                        setCurrQuestionIndex(newQuestionIndex);
+                        setCurrentQuestion(
+                          trialQuestions && trialQuestions.payload
+                            ? trialQuestions.payload[newQuestionIndex]
+                            : null
+                        );
                       }
                     } else {
                       const newAnswers = answers.slice();
                       newAnswers[currQuestionIndex] = [];
                       setAnswers(newAnswers);
+                      setCurrentQuestion(null);
+                      setTimeout(() => {
+                        setCurrentQuestion(
+                          trialQuestions && trialQuestions.payload
+                            ? trialQuestions.payload[currQuestionIndex]
+                            : null
+                        );
+                      }, 500);
                     }
                   }}
                 />

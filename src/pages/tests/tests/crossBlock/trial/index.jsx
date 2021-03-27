@@ -10,7 +10,7 @@ import TrialConfirmModal from "../../../../../components/trialConfirmationModal/
 
 const CrossBlockTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
-  const [apicurrentQuestion, setApiCurrentQuestion] = useState([]);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [started, setStarted] = useState(false);
   const { onOpen, isOpen, onClose } = useDisclosure();
@@ -36,13 +36,13 @@ const CrossBlockTrial = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [setAnswers, currQuestionIndex]
   );
-  const currentQuestion = useMemo(
-    () =>
-      trialQuestions && trialQuestions.payload
-        ? trialQuestions.payload[currQuestionIndex]
-        : null,
-    [trialQuestions, currQuestionIndex]
-  );
+  // const currentQuestion = useMemo(
+  //   () =>
+  //     trialQuestions && trialQuestions.payload
+  //       ? trialQuestions.payload[currQuestionIndex]
+  //       : null,
+  //   [trialQuestions, currQuestionIndex]
+  // );
 
   const currentCorrectAnswer = useMemo(
     () =>
@@ -85,19 +85,14 @@ const CrossBlockTrial = () => {
       trialQuestions?.payload &&
       trialQuestions?.payload[currQuestionIndex]
     ) {
-      setApiCurrentQuestion(
-        trialQuestions && trialQuestions?.payload
-          ? JSON.parse(currentQuestion.show_order).map((item) => item - 1)
+      setCurrentQuestion(
+        trialQuestions && trialQuestions.payload
+          ? trialQuestions.payload[currQuestionIndex]
           : null
       );
     }
-  }, [
-    currQuestionIndex,
-    trialQuestions,
-    setApiCurrentQuestion,
-    currentQuestion,
-  ]);
-  console.log(apicurrentQuestion);
+  }, [currQuestionIndex, trialQuestions, setCurrentQuestion]);
+
   return (
     <>
       {trialQuestionLoading || !trialQuestions ? (
@@ -197,19 +192,26 @@ const CrossBlockTrial = () => {
                         onOpen();
                       } else {
                         setStarted(false);
-                        setCurrQuestionIndex(currQuestionIndex + 1);
+                        const newQuestionIndex = currQuestionIndex + 1;
+                        setCurrQuestionIndex(newQuestionIndex);
+                        setCurrentQuestion(
+                          trialQuestions && trialQuestions.payload
+                            ? trialQuestions.payload[newQuestionIndex]
+                            : null
+                        );
                       }
                     } else {
                       const newAnswers = answers.slice();
-                      setApiCurrentQuestion(
-                        trialQuestions && trialQuestions?.payload
-                          ? JSON.parse(currentQuestion.show_order).map(
-                              (item) => item - 1
-                            )
-                          : null
-                      );
                       newAnswers[currQuestionIndex] = [];
                       setAnswers(newAnswers);
+                      setCurrentQuestion(null);
+                      setTimeout(() => {
+                        setCurrentQuestion(
+                          trialQuestions && trialQuestions.payload
+                            ? trialQuestions.payload[currQuestionIndex]
+                            : null
+                        );
+                      }, 500);
                     }
                   }}
                 />

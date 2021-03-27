@@ -92,6 +92,8 @@ const ReverseDigitSpanTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const { onOpen, isOpen, onClose } = useDisclosure();
+  const [currentSymbols, setCurrentSympols] = useState(null);
+
   const history = useHistory();
   const { tests } = useTests();
   const trialReverseDigitSpanData = tests?.payload?.find(
@@ -101,13 +103,13 @@ const ReverseDigitSpanTrial = () => {
   const { trialQuestions, trialQuestionLoading } = useTrialQuestions(
     reverseDigitSpanID
   );
-  const currentSymbols = useMemo(
-    () =>
-      trialQuestions && trialQuestions?.payload
-        ? JSON.parse(trialQuestions?.payload[currQuestionIndex]?.number_series)
-        : null,
-    [trialQuestions, currQuestionIndex]
-  );
+  // const currentSymbols = useMemo(
+  //   () =>
+  //     trialQuestions && trialQuestions?.payload
+  //       ? JSON.parse(trialQuestions?.payload[currQuestionIndex]?.number_series)
+  //       : null,
+  //   [trialQuestions, currQuestionIndex]
+  // );
 
   const currentCorrectAnswer = useMemo(
     () =>
@@ -140,6 +142,23 @@ const ReverseDigitSpanTrial = () => {
       ? trialQuestions?.payload[currQuestionIndex]?.audio
       : null;
   }, [trialQuestions, currQuestionIndex]);
+
+  useEffect(() => {
+    if (
+      trialQuestions &&
+      trialQuestions?.payload &&
+      trialQuestions?.payload[currQuestionIndex]
+    ) {
+      setCurrentSympols(
+        trialQuestions && trialQuestions?.payload
+          ? JSON.parse(
+              trialQuestions?.payload[currQuestionIndex]?.number_series
+            )
+          : null
+      );
+    }
+  }, [currQuestionIndex, trialQuestions, setCurrentSympols]);
+
   return (
     <>
       {trialQuestionLoading ? (
@@ -210,16 +229,45 @@ const ReverseDigitSpanTrial = () => {
                 <StartTestButton
                   width="200px"
                   type="next"
-                  buttonText="التالى"
+                  buttonText={
+                    hideAnswerStatus || isCurrQuestionCorrect
+                      ? "التالى"
+                      : "اعد المحاولة"
+                  }
                   disabled={
-                    !answers[currQuestionIndex] || !isCurrQuestionCorrect
+                    !answers[currQuestionIndex] ||
+                    !currentCorrectAnswer ||
+                    answers[currQuestionIndex].length <
+                      currentCorrectAnswer.length
                   }
                   onClick={() => {
-                    if (
+                    if (!isCurrQuestionCorrect) {
+                      setCurrentSympols(null);
+                      setTimeout(() => {
+                        setCurrentSympols(
+                          trialQuestions && trialQuestions?.payload
+                            ? JSON.parse(
+                                trialQuestions?.payload[currQuestionIndex]
+                                  ?.number_series
+                              )
+                            : null
+                        );
+                      }, 500);
+                    } else if (
                       currQuestionIndex <
                       trialQuestions?.payload.length - 1
                     ) {
-                      setCurrQuestionIndex(currQuestionIndex + 1);
+                      const newQuestionIndex = currQuestionIndex + 1;
+                      setCurrQuestionIndex(newQuestionIndex);
+                      setCurrentSympols([]);
+                      setCurrentSympols(
+                        trialQuestions && trialQuestions?.payload
+                          ? JSON.parse(
+                              trialQuestions?.payload[newQuestionIndex]
+                                ?.number_series
+                            )
+                          : null
+                      );
                     } else {
                       onOpen();
                     }
