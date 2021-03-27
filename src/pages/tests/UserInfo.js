@@ -46,7 +46,6 @@ const UserInfo = () => {
   // console.log(watchedStaging);
   const submit = useCallback(
     async (values) => {
-      console.log(values);
       const userINfo = {
         ...values,
         stage: values?.stage?.id,
@@ -55,8 +54,8 @@ const UserInfo = () => {
       };
 
       try {
-        // const data = await submitUserInfo(userINfo);
-        // setUserInfo(data);
+        const data = await submitUserInfo(userINfo);
+        setUserInfo(data);
         toast({
           position: "top-right",
           // description: `${data?.message}`,
@@ -64,7 +63,7 @@ const UserInfo = () => {
           duration: 5000,
           isClosable: true,
         });
-        // history.push(`/tests/${firstTest?.code}`);
+        history.push(`/tests/${firstTest?.code}`);
       } catch (err) {
         console.log(err);
         toast({
