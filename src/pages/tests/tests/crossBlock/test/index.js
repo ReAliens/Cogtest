@@ -107,7 +107,7 @@ const CrossBlockTest = () => {
               <Text> {allQuestions?.message}</Text>
               <ReactCountdownClockownClock
                 seconds={testDuration}
-                color="red"
+                color="transparent"
                 alpha={0.9}
                 size={50}
                 onComplete={() => {

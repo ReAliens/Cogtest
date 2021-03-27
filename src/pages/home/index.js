@@ -14,6 +14,7 @@ const Home = ({
   ending,
   thanking,
   signature,
+  email,
 }) => {
   return (
     <>
@@ -52,12 +53,13 @@ const Home = ({
             </Grid>
             <Flex
               justifyContent="center"
-              paddingBottom="100px"
+              paddingBottom="50px"
               marginTop="30px"
               bg="#E4E6EF"
               paddingX="20px"
               h="100%"
               borderRadius="10px"
+              flexDir="column"
             >
               <Grid
                 padding="20px"
@@ -129,6 +131,13 @@ const Home = ({
                   </Text>
                 </Grid>
               </Grid>
+              <Flex justifyContent="flex-start" marginTop="20px">
+                <Text fontSize="16px" color="blue.500">
+                  <a href={`mailto:${email}`} target="_blank" rel="noreferrer">
+                    Email: {email}
+                  </a>
+                </Text>
+              </Flex>
             </Flex>
           </Flex>
         </Box>
@@ -179,6 +188,7 @@ const Home = ({
               paddingX="20px"
               h="100%"
               borderRadius="10px"
+              flexDir="column"
             >
               <Grid
                 padding="20px"
@@ -249,6 +259,13 @@ const Home = ({
                   </Text>
                 </Grid>
               </Grid>
+              <Flex justifyContent="flex-start" marginTop="20px">
+                <Text fontSize="14px" color="blue.500">
+                  <a href={`mailto:${email}`} target="_blank" rel="noreferrer">
+                    Email: {email}
+                  </a>
+                </Text>
+              </Flex>
             </Flex>
           </Flex>
         </Box>

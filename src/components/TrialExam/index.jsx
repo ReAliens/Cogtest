@@ -188,8 +188,8 @@ const TrialExam = ({
                   <Image
                     marginY="20px"
                     fit="fill"
-                    // height="300px"
-                    // width="450px"
+                    height="450px"
+                    width="700px"
                     src={trialQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}

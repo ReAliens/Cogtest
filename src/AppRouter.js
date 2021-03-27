@@ -39,6 +39,7 @@ export default function AppRouter() {
                     tip={settings?.payload?.text3}
                     signature={settings?.payload?.text5}
                     title={settings?.message}
+                    email={settings?.payload?.email}
                   />
                 </Route>
                 <Route exact path={routes.auth.register()}>
@@ -49,8 +50,10 @@ export default function AppRouter() {
                 </Route>
               </Switch>
             </Router>
-            <Flex w="100%" alignItems="center" justifyContent="space-between">
-              <Footer copyRignt={settings?.payload?.copyright} />
+            <Flex w="100%" alignItems="center" justifyContent="center">
+              <a href="https://devnile.com/" target="_blank" rel="noreferrer">
+                <Footer copyRignt={settings?.payload?.copyright} />
+              </a>
             </Flex>
           </Flex>
         )}

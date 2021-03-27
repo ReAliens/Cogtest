@@ -53,15 +53,15 @@ const Test = ({
           marginTop="30px"
           bg="#E4E6EF"
           paddingX="20px"
-          // h={
-          //   examName === "inhibtion"
-          //     ? "100%"
-          //     : examName === "logicalReasoning"
-          //     ? "630"
-          //     : examName === "flanker"
-          //     ? "680px"
-          //     : "500px"
-          // }
+          h={
+            examName === "inhibtion"
+              ? "100%"
+              : examName === "logicalReasoning"
+              ? "630"
+              : examName === "flanker"
+              ? ""
+              : "500px"
+          }
           flexDir="column"
           dir="rtl"
         >
@@ -182,9 +182,8 @@ const Test = ({
                 {allQuestions?.payload && (
                   <Image
                     fit="fill"
-                    // width="200px"
-                    height="full"
-                    width="full"
+                    height="450px"
+                    width="700px"
                     src={allQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}

@@ -41,7 +41,6 @@ const Tests = () => {
               path="/tests/reverse-digit-span"
               component={ReverseDigitSpanIntroduction}
             />
-
             <Route
               path="/tests/digit-symbol"
               component={DigitSymbolIntroduction}
