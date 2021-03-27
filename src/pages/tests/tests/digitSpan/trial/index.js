@@ -91,6 +91,8 @@ function DigitSpan({ symbols, onChange, speedMS }) {
 const DigitSpanTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
+  const [currentSymbols, setCurrentSympols] = useState([]);
+
   const { onOpen, isOpen, onClose } = useDisclosure();
   const history = useHistory();
   const { tests } = useTests();
@@ -102,13 +104,13 @@ const DigitSpanTrial = () => {
     digitSpanID
   );
 
-  const currentSymbols = useMemo(
-    () =>
-      trialQuestions && trialQuestions?.payload
-        ? JSON.parse(trialQuestions?.payload[currQuestionIndex]?.number_series)
-        : null,
-    [trialQuestions, currQuestionIndex]
-  );
+  // const currentSymbols = useMemo(
+  //   () =>
+  //     trialQuestions && trialQuestions?.payload
+  //       ? JSON.parse(trialQuestions?.payload[currQuestionIndex]?.number_series)
+  //       : null,
+  //   [trialQuestions, currQuestionIndex]
+  // );
 
   const currentCorrectAnswer = currentSymbols;
 
@@ -134,6 +136,21 @@ const DigitSpanTrial = () => {
       : null;
   }, [trialQuestions, currQuestionIndex]);
 
+  useEffect(() => {
+    if (
+      trialQuestions &&
+      trialQuestions?.payload &&
+      trialQuestions?.payload[currQuestionIndex]
+    ) {
+      setCurrentSympols(
+        trialQuestions && trialQuestions?.payload
+          ? JSON.parse(
+              trialQuestions?.payload[currQuestionIndex]?.number_series
+            )
+          : null
+      );
+    }
+  }, [currQuestionIndex, trialQuestions, setCurrentSympols]);
   return (
     <>
       {trialQuestionLoading ? (

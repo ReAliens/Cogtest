@@ -26,30 +26,33 @@ const Tests = () => {
   return (
     <>
       <Suspense fallback={<Loader />}>
-        {userInfo ? (
-        <>
-          <Route path="/tests/stroop" component={StroopIntroduction} />
-          <Route path="/tests/flanker" component={FlankerIntroduction} />
-          <Route path="/tests/corsi" component={CrossBlockIntroduction} />
-          <Route
-            path="/tests/reverse-corsi"
-            component={ReverseCrossBlockIntroduction}
-          />
-          <Route path="/tests/digit-span" component={DigitSpanIntroduction} />
-          <Route
-            path="/tests/reverse-digit-span"
-            component={ReverseDigitSpanIntroduction}
-          />
-          <Route
-            path="/tests/digit-symbol"
-            component={DigitSymbolIntroduction}
-          />
-          <Route path="/tests/inhibition" component={InhibitionIntroduction} />
-          <Route
-            path="/tests/logical-reasoning"
-            component={LogicalReasoningIntroduction}
-          />
-        </>
+        {/* {userInfo ? ( */}
+          <>
+            <Route path="/tests/stroop" component={StroopIntroduction} />
+            <Route path="/tests/flanker" component={FlankerIntroduction} />
+            <Route path="/tests/corsi" component={CrossBlockIntroduction} />
+            <Route
+              path="/tests/reverse-corsi"
+              component={ReverseCrossBlockIntroduction}
+            />
+            <Route path="/tests/digit-span" component={DigitSpanIntroduction} />
+            <Route
+              path="/tests/reverse-digit-span"
+              component={ReverseDigitSpanIntroduction}
+            />
+            <Route
+              path="/tests/digit-symbol"
+              component={DigitSymbolIntroduction}
+            />
+            <Route
+              path="/tests/inhibition"
+              component={InhibitionIntroduction}
+            />
+            <Route
+              path="/tests/logical-reasoning"
+              component={LogicalReasoningIntroduction}
+            />
+          </>
          ) : (
           history.push("/")
         )} 

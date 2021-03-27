@@ -1,5 +1,5 @@
 import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import CrossBlockGrid from "../../../../../components/CrossBlockGrid";
 import StartTestButton from "../../../../../components/Button";
@@ -10,6 +10,7 @@ import TrialConfirmModal from "../../../../../components/trialConfirmationModal/
 
 const CrossBlockTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
+  const [apicurrentQuestion, setApiCurrentQuestion] = useState([]);
   const [answers, setAnswers] = useState([]);
   const [started, setStarted] = useState(false);
   const { onOpen, isOpen, onClose } = useDisclosure();
@@ -78,6 +79,25 @@ const CrossBlockTrial = () => {
     [currentQuestion]
   );
 
+  useEffect(() => {
+    if (
+      trialQuestions &&
+      trialQuestions?.payload &&
+      trialQuestions?.payload[currQuestionIndex]
+    ) {
+      setApiCurrentQuestion(
+        trialQuestions && trialQuestions?.payload
+          ? JSON.parse(currentQuestion.show_order).map((item) => item - 1)
+          : null
+      );
+    }
+  }, [
+    currQuestionIndex,
+    trialQuestions,
+    setApiCurrentQuestion,
+    currentQuestion,
+  ]);
+  console.log(apicurrentQuestion);
   return (
     <>
       {trialQuestionLoading || !trialQuestions ? (
@@ -181,6 +201,13 @@ const CrossBlockTrial = () => {
                       }
                     } else {
                       const newAnswers = answers.slice();
+                      setApiCurrentQuestion(
+                        trialQuestions && trialQuestions?.payload
+                          ? JSON.parse(currentQuestion.show_order).map(
+                              (item) => item - 1
+                            )
+                          : null
+                      );
                       newAnswers[currQuestionIndex] = [];
                       setAnswers(newAnswers);
                     }
