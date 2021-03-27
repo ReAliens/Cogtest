@@ -27,32 +27,44 @@ const UserInfo = () => {
   const options = useMemo(() => {
     return stage && stage?.payload ? stage.payload : null;
   }, [stage]);
+  console.log(options);
   const toast = useToast();
   const history = useHistory();
   const methods = useForm();
   const firstTest = tests?.payload?.find((test) => test.is_open === true);
   const { handleSubmit, watch } = methods;
   const watchedStaging = watch(["stage"]);
+  const majorsOptions = useMemo(() => {
+    return watchedStaging &&
+      watchedStaging?.stage &&
+      watchedStaging?.stage?.majors
+      ? watchedStaging?.stage?.majors[0]
+      : null;
+  }, [watchedStaging]);
+  console.log(majorsOptions);
+
+  // console.log(watchedStaging);
   const submit = useCallback(
     async (values) => {
+      console.log(values);
       const userINfo = {
         ...values,
-        stage: values?.stage?.value,
-        major: values?.type?.value || "",
+        stage: values?.stage?.id,
+        major: values?.major?.id || "",
         gender: radioValue,
       };
 
       try {
-        const data = await submitUserInfo(userINfo);
-        setUserInfo(data);
+        // const data = await submitUserInfo(userINfo);
+        // setUserInfo(data);
         toast({
           position: "top-right",
-          description: `${data?.message}`,
+          // description: `${data?.message}`,
           status: "success",
           duration: 5000,
           isClosable: true,
         });
-        history.push(`/tests/${firstTest?.code}`);
+        // history.push(`/tests/${firstTest?.code}`);
       } catch (err) {
         console.log(err);
         toast({
@@ -145,23 +157,17 @@ const UserInfo = () => {
                     }}
                   />
                 </Flex>
-                {watchedStaging?.stage?.value === "master" && (
+                {majorsOptions?.length > 0 && (
                   <Flex
                     justifyContent="center"
                     paddingX={["0px", "0px", "40px", "100px"]}
                   >
                     <FormSelect
-                      id="type"
+                      id="major"
                       placeholder=" من فضلك اختر التخصص "
                       label=" اختر التخصص"
                       labelSize={["12px", "14px", "16px", "16px"]}
-                      options={[
-                        { value: "humanScience", label: "علوم انسانية" },
-                        {
-                          value: "appliedScience",
-                          label: "علوم تطبيقية",
-                        },
-                      ]}
+                      options={majorsOptions}
                       validation={{
                         required: {
                           value: true,
