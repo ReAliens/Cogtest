@@ -132,9 +132,9 @@ const Home = ({
                 </Grid>
               </Grid>
               <Flex justifyContent="flex-start" marginTop="20px">
-                <Text fontSize="16px" color="blue.500">
+                <Text fontWeight="bold" fontSize="16px" color="#2B6CB0">
                   <a href={`mailto:${email}`} target="_blank" rel="noreferrer">
-                    Email: {email}
+                    {email}
                   </a>
                 </Text>
               </Flex>
@@ -260,9 +260,9 @@ const Home = ({
                 </Grid>
               </Grid>
               <Flex justifyContent="flex-start" marginTop="20px">
-                <Text fontSize="14px" color="blue.500">
+                <Text fontWeight="bold" fontSize="14px" color="#2B6CB0">
                   <a href={`mailto:${email}`} target="_blank" rel="noreferrer">
-                    Email: {email}
+                    {email}
                   </a>
                 </Text>
               </Flex>
