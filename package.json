@@ -12,6 +12,7 @@
     "axios": "^0.21.1",
     "framer-motion": "^3.6.2",
     "google-fonts-complete": "^2.1.1",
+    "query-string": "^7.0.0",
     "react": "^17.0.1",
     "react-countdown-clock": "^2.8.1",
     "react-dom": "^17.0.1",

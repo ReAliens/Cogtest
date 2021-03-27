@@ -1,5 +1,5 @@
 import { Box, Flex, Text, useDisclosure } from "@chakra-ui/react";
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory } from "react-router-dom";
 import CrossBlockGrid from "../../../../../components/CrossBlockGrid";
 import StartTestButton from "../../../../../components/Button";
@@ -10,6 +10,7 @@ import TrialConfirmModal from "../../../../../components/trialConfirmationModal/
 
 const CrossBlockTrial = () => {
   const [currQuestionIndex, setCurrQuestionIndex] = useState(0);
+  const [currentQuestion, setCurrentQuestion] = useState(null);
   const [answers, setAnswers] = useState([]);
   const [started, setStarted] = useState(false);
   const { onOpen, isOpen, onClose } = useDisclosure();
@@ -35,13 +36,13 @@ const CrossBlockTrial = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [setAnswers, currQuestionIndex]
   );
-  const currentQuestion = useMemo(
-    () =>
-      trialQuestions && trialQuestions.payload
-        ? trialQuestions.payload[currQuestionIndex]
-        : null,
-    [trialQuestions, currQuestionIndex]
-  );
+  // const currentQuestion = useMemo(
+  //   () =>
+  //     trialQuestions && trialQuestions.payload
+  //       ? trialQuestions.payload[currQuestionIndex]
+  //       : null,
+  //   [trialQuestions, currQuestionIndex]
+  // );
 
   const currentCorrectAnswer = useMemo(
     () =>
@@ -77,6 +78,20 @@ const CrossBlockTrial = () => {
         : [],
     [currentQuestion]
   );
+
+  useEffect(() => {
+    if (
+      trialQuestions &&
+      trialQuestions?.payload &&
+      trialQuestions?.payload[currQuestionIndex]
+    ) {
+      setCurrentQuestion(
+        trialQuestions && trialQuestions.payload
+          ? trialQuestions.payload[currQuestionIndex]
+          : null
+      );
+    }
+  }, [currQuestionIndex, trialQuestions, setCurrentQuestion]);
 
   return (
     <>
@@ -177,12 +192,26 @@ const CrossBlockTrial = () => {
                         onOpen();
                       } else {
                         setStarted(false);
-                        setCurrQuestionIndex(currQuestionIndex + 1);
+                        const newQuestionIndex = currQuestionIndex + 1;
+                        setCurrQuestionIndex(newQuestionIndex);
+                        setCurrentQuestion(
+                          trialQuestions && trialQuestions.payload
+                            ? trialQuestions.payload[newQuestionIndex]
+                            : null
+                        );
                       }
                     } else {
                       const newAnswers = answers.slice();
                       newAnswers[currQuestionIndex] = [];
                       setAnswers(newAnswers);
+                      setCurrentQuestion(null);
+                      setTimeout(() => {
+                        setCurrentQuestion(
+                          trialQuestions && trialQuestions.payload
+                            ? trialQuestions.payload[currQuestionIndex]
+                            : null
+                        );
+                      }, 500);
                     }
                   }}
                 />
