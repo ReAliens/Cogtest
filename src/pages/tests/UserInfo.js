@@ -27,7 +27,6 @@ const UserInfo = () => {
   const options = useMemo(() => {
     return stage && stage?.payload ? stage.payload : null;
   }, [stage]);
-  console.log(options);
   const toast = useToast();
   const history = useHistory();
   const methods = useForm();
@@ -41,15 +40,14 @@ const UserInfo = () => {
       ? watchedStaging?.stage?.majors[0]
       : null;
   }, [watchedStaging]);
-  console.log(majorsOptions);
 
   // console.log(watchedStaging);
   const submit = useCallback(
     async (values) => {
       const userINfo = {
         ...values,
-        stage: values?.stage?.id,
-        major: values?.major?.id || "",
+        stage_id: values?.stage?.id,
+        major_id: values?.major?.id || "",
         gender: radioValue,
       };
 
@@ -58,7 +56,7 @@ const UserInfo = () => {
         setUserInfo(data);
         toast({
           position: "top-right",
-          // description: `${data?.message}`,
+          description: `${data?.message}`,
           status: "success",
           duration: 5000,
           isClosable: true,

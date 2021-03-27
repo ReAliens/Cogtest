@@ -23,7 +23,7 @@ const ReverseDigitSpanIntroduction = lazy(() =>
 const Tests = () => {
   const { userInfo } = useContext(UserInfoContext);
   const history = useHistory();
-
+  console.log(userInfo);
   return (
     <>
       <Suspense fallback={<Loader />}>
