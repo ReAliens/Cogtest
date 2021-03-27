@@ -60,6 +60,8 @@ const Test = ({
               ? ""
               : examName === "flanker"
               ? ""
+              : examName === "digitSymbol"
+              ? ""
               : "500px"
           }
           flexDir="column"
@@ -183,8 +185,8 @@ const Test = ({
                   <Image
                     marginY="20px"
                     fit="fill"
-                    height="450px"
-                    width="700px"
+                    height="300px"
+                    width="500px"
                     src={allQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}
@@ -240,8 +242,10 @@ const Test = ({
               >
                 {allQuestions?.payload && (
                   <Image
-                    fit="cover"
-                    width="100px"
+                    marginY="20px"
+                    fit="fill"
+                    height="300px"
+                    width="500px"
                     src={allQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}
@@ -337,8 +341,8 @@ const Test = ({
                   <Image
                     marginY="20px"
                     fit="fill"
-                    height="450px"
-                    width="700px"
+                    height="300px"
+                    width="500px"
                     src={allQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}
@@ -439,8 +443,8 @@ const Test = ({
                   <Image
                     marginY="20px"
                     fit="fill"
-                    height="450px"
-                    width="700px"
+                    height="300px"
+                    width="500px"
                     src={allQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}
