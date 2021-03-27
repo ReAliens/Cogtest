@@ -55,9 +55,9 @@ const Test = ({
           paddingX="20px"
           h={
             examName === "inhibtion"
-              ? "100%"
+              ? ""
               : examName === "logicalReasoning"
-              ? "630"
+              ? ""
               : examName === "flanker"
               ? ""
               : "500px"
@@ -181,6 +181,7 @@ const Test = ({
               >
                 {allQuestions?.payload && (
                   <Image
+                    marginY="20px"
                     fit="fill"
                     height="450px"
                     width="700px"
@@ -334,8 +335,10 @@ const Test = ({
               >
                 {allQuestions?.payload && (
                   <Image
-                    fit="cover"
-                    // width="0px"
+                    marginY="20px"
+                    fit="fill"
+                    height="450px"
+                    width="700px"
                     src={allQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}
@@ -434,8 +437,10 @@ const Test = ({
               >
                 {allQuestions?.payload && (
                   <Image
-                    fit="cover"
-                    width="200px"
+                    marginY="20px"
+                    fit="fill"
+                    height="450px"
+                    width="700px"
                     src={allQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}

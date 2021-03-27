@@ -58,15 +58,15 @@ const TrialExam = ({
           marginTop="30px"
           bg="#E4E6EF"
           paddingX="20px"
-          // h={
-          //   examName === "inhibition"
-          //     ? "100%"
-          //     : examName === "logicalReasoning"
-          //     ? "630px"
-          //     : examName === "flanker"
-          //     ? "680px"
-          //     : "500px"
-          // }
+          h={
+            examName === "inhibition"
+              ? ""
+              : examName === "logicalReasoning"
+              ? ""
+              : examName === "flanker"
+              ? ""
+              : "500px"
+          }
           flexDir="column"
           dir="rtl"
         >
@@ -344,8 +344,10 @@ const TrialExam = ({
               >
                 {trialQuestions?.payload && (
                   <Image
-                    fit="cover"
-                    width="100px"
+                    marginY="20px"
+                    fit="fill"
+                    height="450px"
+                    width="700px"
                     src={trialQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}
@@ -443,8 +445,10 @@ const TrialExam = ({
               >
                 {trialQuestions?.payload && (
                   <Image
+                    marginY="20px"
                     fit="fill"
-                    width="100px"
+                    height="450px"
+                    width="700px"
                     src={trialQuestions?.payload[currQuestionIndex]?.photo}
                   />
                 )}
