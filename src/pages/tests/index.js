@@ -26,7 +26,7 @@ const Tests = () => {
   return (
     <>
       <Suspense fallback={<Loader />}>
-        {/* {userInfo ? ( */}
+        {userInfo ? (
           <>
             <Route path="/tests/stroop" component={StroopIntroduction} />
             <Route path="/tests/flanker" component={FlankerIntroduction} />
@@ -53,9 +53,9 @@ const Tests = () => {
               component={LogicalReasoningIntroduction}
             />
           </>
-         ) : (
+        ) : (
           history.push("/")
-        )} 
+        )}
       </Suspense>
     </>
   );
