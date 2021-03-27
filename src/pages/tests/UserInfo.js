@@ -41,7 +41,6 @@ const UserInfo = () => {
       : null;
   }, [watchedStaging]);
 
-  // console.log(watchedStaging);
   const submit = useCallback(
     async (values) => {
       const userINfo = {
@@ -90,7 +89,9 @@ const UserInfo = () => {
         overflow="hidden"
       >
         <Flex marginX="20px" dir="rtl">
-          <Text> البيانات الأولية</Text>
+          <Text fontWeight="bold" fontSize="20px">
+            البيانات الأولية
+          </Text>
         </Flex>
         <Flex
           justifyContent="center"

@@ -122,7 +122,7 @@ const DigitSpanTest = () => {
         const questionID = allQuestions.payload[key].id;
         answersPayload.push({
           question_id: questionID,
-          answer_array: answers[key],
+          answer_array: answers[key].map((i) => parseInt(i, 10)),
         });
       });
       const testAnswerPayload = {
@@ -130,6 +130,7 @@ const DigitSpanTest = () => {
         answers: answersPayload,
         user_id: userInfo?.payload?.id,
       };
+      console.log(testAnswerPayload);
       submitAnswerTest(testAnswerPayload);
       toast({
         position: "top-right",

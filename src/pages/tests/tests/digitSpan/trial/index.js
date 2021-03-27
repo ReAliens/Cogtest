@@ -134,8 +134,6 @@ const DigitSpanTrial = () => {
       : null;
   }, [trialQuestions, currQuestionIndex]);
 
-  console.log(audioTrack);
-
   return (
     <>
       {trialQuestionLoading ? (
