@@ -124,6 +124,7 @@ const ReverseDigitSpanTest = () => {
         answersPayload.push({
           question_id: questionID,
           answer_array: answers[key].map((i) => parseInt(i, 10)),
+          answer_id: null,
         });
       });
       const testAnswerPayload = {
