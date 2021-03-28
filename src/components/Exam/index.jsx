@@ -541,9 +541,7 @@ const Test = ({
               onClick={() => {
                 if (currQuestionIndex < allQuestions?.payload.length - 1) {
                   const userAnswer = answers[currQuestionIndex];
-                  if (
-                    userAnswer !== correctAnswers[currQuestionIndex]?.answer
-                  ) {
+                  if (userAnswer !== correctAnswers[currQuestionIndex]?.id) {
                     setWrongAnswers(wrongAnswers + 1);
                   }
                   if (wrongAnswers === 4) {
