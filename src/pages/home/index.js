@@ -49,7 +49,7 @@ const Home = ({
                 fontWeight="bold"
                 fontSize="18px"
               >
-                {title}
+               المقدمة
               </Text>
             </Grid>
             <Flex
