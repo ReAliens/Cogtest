@@ -131,7 +131,6 @@ const DigitSpanTest = () => {
         answers: answersPayload,
         user_id: userInfo?.payload?.id,
       };
-      console.log(testAnswerPayload);
       submitAnswerTest(testAnswerPayload);
       toast({
         position: "top-right",

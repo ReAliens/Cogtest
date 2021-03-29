@@ -15,6 +15,7 @@ const Home = ({
   thanking,
   signature,
   email,
+  copyright,
 }) => {
   return (
     <>
@@ -46,7 +47,7 @@ const Home = ({
                 justifyContent="flex-end"
                 alignItems="flex-end"
                 fontWeight="bold"
-                fontSize="16px"
+                fontSize="18px"
               >
                 {title}
               </Text>
@@ -137,6 +138,11 @@ const Home = ({
                     {email}
                   </a>
                 </Text>
+              </Flex>
+              <Flex justifyContent="center">
+                <a href="https://devnile.com/" target="_blank" rel="noreferrer">
+                  <Text fontWeight="bold">{copyright} </Text>
+                </a>
               </Flex>
             </Flex>
           </Flex>
@@ -265,6 +271,13 @@ const Home = ({
                     {email}
                   </a>
                 </Text>
+              </Flex>
+              <Flex justifyContent="center">
+                <a href="https://devnile.com/" target="_blank" rel="noreferrer">
+                  <Text fontWeight="bold" fontSize="12px" dir="rtl" mt="20px">
+                    {copyright}{" "}
+                  </Text>
+                </a>
               </Flex>
             </Flex>
           </Flex>

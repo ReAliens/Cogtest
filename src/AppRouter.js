@@ -5,7 +5,6 @@ import Tests from "./pages/tests";
 import Home from "./pages/home";
 import UserInfo from "./pages/tests/UserInfo";
 import Header from "./components/appHeader";
-import Footer from "./components/footer";
 import useSettings from "./hooks/useSettings";
 import { Flex } from "@chakra-ui/react";
 import UserInfoProvider from "./contexts/userContext";
@@ -40,6 +39,7 @@ export default function AppRouter() {
                     signature={settings?.payload?.text5}
                     title={settings?.message}
                     email={settings?.payload?.email}
+                    copyright={settings?.payload?.copyright}
                   />
                 </Route>
                 <Route exact path={routes.auth.register()}>
@@ -50,11 +50,6 @@ export default function AppRouter() {
                 </Route>
               </Switch>
             </Router>
-            <Flex w="100%" alignItems="center" justifyContent="center">
-              <a href="https://devnile.com/" target="_blank" rel="noreferrer">
-                <Footer copyRignt={settings?.payload?.copyright} />
-              </a>
-            </Flex>
           </Flex>
         )}
       </Flex>

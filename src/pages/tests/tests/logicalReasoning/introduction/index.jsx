@@ -1,13 +1,14 @@
 import React from "react";
-import { useHistory } from "react-router";
+// import { useHistory } from "react-router";
 import Introduction from "../../../../../components/Introduction";
 import Loader from "../../../../../components/Loader";
+import FinishPage from "../../../../../components/TestFinishPage";
 import useTests from "../../../../../hooks/useTests";
 
 const LogicalReasoningIntroduction = () => {
   const { tests, testLoading } = useTests();
   const ninthTest = tests && tests.payload ? tests.payload[8] : null;
-  const history = useHistory();
+  // const history = useHistory();
   return (
     <>
       {testLoading || !tests || !ninthTest ? (
@@ -19,7 +20,7 @@ const LogicalReasoningIntroduction = () => {
           testLink={`/tests/logical-reasoning/trial`}
         />
       ) : (
-        history.push("/")
+        <FinishPage type="lastExam" />
       )}
     </>
   );
