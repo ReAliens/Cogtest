@@ -1,13 +1,16 @@
-import { Flex, Text, useToast } from "@chakra-ui/react";
-import React, { useCallback, useContext } from "react";
+import { Flex, Text, useDisclosure, useToast } from "@chakra-ui/react";
+import React, { useCallback, useContext, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import StartTestButton from "../../components/Button";
 import { UserInfoContext } from "../../contexts/userContext";
 import FormInput from "../formInput";
 import useUpdateUserInfo from "../../hooks/useUpdateUserInfo";
+import FinalResultModal from "../FinalResultModal";
 
 const FinishPage = ({ testName, type }) => {
   const { userInfo } = useContext(UserInfoContext);
+  const [finalData, setFinalData] = useState();
+  const { onOpen, isOpen, onClose } = useDisclosure();
   const {
     submitUpdateUserInfo,
     submitUpdateUserInfoLoading,
@@ -23,6 +26,7 @@ const FinishPage = ({ testName, type }) => {
       };
 
       const data = await submitUpdateUserInfo(UpdatedUserInfo);
+      setFinalData(data);
       if (data?.message === "قيمة البريد الالكتروني مُستخدمة من قبل") {
         toast({
           position: "top-right",
@@ -52,82 +56,90 @@ const FinishPage = ({ testName, type }) => {
           duration: 5000,
           isClosable: true,
         });
-        window.location.href = "/";
+        onOpen();
       }
     },
-    [userInfo, submitUpdateUserInfo, toast]
+    [userInfo, submitUpdateUserInfo, toast, onOpen]
   );
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(submit)}>
-        <Flex
-          paddingTop="20px"
-          h="100%"
-          w="70vw"
-          flexDir="column"
-          borderRadius="20px"
-        >
+    <>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(submit)}>
           <Flex
-            justifyContent="center"
-            borderRadius="20px"
-            paddingBottom="20px"
-            alignItems="center"
-            marginTop="30px"
-            bg="#E4E6EF"
-            paddingX="20px"
+            paddingTop="20px"
             h="100%"
+            w="70vw"
             flexDir="column"
+            borderRadius="20px"
           >
             <Flex
-              flexDir="column"
-              padding="20px"
-              marginTop="50px"
               justifyContent="center"
-              w="100%"
-              borderRadius="10px"
-              bg="white"
-              dir="rtl"
+              borderRadius="20px"
+              paddingBottom="20px"
+              alignItems="center"
+              marginTop="30px"
+              bg="#E4E6EF"
+              paddingX="20px"
+              h="100%"
+              flexDir="column"
             >
-              <Flex justifyContent="center">
-                <Text dir="rtl">
-                  تم انتهاء الاختبار بنجاح الرجاء تسجيل الخروج ﻹتمام تسجيل
-                  الدرجة
-                </Text>
-              </Flex>
-              <Flex justifyContent="center">
-                <Text>
-                  الرجاء تسجيل البريد الإلكترونى لمتابعة الاختبارات الجديدة
-                </Text>
-              </Flex>
-
               <Flex
-                marginTop="20px"
+                flexDir="column"
+                padding="20px"
+                marginTop="50px"
                 justifyContent="center"
-                paddingX={["0px", "0px", "40px", "100px"]}
+                w="100%"
+                borderRadius="10px"
+                bg="white"
+                dir="rtl"
               >
-                <FormInput
-                  id="email"
-                  placeholder="البريد الإلكترونى "
-                  labelSize={["12px", "14px", "16px", "16px"]}
-                  label=" البريد الإلكرونى "
-                  type="email"
+                <Flex justifyContent="center">
+                  <Text dir="rtl">
+                    تم انتهاء الاختبار بنجاح الرجاء تسجيل الخروج ﻹتمام تسجيل
+                    الدرجة
+                  </Text>
+                </Flex>
+                <Flex justifyContent="center">
+                  <Text>
+                    الرجاء تسجيل البريد الإلكترونى لمتابعة الاختبارات الجديدة
+                  </Text>
+                </Flex>
+
+                <Flex
+                  marginTop="20px"
+                  justifyContent="center"
+                  paddingX={["0px", "0px", "40px", "100px"]}
+                >
+                  <FormInput
+                    id="email"
+                    placeholder="البريد الإلكترونى "
+                    labelSize={["12px", "14px", "16px", "16px"]}
+                    label=" البريد الإلكرونى "
+                    type="email"
+                  />
+                </Flex>
+              </Flex>
+              <Flex marginTop="20px">
+                <StartTestButton
+                  buttonText={
+                    type === "lastExam" ? "تسجيل خروج" : "ابدأ الاختبار التالى"
+                  }
+                  isLoading={submitUpdateUserInfoLoading}
+                  onClick={handleSubmit(submit)}
                 />
               </Flex>
             </Flex>
-            <Flex marginTop="20px">
-              <StartTestButton
-                buttonText={
-                  type === "lastExam" ? "تسجيل خروج" : "ابدأ الاختبار التالى"
-                }
-                isLoading={submitUpdateUserInfoLoading}
-                onClick={handleSubmit(submit)}
-              />
-            </Flex>
           </Flex>
-        </Flex>
-      </form>
-    </FormProvider>
+        </form>
+      </FormProvider>
+      <FinalResultModal
+        isOpen={isOpen}
+        onClose={onClose}
+        endMessage={finalData?.message}
+        score={finalData?.payload}
+      />
+    </>
   );
 };
 
